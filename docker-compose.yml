@@ -1,0 +1,56 @@
+services:
+  # Frontend (Nuxt.js)
+  nuxt:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nuxt-container
+    ports:
+      - "3000:3500"  # Expose port 3000 for Nuxt
+    volumes:
+      - ./frontend:/app
+    tmpfs:
+      - /tmp
+    environment:
+      - NODE_ENV=development
+      - PORT=3500    # Override port here
+      - HOST=0.0.0.0 # Override host here
+    depends_on:
+      - backend
+
+  # Backend (Laravel)
+  backend:
+    build:
+      context: ./backend
+    container_name: laravel-container
+    ports:
+      - "8000:8000"  # Expose port 8000 for Laravel
+    volumes:
+      - ./backend:/var/www
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=webdev-bachelor
+      - DB_USERNAME=webdev-bachelor
+      - DB_PASSWORD=misselotte
+    depends_on:
+      - db
+      
+
+  # Database (MySQL)
+  db:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: webdev-bachelor
+      MYSQL_USER: webdev-bachelor
+      MYSQL_PASSWORD: misselotte
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+# Volumes to persist data
+volumes:
+  mysql_data:

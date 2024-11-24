@@ -28,6 +28,7 @@ services:
       - "8000:8000"  # Expose port 8000 for Laravel
     volumes:
       - ./backend:/var/www
+      - /var/www/vendor
     environment:
       - DB_HOST=db
       - DB_PORT=3306
@@ -40,7 +41,7 @@ services:
 
   # Database (MySQL)
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: rootroot

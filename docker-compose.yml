@@ -9,6 +9,7 @@ services:
       - "3000:3500"  # Expose port 3000 for Nuxt
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     tmpfs:
       - /tmp
     environment:

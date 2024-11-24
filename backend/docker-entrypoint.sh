@@ -20,5 +20,8 @@ fi
 echo "Running migrations..."
 php artisan migrate --force
 
+echo "Ensuring vendor dependencies are installed"
+composer install --optimize-autoloader --no-dev
+
 # Execute the original command (start the server)
 exec "$@"

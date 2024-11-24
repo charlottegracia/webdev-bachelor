@@ -17,10 +17,10 @@ RUN npm ci
 COPY . .
 
 # Expose port 3000 (default for Nuxt.js)
-EXPOSE 3500
+EXPOSE 3000
 
 # Build the Nuxt.js app (optional if you're using Nuxt in dev mode)
-# RUN npm run build
+#RUN npm run build
 
 # Start the Nuxt.js app
 CMD ["npm", "run", "dev"]

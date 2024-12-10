@@ -42,18 +42,21 @@ class Carrier extends Model
 
     public function updateStatus()
     {
-        if ($this->incidents->where('status', 'active')->count() > 0) {
-            $this->status = 'yellow';
-        } 
+        $activeIncidents = $this->incidents->where('status', 'active');
+        $criticalIncidents = $this->incidents->where('critical', true);
 
-        elseif ($this->incidents->where('critical', true)->count() > 0) {
-            $this->status = 'red';  
-        } 
+        if ($criticalIncidents->count() > 0) {
+            $this->status = 'red';
+        }
+
+        elseif ($activeIncidents->count() > 0) {
+            $this->status = 'yellow';
+        }
 
         else {
-            $this->status = 'green'; 
+            $this->status = 'green';
         }
- 
-        $this->save(); 
+
+        $this->save();
     }
 }

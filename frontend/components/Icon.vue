@@ -9,7 +9,6 @@
       />
     </div>
   </template>
-  
   <script setup lang="ts">
   import { computed } from 'vue';
   
@@ -19,8 +18,6 @@
     PhGlobeHemisphereWest,
     // Add more icons here as needed
   } from '@phosphor-icons/vue/compact';
-  
-  type Weight = 'bold' | 'duotone' | 'fill' | 'light' | 'regular';
   
   // Mapping Phosphor icons to their components
   const icons: Record<string, Component> = {
@@ -34,13 +31,11 @@
     defineProps<{
       size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
       src?: string;
-      filled?: boolean;
       color?: string; // New color prop
     }>(),
     {
       size: 'md',
       src: '',
-      filled: false,
       color: 'text-text-default', // Default value is an empty string
     }
   );
@@ -68,8 +63,8 @@
     return sizeClasses[size] || 'text-base';
   });
   
-  // Weight class based on the `filled` prop
-  const weight = computed<Weight>(() => (props.filled ? 'fill' : 'regular'));
+  // Always set weight to "regular"
+  const weight = computed(() => 'regular'); // Set all icons to regular weight
   
   // Generate inline style for color (if provided as a hex/RGB string)
   const iconColorStyle = computed(() => {
@@ -87,10 +82,4 @@
     return ''; // No Tailwind class if not a valid text- color class
   });
   </script>
-  
-  <style scoped>
-  .nuxt-icon svg {
-    @apply mb-0;
-  }
-  </style>
   

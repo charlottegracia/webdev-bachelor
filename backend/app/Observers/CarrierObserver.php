@@ -14,7 +14,9 @@ class CarrierObserver
      */
     public function created(Incident $incident)
     {
-        $incident->carrier->updateStatus();
+        foreach ($incident->carriers as $carrier) {
+            $carrier->updateStatus();
+        }
     }
 
     /**
@@ -25,7 +27,9 @@ class CarrierObserver
      */
     public function updated(Incident $incident)
     {
-        $incident->carrier->updateStatus();
+        foreach ($incident->carriers as $carrier) {
+            $carrier->updateStatus();
+        }
     }
 
     /**
@@ -36,9 +40,8 @@ class CarrierObserver
      */
     public function deleted(Incident $incident)
     {
-        if ($incident->carrier->incidents->where('status', 'active')->count() == 0) {
-            $incident->carrier->status = 'green';
-            $incident->carrier->save();
+        foreach ($incident->carriers as $carrier) {
+            $carrier->updateStatus();
         }
     }
 

@@ -44,7 +44,13 @@ class Carrier extends Model
     {
         if ($this->incidents->where('status', 'active')->count() > 0) {
             $this->status = 'yellow';
-        } else {
+        } 
+
+        elseif ($this->incidents->where('critical', true)->count() > 0) {
+            $this->status = 'red';  
+        } 
+
+        else {
             $this->status = 'green'; 
         }
  

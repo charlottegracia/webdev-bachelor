@@ -7,4 +7,6 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
+Route::get('/carriers', [CarrierController::class, 'index'])->name('carriers.index');
+
 require __DIR__.'/auth.php';

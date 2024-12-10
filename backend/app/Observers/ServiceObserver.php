@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Carrier;
+use App\Models\Service;
 
-class CarrierObserver
+class ServiceObserver
 {
     
     public function created(Service $service): void
@@ -23,7 +23,7 @@ class CarrierObserver
     }
 
     /**
-     * Handle the Carrier "restored" event.
+     * Handle the Service "restored" event.
      */
     public function restored(Service $service): void
     {
@@ -31,7 +31,7 @@ class CarrierObserver
     }
 
     /**
-     * Handle the Carrier "force deleted" event.
+     * Handle the Service "force deleted" event.
      */
     public function forceDeleted(Service $service): void
     {

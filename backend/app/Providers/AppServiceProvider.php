@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Carrier;
+use App\Models\Service;
+use App\Models\Incident;
+use App\Observers\CarrierObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -4,6 +4,6 @@
         <main class="max-w-screen-xl mx-auto">
             <NuxtPage />
         </main>
-        <div>footer</div>
+        <Footer />
     </div>
 </template>

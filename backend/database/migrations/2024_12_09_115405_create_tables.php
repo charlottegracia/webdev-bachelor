@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incident', function (Blueprint $table) {
+        Schema::create('incidents', function (Blueprint $table) {
             $table->id('incident_id');
             $table->string('title');
             $table->text('message');
@@ -21,12 +21,10 @@ return new class extends Migration
             $table->enum('status', ['active', 'expired']);
             $table->timestamp('expected_resolved_at')->nullable();
             $table->timestamp('resolved_at')->nullable();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamps();
         });
 
-        Schema::create('failure_log', function (Blueprint $table) {
+        Schema::create('failure_logs', function (Blueprint $table) {
             $table->id('failure_log_id');
             $table->unsignedBigInteger('loggable_id'); // ID for den relaterede model
             $table->string('loggable_type'); // Type af model (Service eller Carrier)
@@ -34,20 +32,19 @@ return new class extends Migration
             $table->string('connection');
             $table->text('reason');
             $table->timestamp('failed_at');
+            $table->timestamps();
         });
 
-        Schema::create('service', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id('service_id');
             $table->string('title');
             $table->string('type');
             $table->enum('status', ['green', 'yellow', 'red'])->default('green');
             $table->text('description')->nullable();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamps();
         });
 
-        Schema::create('carrier', function (Blueprint $table) {
+        Schema::create('carriers', function (Blueprint $table) {
             $table->id('carrier_id');
             $table->text('slug');
             $table->text('title');
@@ -55,24 +52,25 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['green', 'yellow', 'red'])->default('green');
             $table->text('peak_up_charge')->nullable();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamps();
         });
 
-        Schema::create('incident_carrier', function (Blueprint $table) {
-            $table->foreignId('incident_id')->constrained('incident');
-            $table->foreignId('carrier_id')->constrained('carrier');
+        Schema::create('incident_carriers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('incident_id')->constrained('incidents', 'incident_id')->cascadeOnDelete();
+            $table->foreignId('carrier_id')->constrained('carriers', 'carrier_id')->cascadeOnDelete();
         });
 
-        Schema::create('incident_service', function (Blueprint $table) {
-            $table->foreignId('incident_id')->constrained('incident');
-            $table->foreignId('service_id')->constrained('service');
+        Schema::create('incident_services', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('incident_id')->constrained('incidents', 'incident_id')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services', 'service_id')->cascadeOnDelete();
         });
 
-        Schema::create('carrier_service', function (Blueprint $table) {
-            $table->foreignId('carrier_id')->constrained('carrier');
-            $table->foreignId('service_id')->constrained('service');
+        Schema::create('carrier_services', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('carrier_id')->constrained('carriers', 'carrier_id')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services', 'service_id')->cascadeOnDelete();
         });
     }
 
@@ -81,12 +79,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carrier_service');
-        Schema::dropIfExists('incident_service');
-        Schema::dropIfExists('incident_carrier');
-        Schema::dropIfExists('carrier');
-        Schema::dropIfExists('service');
-        Schema::dropIfExists('failure_log');
-        Schema::dropIfExists('incident');
+        Schema::dropIfExists('carrier_services');
+        Schema::dropIfExists('incident_services');
+        Schema::dropIfExists('incident_carriers');
+        Schema::dropIfExists('carriers');
+        Schema::dropIfExists('services');
+        Schema::dropIfExists('failure_logs');
+        Schema::dropIfExists('incidents');
     }
 };

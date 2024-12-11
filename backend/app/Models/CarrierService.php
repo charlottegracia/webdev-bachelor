@@ -11,6 +11,8 @@ class CarrierService extends Model
 
     protected $table = 'carrier_services'; 
 
+    public $timestamps = false;
+
     // Relation til Carrier
     public function carrier()
     {

@@ -23,15 +23,13 @@ class Carrier extends Model
     // Relation til Incident (via incident_carriers)
     public function incidents()
     {
-        return $this->belongsToMany(Incident::class, 'incident_carriers', 'carrier_id', 'incident_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Incident::class, 'incident_carriers', 'carrier_id', 'incident_id');
     }
 
     // Relation til Service (via carrier_services)
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'carrier_services', 'carrier_id', 'service_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Service::class, 'carrier_services', 'carrier_id', 'service_id');
     }
 
     // Polymorf relation til FailureLogs (Carrier kan have logs)

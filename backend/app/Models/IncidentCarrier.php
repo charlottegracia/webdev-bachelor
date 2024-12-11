@@ -11,6 +11,8 @@ class IncidentCarrier extends Model
 
     protected $table = 'incident_carriers';
 
+    public $timestamps = false;
+
     // Relation til Incident
     public function incident()
     {

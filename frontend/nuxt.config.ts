@@ -9,4 +9,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8000/api', // Laravel API URL
+    },
+  },
 })

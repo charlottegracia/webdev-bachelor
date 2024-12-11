@@ -11,6 +11,8 @@ class IncidentService extends Model
 
     protected $table = 'incident_services';
 
+    public $timestamps = false;
+
     // Relation til Incident
     public function incident()
     {

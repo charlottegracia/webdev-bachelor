@@ -1,14 +1,13 @@
 <template>
     <div class="fixed top-0 w-full z-50 navbar px-4 md:px-0" :class="{ 'navbar--hidden': !showNavbar }">
-        <div
+        <header
             class="flex relative items-center justify-between bg-white rounded-full shadow-home p-3 mt-8 max-w-content mx-auto z-50">
             <div>
                 <nuxt-link to="/">
-                    logo!
                     <img class="h-6 ml-1" src="/images/homerunner-logo.png" alt="homerunner_logo " />
                 </nuxt-link>
             </div>
-            <div class="hidden md:flex py-2 items-start gap-6">
+            <nav class="hidden md:flex py-2 items-start gap-6">
                 <nuxt-link to="/updates">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
                         Liveopdateringer
@@ -34,7 +33,7 @@
                         Datoer og tillæg
                     </p>
                 </nuxt-link>
-            </div>
+            </nav>
             <div class="hidden md:flex items-center gap-6">
                 <a href="https://homerunner.com">
                     <p
@@ -53,7 +52,7 @@
                         d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20" />
                 </svg>
             </div>
-            <div class="w-full overflow-hidden max-h-0 transition-all duration-300 bg-white absolute top-14 right-0 rounded-b-[35px]"
+            <nav class="w-full overflow-hidden max-h-0 transition-all duration-300 bg-white absolute top-14 right-0 rounded-b-[35px]"
                 :class="mobiledNavShown ? 'max-h-[550px] py-10' : 'max-h-0'">
                 <nuxt-link to="/updates">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
@@ -89,10 +88,10 @@
                         </p>
                     </a>
                 </div>
-            </div>
+            </nav>
             <div class="w-5 bg-white absolute top-11 left-0" :class="mobiledNavShown ? 'h-5' : 'h-0'"></div>
             <div class="w-5 bg-white absolute top-11 right-0" :class="mobiledNavShown ? 'h-5' : 'h-0'"></div>
-        </div>
+        </header>
     </div>
 </template>
 

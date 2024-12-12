@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-homeblue-08 p-10 rounded-2xl min-h-96 flex items-center justify-center flex-col relative">
+    <div class="bg-homeblue-08 p-10 rounded-2xl min-h-96 flex items-center justify-center flex-col relative text-center">
         <slot></slot>
         <div class="absolute bottom-0 right-0">
             <svg width="439" height="174" viewBox="0 0 439 174" fill="none" xmlns="http://www.w3.org/2000/svg">

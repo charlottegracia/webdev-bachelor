@@ -47,4 +47,27 @@ class ServiceController extends Controller
 
         return response()->json($service);
     }
+
+    /**
+     * Slet en service.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json(['message' => 'Service ikke fundet.'], 404);
+        }
+
+        $service->carriers()->detach();
+        $service->incidents()->detach();
+        $service->failureLogs()->delete();
+
+        $service->delete();
+
+        return response()->json(['message' => 'Service slettet.'], 200);
+    }
 }

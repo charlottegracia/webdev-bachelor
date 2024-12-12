@@ -39,6 +39,29 @@ class CarrierController extends Controller
             return response()->json(['error' => 'Carrier not found'], 404);
         }
 
-        return response()->json($carrier->load('services'), 201);
+        return response()->json($carrier->load('services', 'incidents'), 201);
+    }
+
+     /**
+     * Slet en carrier.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $carrier = Carrier::find($id);
+
+        if (!$carrier) {
+            return response()->json(['message' => 'Carrier ikke fundet.'], 404);
+        }
+
+        $carrier->incidents()->detach();
+        $carrier->services()->delete();
+        $carrier->failureLogs()->delete();
+
+        $carrier->delete();
+
+        return response()->json(['message' => 'Carrier slettet.'], 200);
     }
 }

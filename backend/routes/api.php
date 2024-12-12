@@ -9,6 +9,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/carriers', [CarrierController::class, 'index'])->name('api.carriers.index');
 Route::post('/carriers', [CarrierController::class, 'store']);
 Route::get('carriers/{id}', [CarrierController::class, 'show']);
 

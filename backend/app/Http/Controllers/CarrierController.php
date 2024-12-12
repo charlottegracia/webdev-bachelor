@@ -12,7 +12,8 @@ class CarrierController extends Controller
     {
         $carriers = Carrier::with('services', 'incidents')->get();
 
-        return view('carriers.index', compact('carriers'));
+        return response()->json($carriers);
+        //return view('carriers.index', compact('carriers'));
     }
 
     public function store(Request $request)

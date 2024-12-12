@@ -9,6 +9,9 @@ dist
 # Node dependencies
 node_modules
 
+# Vendor dependencies
+vendor
+
 # Logs
 logs
 *.log

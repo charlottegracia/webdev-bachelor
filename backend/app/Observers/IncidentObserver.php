@@ -17,6 +17,10 @@ class IncidentObserver
         foreach ($incident->carriers as $carrier) {
             $carrier->updateStatus();
         }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
+        }
     }
 
     /**
@@ -30,6 +34,10 @@ class IncidentObserver
         foreach ($incident->carriers as $carrier) {
             $carrier->updateStatus();
         }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
+        }
     }
 
     /**
@@ -42,6 +50,10 @@ class IncidentObserver
     {
         foreach ($incident->carriers as $carrier) {
              $carrier->updateStatus();
+        }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
         }
     }
 }

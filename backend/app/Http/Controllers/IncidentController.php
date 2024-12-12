@@ -45,6 +45,6 @@ class IncidentController extends Controller
         $incident = Incident::findOrFail($id);
         $incident->update($validated); 
 
-        return response()->json($incident->load('carriers'));
+        return response()->json($incident->load('carriers', 'services'));
     }
 }

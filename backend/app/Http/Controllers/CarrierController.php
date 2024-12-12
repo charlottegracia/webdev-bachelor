@@ -13,7 +13,6 @@ class CarrierController extends Controller
         $carriers = Carrier::with('services', 'incidents')->get();
 
         return response()->json($carriers);
-        //return view('carriers.index', compact('carriers'));
     }
 
     public function store(Request $request)
@@ -40,6 +39,6 @@ class CarrierController extends Controller
             return response()->json(['error' => 'Carrier not found'], 404);
         }
 
-        return response()->json($carrier);
+        return response()->json($carrier->load('services'), 201);
     }
 }

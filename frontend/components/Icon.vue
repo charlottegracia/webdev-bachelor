@@ -16,6 +16,10 @@
   import {
     PhTruck,
     PhGlobeHemisphereWest,
+    PhArrowRight,
+    PhGraph,
+    PhBroadcast,
+    PhCalendar,
     // Add more icons here as needed
   } from '@phosphor-icons/vue/compact';
   
@@ -23,6 +27,10 @@
   const icons: Record<string, Component> = {
     PhTruck,
     PhGlobeHemisphereWest,
+    PhArrowRight,
+    PhGraph,
+    PhBroadcast,
+    PhCalendar,
     // Add more icons here as needed
   };
   

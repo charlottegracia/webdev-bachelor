@@ -1,4 +1,10 @@
 <template>
+
+    <div>transportører</div>
+    <nuxt-link to="/">
+        <Button text="Click fwetjygrbr br rf erb rwme" />
+    </nuxt-link>
+
     <div>
         <div class="text-4xl pt-40">transportører</div>
         <!-- Using Tailwind CSS color class for Raspberry color -->
@@ -15,4 +21,5 @@
 
         <Icon src="Truck" size="4xl" />
     </div>
+
 </template>

@@ -23,7 +23,7 @@
 
         <ul v-if="carriers.length > 0">
       <li v-for="carrier in carriers" :key="carrier.carrier_id" class="my-2">
-        <strong>{{ carrier.title }}</strong> - {{ carrier.type }}
+        <strong>{{ carrier.title }}</strong> - {{ carrier.type }} - {{ carrier.status }}
         <p>{{ carrier.description }}</p>
       </li>
     </ul>

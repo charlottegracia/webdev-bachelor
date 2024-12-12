@@ -33,12 +33,12 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            // Middleware, der kun anvendes på web-ruter
+            
         ],
 
         'api' => [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,  // Hvis du bruger Sanctum
-            \Fruitcake\Cors\HandleCors::class,  // CORS middleware til API-gruppe
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,  
+           // \Fruitcake\Cors\HandleCors::class,  // CORS middleware til API-gruppe
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],

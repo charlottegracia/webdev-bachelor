@@ -3,3 +3,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Fields';
+    src: url('/fonts/fonnts.com-Fields-Medium.otf') format('opentype');
+  }
+  
+.fields {
+    font-family: 'Fields', sans-serif;
+    line-height: 110%;
+    letter-spacing: -0.56px;
+}

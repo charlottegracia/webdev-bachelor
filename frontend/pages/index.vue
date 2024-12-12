@@ -90,7 +90,7 @@
                     <p>ikon</p>
                 </nuxt-link>
             </div>
-            <div class="col-span-2">
+            <div class="col-span-2 md:col-span-3">
                 <Banner>
                     <div class="fields text-[64px] text-homeblue-100">Hold dig opdateret</div>
                 </Banner>

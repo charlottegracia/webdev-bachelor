@@ -46,7 +46,7 @@ return [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3307'),
+            'port' => env('DB_PORT', '3308'),
             'database' => env('DB_DATABASE', 'webdev-bachelor'),
             'username' => env('DB_USERNAME', 'webdev-bachelor'),
             'password' => env('DB_PASSWORD', 'misselotte'),

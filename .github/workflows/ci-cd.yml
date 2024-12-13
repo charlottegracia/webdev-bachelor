@@ -20,6 +20,12 @@ jobs:
         with:
           php-version: '8.2'
 
+      # Install Composer dependencies for Laravel Backend
+      - name: Install Composer dependencies
+        run: |
+          cd backend
+          composer install --no-interaction
+
       # Setup and run Nuxt 3 (Frontend) tests only if test files exist
       - name: Run Nuxt 3 Tests if Present
         run: |
@@ -31,13 +37,19 @@ jobs:
             echo "No frontend tests found. Skipping frontend tests."
           fi
 
-      # Setup and run Laravel (Backend) tests only if test files exist
-      - name: Run Laravel Tests if Present
+      # Set the environment for Laravel to use in-memory SQLite database for testing
+      - name: Set up Laravel Environment for Testing
         run: |
-          if [ "$(find backend/tests -name '*.php')" ]; then
-            cd backend
-            composer install --no-interaction
-            php artisan test
-          else
-            echo "No backend tests found. Skipping backend tests."
-          fi
+          cd backend
+          echo "DB_CONNECTION=sqlite" >> .env.testing
+          echo "DB_DATABASE=:memory:" >> .env.testing
+          echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
+
+      # Run Laravel Migrations and Tests (use in-memory SQLite)
+      - name: Run Laravel Migrations and Tests if Present
+        run: |
+          cd backend
+          # Run migrations for the in-memory SQLite database
+          php artisan migrate --database=sqlite --force
+          # Run tests if present
+          php artisan test --env=testing

@@ -84,8 +84,14 @@ jobs:
 
       # Build Project Artifacts
       - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          # Run Nuxt 3 build process
+          cd frontend
+          npm install
+          npm run build
+          # Copy .output to dist folder
+          cp -r .output/* dist
 
       # Deploy Project Artifacts to Vercel
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy ./dist --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

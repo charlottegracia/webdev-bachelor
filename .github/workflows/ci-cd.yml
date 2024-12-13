@@ -26,6 +26,29 @@ jobs:
           cd backend
           composer install --no-interaction
 
+      # Set the environment for Laravel to use in-memory SQLite database for testing
+      - name: Set up Laravel Environment for Testing
+        run: |
+          cd backend
+          echo "DB_CONNECTION=sqlite" >> .env.testing
+          echo "DB_DATABASE=:memory:" >> .env.testing
+          echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
+
+      # Generate Laravel Application Key
+      - name: Generate Laravel Application Key
+        run: |
+          cd backend
+          php artisan key:generate --env=testing
+
+      # Run Laravel Migrations and Tests (use in-memory SQLite)
+      - name: Run Laravel Migrations and Tests if Present
+        run: |
+          cd backend
+          # Run migrations for the in-memory SQLite database
+          php artisan migrate --database=sqlite --force
+          # Run tests if present
+          php artisan test --env=testing
+
       # Setup and run Nuxt 3 (Frontend) tests only if test files exist
       - name: Run Nuxt 3 Tests if Present
         run: |
@@ -36,20 +59,3 @@ jobs:
           else
             echo "No frontend tests found. Skipping frontend tests."
           fi
-
-      # Set the environment for Laravel to use in-memory SQLite database for testing
-      - name: Set up Laravel Environment for Testing
-        run: |
-          cd backend
-          echo "DB_CONNECTION=sqlite" >> .env.testing
-          echo "DB_DATABASE=:memory:" >> .env.testing
-          echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
-
-      # Run Laravel Migrations and Tests (use in-memory SQLite)
-      - name: Run Laravel Migrations and Tests if Present
-        run: |
-          cd backend
-          # Run migrations for the in-memory SQLite database
-          php artisan migrate --database=sqlite --force
-          # Run tests if present
-          php artisan test --env=testing

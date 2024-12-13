@@ -34,11 +34,15 @@ jobs:
           echo "DB_DATABASE=:memory:" >> .env.testing
           echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
 
-      # Generate Laravel Application Key
-      - name: Generate Laravel Application Key
+      # Ensure the APP_KEY is set or generate a new one
+      - name: Set or Generate Laravel Application Key
         run: |
           cd backend
-          php artisan key:generate --env=testing
+          if ! grep -q "APP_KEY=" .env.testing; then
+            php artisan key:generate --env=testing
+          else
+            echo "APP_KEY is already set"
+          fi
 
       # Run Laravel Migrations and Tests (use in-memory SQLite)
       - name: Run Laravel Migrations and Tests if Present

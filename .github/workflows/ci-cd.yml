@@ -95,6 +95,5 @@ jobs:
 
       # Deploy Project Artifacts to Vercel
       - name: Deploy Project Artifacts to Vercel
-        run: |
-          cd frontend
+        run:
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

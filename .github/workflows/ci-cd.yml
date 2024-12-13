@@ -78,6 +78,10 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
+      # Change to the Frontend Directory
+      - name: Move to Frontend Directory
+        run: cd frontend
+
       # Pull Vercel Environment Information
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
@@ -85,13 +89,12 @@ jobs:
       # Build Project Artifacts
       - name: Build Project Artifacts
         run: |
-          # Run Nuxt 3 build process
           cd frontend
           npm install
           npm run build
-          # Copy .output to dist folder
-          cp -r .output/* dist
 
       # Deploy Project Artifacts to Vercel
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy ./dist --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          cd frontend
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

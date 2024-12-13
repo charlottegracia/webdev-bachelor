@@ -5,12 +5,20 @@ on:
     branches:
       - dev
       - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      # Setup PHP 8.2 for Laravel Backend
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
       # Setup and run Nuxt 3 (Frontend) tests only if test files exist
       - name: Run Nuxt 3 Tests if Present

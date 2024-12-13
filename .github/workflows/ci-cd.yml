@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Setup and run Nuxt 3 (Frontend) tests only if test files exist
+      - name: Run Nuxt 3 Tests if Present
+        run: |
+          if [ "$(find frontend/tests -name '*.test.js' -o -name '*.spec.js')" ]; then
+            cd frontend
+            npm install
+            npm run test
+          else
+            echo "No frontend tests found. Skipping frontend tests."
+          fi
+
+      # Setup and run Laravel (Backend) tests only if test files exist
+      - name: Run Laravel Tests if Present
+        run: |
+          if [ "$(find backend/tests -name '*.php')" ]; then
+            cd backend
+            composer install --no-interaction
+            php artisan test
+          else
+            echo "No backend tests found. Skipping backend tests."
+          fi

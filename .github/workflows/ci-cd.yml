@@ -70,11 +70,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      # Change directory to the frontend folder
-      - name: Change to Frontend Directory
-        run: cd frontend
-
+        
       # Install Vercel CLI
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

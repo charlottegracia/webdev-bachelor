@@ -91,7 +91,7 @@ jobs:
 
       # Link Railway service to the current project directory
       - name: Link Railway Service
-        run: railway link --projectId ${{ secrets.RAILWAY_PROJECT_ID }}
+        run: railway link --project ${{ secrets.RAILWAY_PROJECT_ID }}
 
       # Deploy Laravel Backend to Railway
       - name: Deploy Backend to Railway

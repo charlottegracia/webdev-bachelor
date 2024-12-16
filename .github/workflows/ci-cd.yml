@@ -84,3 +84,17 @@ jobs:
       # Deploy Project Artifacts to Vercel
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Install Railway CLI for backend deployment
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      # Link Railway service to the current project directory
+      - name: Link Railway Service
+        run: railway link --projectId ${{ secrets.RAILWAY_PROJECT_ID }}
+
+      # Deploy Laravel Backend to Railway
+      - name: Deploy Backend to Railway
+        run: |
+          cd backend
+          railway up --service backend

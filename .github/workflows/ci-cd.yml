@@ -90,15 +90,15 @@ jobs:
         run: npm install -g @railway/cli
       
       # Login to Railway CLI
-      - name: Login to Railway CLI
-        run: railway login --apiKey ${{ secrets.RAILWAY_API_KEY }}
+      # - name: Login to Railway CLI
+      #  run: railway login --apiKey ${{ secrets.RAILWAY_API_KEY }}
       
       # Link Railway service to the current project directory
-      - name: Link Railway Service
-        run: railway link --project 8a72c5d0-5087-4991-bbf7-6cb8f5b62144
+      # - name: Link Railway Service
+      #  run: railway link --project 8a72c5d0-5087-4991-bbf7-6cb8f5b62144
 
       # Deploy Laravel Backend to Railway
       - name: Deploy Backend to Railway
         run: |
           cd backend
-          railway up --service backend
+          railway redeploy --service backend

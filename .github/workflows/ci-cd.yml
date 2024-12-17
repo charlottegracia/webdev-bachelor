@@ -27,6 +27,7 @@ jobs:
         run: |
           cd backend
           composer install --no-interaction
+
       # Set the environment for Laravel to use in-memory SQLite database for testing
       - name: Set up Laravel Environment for Testing
         run: |
@@ -34,6 +35,7 @@ jobs:
           echo "DB_CONNECTION=sqlite" >> .env.testing
           echo "DB_DATABASE=:memory:" >> .env.testing
           echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
+
       # Ensure the APP_KEY is set or generate a new one
       - name: Set or Generate Laravel Application Key
         run: |
@@ -43,14 +45,14 @@ jobs:
           else
             echo "APP_KEY is already set"
           fi
+
       # Run Laravel Migrations and Tests (use in-memory SQLite)
       - name: Run Laravel Migrations and Tests if Present
         run: |
           cd backend
-          # Run migrations for the in-memory SQLite database
           php artisan migrate --database=sqlite --force
-          # Run tests if present
           php artisan test --env=testing
+
       # Setup and run Nuxt 3 (Frontend) tests only if test files exist
       - name: Run Nuxt 3 Tests if Present
         run: |
@@ -62,10 +64,10 @@ jobs:
             echo "No frontend tests found. Skipping frontend tests."
           fi
 
-  deploy-staging:
+  deploy-preview:
     runs-on: ubuntu-latest
     needs: test  # Ensure deployment runs only after tests pass
-    if: github.ref == 'refs/heads/dev'  
+    if: github.ref == 'refs/heads/dev'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -74,17 +76,17 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      # Pull Vercel Environment Information for Staging
+      # Pull Vercel Environment Information for Preview
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      # Build Project Artifacts for Staging
+      # Build Project Artifacts for Preview
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
-      # Deploy Project Artifacts to Staging on Vercel
-      - name: Deploy Project Artifacts to Staging
-        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+      # Deploy Project Artifacts to Preview on Vercel
+      - name: Deploy Project Artifacts to Preview
+        run: vercel deploy --pre --token=${{ secrets.VERCEL_TOKEN }}
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -108,4 +110,4 @@ jobs:
 
       # Deploy Project Artifacts to Production on Vercel
       - name: Deploy Project Artifacts to Production
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --scope=webdev-bachelor.vercel.app

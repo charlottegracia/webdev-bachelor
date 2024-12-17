@@ -1,0 +1,111 @@
+name: CI/CD Pipeline
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Setup PHP 8.2 for Laravel Backend
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      # Install Composer dependencies for Laravel Backend
+      - name: Install Composer dependencies
+        run: |
+          cd backend
+          composer install --no-interaction
+      # Set the environment for Laravel to use in-memory SQLite database for testing
+      - name: Set up Laravel Environment for Testing
+        run: |
+          cd backend
+          echo "DB_CONNECTION=sqlite" >> .env.testing
+          echo "DB_DATABASE=:memory:" >> .env.testing
+          echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
+      # Ensure the APP_KEY is set or generate a new one
+      - name: Set or Generate Laravel Application Key
+        run: |
+          cd backend
+          if ! grep -q "APP_KEY=" .env.testing; then
+            php artisan key:generate --env=testing
+          else
+            echo "APP_KEY is already set"
+          fi
+      # Run Laravel Migrations and Tests (use in-memory SQLite)
+      - name: Run Laravel Migrations and Tests if Present
+        run: |
+          cd backend
+          # Run migrations for the in-memory SQLite database
+          php artisan migrate --database=sqlite --force
+          # Run tests if present
+          php artisan test --env=testing
+      # Setup and run Nuxt 3 (Frontend) tests only if test files exist
+      - name: Run Nuxt 3 Tests if Present
+        run: |
+          if [ "$(find frontend/tests -name '*.test.js' -o -name '*.spec.js')" ]; then
+            cd frontend
+            npm install
+            npm run test
+          else
+            echo "No frontend tests found. Skipping frontend tests."
+          fi
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: test  # Ensure deployment runs only after tests pass
+    if: github.ref == 'refs/heads/dev'  
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Install Vercel CLI
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      # Pull Vercel Environment Information for Staging
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Build Project Artifacts for Staging
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Deploy Project Artifacts to Staging on Vercel
+      - name: Deploy Project Artifacts to Staging
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: test  # Ensure deployment runs only after tests pass
+    if: github.ref == 'refs/heads/main' 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Install Vercel CLI
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      # Pull Vercel Environment Information for Production
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Build Project Artifacts for Production
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Deploy Project Artifacts to Production on Vercel
+      - name: Deploy Project Artifacts to Production
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

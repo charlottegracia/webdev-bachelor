@@ -5,7 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ExpireIncidents;
-use App\Console\Commands\DemoCron;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +13,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ExpireIncidents::class,
-        DemoCron::class,
     ];
 
     /**
@@ -22,8 +20,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('demo:cron')->everyMinute();
-        
         $schedule->command('expire:incidents')->everyMinute();
     }
 

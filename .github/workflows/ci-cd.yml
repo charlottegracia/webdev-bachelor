@@ -86,7 +86,7 @@ jobs:
 
       # Deploy Project Artifacts to Preview on Vercel
       - name: Deploy Project Artifacts to Preview
-        run: vercel deploy --pre --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
 
   deploy-production:
     runs-on: ubuntu-latest

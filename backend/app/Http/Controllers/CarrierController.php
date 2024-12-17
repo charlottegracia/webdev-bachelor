@@ -39,7 +39,7 @@ class CarrierController extends Controller
             return response()->json(['error' => 'Carrier not found'], 404);
         }
 
-        return response()->json($carrier->load('services', 'incidents'), 201);
+        return response()->json($carrier->load('services', 'incidents'), 200);
     }
 
      /**

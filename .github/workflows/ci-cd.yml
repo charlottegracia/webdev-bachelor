@@ -110,4 +110,4 @@ jobs:
 
       # Deploy Project Artifacts to Production on Vercel
       - name: Deploy Project Artifacts to Production
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --scope=webdev-bachelor.vercel.app
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

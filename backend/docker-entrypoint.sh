@@ -23,5 +23,9 @@ composer install --optimize-autoloader --no-dev
 echo "Running migrations..."
 php artisan migrate --force
 
+# Run Laravel Scheduler
+echo "Starting Laravel Scheduler..."
+php artisan schedule:work &
+
 # Execute the original command (start the server)
 exec "$@"

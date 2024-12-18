@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Incident;
+use Carbon\Carbon;
 
 class ExpireIncidents extends Command
 {
@@ -25,7 +26,7 @@ class ExpireIncidents extends Command
 
         $incidents = Incident::where('status', 'active')
         ->whereNotNull('expected_resolved_at')
-        ->where('expected_resolved_at', '<=', now())
+        ->where('expected_resolved_at', '<=', Carbon::now('Europe/Copenhagen'))
         ->get();
 
         foreach ($incidents as $incident) {

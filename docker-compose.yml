@@ -29,12 +29,15 @@ services:
     volumes:
       - ./backend:/var/www
       - /var/www/vendor
+      - /etc/timezone:/etc/timezone 
+      - /etc/localtime:/etc/localtime:ro 
     environment:
       - DB_HOST=db
       - DB_PORT=3306
       - DB_DATABASE=webdev-bachelor
       - DB_USERNAME=webdev-bachelor
       - DB_PASSWORD=misselotte
+      - TZ=Europe/Copenhagen
     depends_on:
       - db
       

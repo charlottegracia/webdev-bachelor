@@ -49,7 +49,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Slet en service.
+     * Delete a service.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse

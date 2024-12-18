@@ -20,7 +20,7 @@ class FailureLog extends Model
         'failed_at'
     ];
 
-    // Polymorf relation (kan tilhøre Service eller Carrier)
+    // Polymorphic relationship (can belong to Service or Carrier)
     public function loggable()
     {
         return $this->morphTo();

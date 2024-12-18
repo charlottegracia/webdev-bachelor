@@ -13,13 +13,13 @@ class IncidentCarrier extends Model
 
     public $timestamps = false;
 
-    // Relation til Incident
+    // Relation to Incident
     public function incident()
     {
         return $this->belongsTo(Incident::class, 'incident_id', 'incident_id');
     }
 
-    // Relation til Carrier
+    // Relation to Carrier
     public function carrier()
     {
         return $this->belongsTo(Carrier::class, 'carrier_id', 'carrier_id');

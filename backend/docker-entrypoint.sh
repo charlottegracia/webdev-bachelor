@@ -23,6 +23,10 @@ composer install --optimize-autoloader --no-dev
 echo "Running migrations..."
 php artisan migrate --force
 
+# Seed the database
+echo "Seeding the database..."
+php artisan db:seed --force
+
 # Run Laravel Scheduler
 echo "Starting Laravel Scheduler..."
 php artisan schedule:work &

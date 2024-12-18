@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Incident extends Model
 {
@@ -52,9 +53,9 @@ class Incident extends Model
     // Update the status to expired if the date has been exceeded
     public function checkAndExpire()
     {
-        if ($this->expected_resolved_at && now()->greaterThan($this->expected_resolved_at) && $this->status === 'active') {
+        if ($this->expected_resolved_at && Carbon::now('Europe/Copenhagen')->greaterThan($this->expected_resolved_at) && $this->status === 'active') {
             $this->status = 'expired';
-            $this->resolved_at = now();
+            $this->resolved_at = Carbon::now('Europe/Copenhagen');
             $this->save();
         }
     }

@@ -31,6 +31,7 @@ class CarrierController extends Controller
         return response()->json($carrier, 201);
     }
 
+    // Show one carrier on id
     public function show($id)
     {
         $carrier = Carrier::find($id);
@@ -43,7 +44,7 @@ class CarrierController extends Controller
     }
 
      /**
-     * Slet en carrier.
+     * Delete a carrier.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse

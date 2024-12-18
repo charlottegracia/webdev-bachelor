@@ -13,13 +13,13 @@ class IncidentService extends Model
 
     public $timestamps = false;
 
-    // Relation til Incident
+    // Relation to Incident
     public function incident()
     {
         return $this->belongsTo(Incident::class, 'incident_id', 'incident_id');
     }
 
-    // Relation til Service
+    // Relation to Service
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id', 'service_id');

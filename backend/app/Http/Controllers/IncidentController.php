@@ -44,8 +44,6 @@ class IncidentController extends Controller
             return response()->json(['error' => 'Incident not found'], 404);
         }
 
-        //dd('Expected resolved at format: ' . $incident->expected_resolved_at . ' date now: ' . now());
-
         return response()->json($incident->load('carriers', 'services'), 200);
     }
 

@@ -111,10 +111,6 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-      # Debug Deployment Process
-      - name: Debug Deployment
-        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --debug
-
       # Deploy Project Artifacts to Production on Vercel
       - name: Deploy Project Artifacts to Production
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

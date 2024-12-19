@@ -36,7 +36,6 @@ jobs:
           cd backend
           echo "DB_CONNECTION=sqlite" >> .env.testing
           echo "DB_DATABASE=:memory:" >> .env.testing
-          echo "CACHE_DRIVER=array" >> .env.testing  # Optional, for faster tests
 
       # Ensure the APP_KEY is set or generate a new one
       - name: Set or Generate Laravel Application Key

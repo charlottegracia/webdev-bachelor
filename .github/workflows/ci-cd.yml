@@ -105,7 +105,7 @@ jobs:
 
       # Pull Vercel Environment Information for Production
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       # Build Project Artifacts for Production
       - name: Build Project Artifacts

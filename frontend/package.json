@@ -10,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@phosphor-icons/vue": "^2.2.1",
+    "axios": "^1.7.9",
     "nuxt": "^3.14.159",
     "vue": "latest",
     "vue-router": "latest"

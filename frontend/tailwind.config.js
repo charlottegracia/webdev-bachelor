@@ -49,6 +49,9 @@ export default {
           '300': '#16405F',
         },
       }, 
+      maxWidth: {
+        'content': '1320px'
+      },
     },
   },
   plugins: [],

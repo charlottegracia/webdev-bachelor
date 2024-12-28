@@ -7,7 +7,7 @@ trait HandlesStatusUpdates
     public function updateStatus()
     {
         $activeIncidents = $this->incidents->where('status', 'active');
-        $criticalIncidents = $this->incidents->where('critical', true);
+        $criticalIncidents = $this->incidents->where('status', 'active')->where('critical', true);
 
         if ($criticalIncidents->count() > 0) {
             $this->status = 'red';

@@ -36,6 +36,17 @@ class IncidentController extends Controller
         return response()->json($incident->load('carriers', 'services'), 201);
     }
 
+    public function show($id)
+    {
+        $incident = Incident::find($id);
+
+        if (!$incident) {
+            return response()->json(['error' => 'Incident not found'], 404);
+        }
+
+        return response()->json($incident->load('carriers', 'services'), 200);
+    }
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -56,7 +67,7 @@ class IncidentController extends Controller
     }
 
      /**
-     * Slet en incident.
+     * Delete an incident.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
@@ -66,7 +77,7 @@ class IncidentController extends Controller
         $incident = Incident::find($id);
 
         if (!$incident) {
-            return response()->json(['message' => 'Incident ikke fundet.'], 404);
+            return response()->json(['message' => 'Incident not found.'], 404);
         }
 
         $incident->carriers()->detach();
@@ -74,6 +85,6 @@ class IncidentController extends Controller
 
         $incident->delete();
 
-        return response()->json(['message' => 'Incident slettet.'], 200);
+        return response()->json(['message' => 'Incident deleted.'], 200);
     }
 }

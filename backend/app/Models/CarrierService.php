@@ -13,13 +13,13 @@ class CarrierService extends Model
 
     public $timestamps = false;
 
-    // Relation til Carrier
+    // Relation to Carrier
     public function carrier()
     {
         return $this->belongsTo(Carrier::class, 'carrier_id', 'carrier_id');
     }
 
-    // Relation til Service
+    // Relation to Service
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id', 'service_id');

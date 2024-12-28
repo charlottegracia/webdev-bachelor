@@ -1,46 +1,35 @@
 <template>
-    <footer class="max-w-[1096px] mx-3 lg:mx-auto">
-        <div class="grid grid-cols-1 sm:grid-cols-2 border-y border-text-homegrey py-10 gap-10 md:gap-0">
-            <img class="h-6 ml-1" :src="'https://a.storyblok.com/f/264288/272x38/87d27f74ef/homerunner_logo-1.png'"
-                alt="homerunner_logo">
+    <footer class="max-w-content mx-auto mt-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 border-y border-home-dark-grey py-10 gap-10 md:gap-0">
+        <img class="h-6 ml-1" :src="logoPath" alt="Homerunner Logo">
+        <div class="md:mx-auto grid grid-cols-1 md:grid-cols-3 px-0 gap-4">
             <div v-for="(footer, index) in footerLinks" :key="footer.title" class="mb-6">
-                <p class="text-lg font-bold mb-2">{{ footer.title }}</p>
+                <p class="font-bold mb-4">{{ footer.title }}</p>
                 <ul>
                     <li v-for="link in footer.links" :key="link.text" class="mb-2">
-                        <template v-if="link.url">
-                            <a :href="link.url" target="_blank" rel="noopener noreferrer"
-                                class="text-blue-500 hover:underline">
+                        <div class="cursor-pointer mb-4 text-text-light-grey" v-if="link.url">
+                            <a :href="link.url" target="_blank" rel="noopener noreferrer" class="mb-4 text-text-light-grey">
                                 {{ link.text }}
                             </a>
-                        </template>
+                        </div>
                         <template v-else>
-                            <span class="text-gray-700">{{ link.text }}</span>
+                            <span class="text-text-light-grey">{{ link.text }}</span>
                         </template>
                     </li>
                 </ul>
-            <!-- <div v-for="footerlink in storyContent.footer_links" :key="footerlink._uid">
-            <p class="text-[18px] font-bold mb-4">{{ footerlink.title }}</p>
-            <div v-for="link in footerlink.links" :key="link._uid">
-              <div class="cursor-pointer mb-4 text-text-lightgrey"
-                v-if="link.link.linktype == 'story' && link.link.cached_url"
-                @click="navigateTo({ path: link.link.cached_url })">{{ link.text }}</div>
-              <div class="cursor-pointer mb-4 text-text-lightgrey" v-if="link.link.linktype == 'url'"> <a
-                  :href="link.link.cached_url" target="_blank" rel="noopener noreferrer">{{ link.text }}</a></div>
-              <div class="mb-4 text-text-lightgrey" v-if="!link.link.cached_url && link.link.linktype == 'story'">{{
-                link.text }}</div>
             </div>
-          </div> -->
         </div>
-        </div>
-        <p class="py-10">© Homerunner 2023</p>
-    </footer>
-
+    </div>
+    <p class="py-10">© Homerunner {{ currentYear }}</p>
+</footer>
 </template>
 
 <script>
 export default {
     data() {
         return {
+            logoPath: '/images/homerunner-logo.png',
+            currentYear: new Date().getFullYear(),
             footerLinks: [
                 {
                     title: "Produkt",

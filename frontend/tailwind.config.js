@@ -18,6 +18,7 @@ export default {
           'default': '#292D33',
           'secondary': '#42464C',
           'tertiary': '#60656C',
+          'light-grey': '#6F7276' // navngivning idk 
         },
         home: {
           'bg': '#FAFAF8',
@@ -28,9 +29,9 @@ export default {
           'grape': '#D1D4F0',
           'grape-200': '#BABEE3',
           'grape-300': '#383C70',
-          'raspberry' : '#F0D1DE',
-          'raspberry-200' : '#E3BACB',
-          'raspberry-300' : '#63324D',
+          'raspberry': '#F0D1DE',
+          'raspberry-200': '#E3BACB',
+          'raspberry-300': '#63324D',
           'kiwi': '#C1E6D3',
           'kiwi-200': '#ABD9C1',
           'kiwi-300': '#264D32',
@@ -40,6 +41,7 @@ export default {
           'tangerine': '#F0AB84',
           'tangerine-200': '#E39A71',
           'tangerine-300': '#402626',
+          'dark-grey': '#4b4f54' // måske anden navngivning, brugt til border i footeren
         },
         homeblue: {
           '08': '#EBF1FB',
@@ -48,7 +50,7 @@ export default {
           '120': '#0547A9',
           '300': '#16405F',
         },
-      }, 
+      },
       maxWidth: {
         'content': '1320px'
       },

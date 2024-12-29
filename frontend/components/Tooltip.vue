@@ -3,7 +3,7 @@
         <VTooltip :placement="placement" class="h-[inherit]">
             <div class="peer h-[inherit]">
                 <slot>
-                    <Icon class="text-quarterary cursor-pointer" src="info" size="lg"></Icon>
+                    <Icon src="info"></Icon>
                 </slot>
             </div>
 
@@ -24,11 +24,10 @@
 <script setup lang="ts">
 const props = withDefaults(
     defineProps<{
-        text?: string;
+        text: string;
         placement?: 'auto' | 'auto-start' | 'auto-end' | 'top' | 'top-start' | 'top-end' | 'right' | 'right-start' | 'right-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end';
     }>(),
     {
-        text: "",
         placement: 'top',
 
     }

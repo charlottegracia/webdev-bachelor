@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HandlesStatusUpdates;
 
 class Carrier extends Model
 {
     use HasFactory;
+    use HandlesStatusUpdates;
 
     protected $primaryKey = 'carrier_id'; 
 
@@ -20,41 +22,21 @@ class Carrier extends Model
         'peak_up_charge'
     ];
 
-    // Relation til Incident (via incident_carriers)
+    // Relationship to Incident (via incident_carriers)
     public function incidents()
     {
         return $this->belongsToMany(Incident::class, 'incident_carriers', 'carrier_id', 'incident_id');
     }
 
-    // Relation til Service (via carrier_services)
+    // Relationship to Service (via carrier_services)
     public function services()
     {
         return $this->belongsToMany(Service::class, 'carrier_services', 'carrier_id', 'service_id');
     }
 
-    // Polymorf relation til FailureLogs (Carrier kan have logs)
+    // Polymorphic relation to FailureLogs (Carrier can have logs)
     public function failureLogs()
     {
         return $this->morphMany(FailureLog::class, 'loggable');
-    }
-
-    public function updateStatus()
-    {
-        $activeIncidents = $this->incidents->where('status', 'active');
-        $criticalIncidents = $this->incidents->where('critical', true);
-
-        if ($criticalIncidents->count() > 0) {
-            $this->status = 'red';
-        }
-
-        elseif ($activeIncidents->count() > 0) {
-            $this->status = 'yellow';
-        }
-
-        else {
-            $this->status = 'green';
-        }
-
-        $this->save();
     }
 }

@@ -7,6 +7,13 @@ use App\Models\Incident;
 
 class IncidentController extends Controller
 {
+    public function index()
+    {
+        $incidents = Incident::with('carriers', 'services')->get();
+
+        return response()->json($incidents);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -29,6 +36,17 @@ class IncidentController extends Controller
         return response()->json($incident->load('carriers', 'services'), 201);
     }
 
+    public function show($id)
+    {
+        $incident = Incident::find($id);
+
+        if (!$incident) {
+            return response()->json(['error' => 'Incident not found'], 404);
+        }
+
+        return response()->json($incident->load('carriers', 'services'), 200);
+    }
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -45,6 +63,28 @@ class IncidentController extends Controller
         $incident = Incident::findOrFail($id);
         $incident->update($validated); 
 
-        return response()->json($incident->load('carriers'));
+        return response()->json($incident->load('carriers', 'services'));
+    }
+
+     /**
+     * Delete an incident.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $incident = Incident::find($id);
+
+        if (!$incident) {
+            return response()->json(['message' => 'Incident not found.'], 404);
+        }
+
+        $incident->carriers()->detach();
+        $incident->services()->detach();
+
+        $incident->delete();
+
+        return response()->json(['message' => 'Incident deleted.'], 200);
     }
 }

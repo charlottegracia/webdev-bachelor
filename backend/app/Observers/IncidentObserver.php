@@ -7,7 +7,7 @@ use App\Models\Incident;
 class IncidentObserver
 {
     /**
-     * Håndterer oprettelsen af en Incident og opdaterer Carrier status.
+     * Handles the creation of an Incident and updates Carrier and Service status.
      *
      * @param  \App\Models\Incident  $incident
      * @return void
@@ -17,10 +17,14 @@ class IncidentObserver
         foreach ($incident->carriers as $carrier) {
             $carrier->updateStatus();
         }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
+        }
     }
 
     /**
-     * Håndterer opdatering af en Incident og opdaterer Carrier status.
+     * Handles updating an Incident and updates the Carrier and Service status.
      *
      * @param  \App\Models\Incident  $incident
      * @return void
@@ -30,10 +34,14 @@ class IncidentObserver
         foreach ($incident->carriers as $carrier) {
             $carrier->updateStatus();
         }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
+        }
     }
 
     /**
-     * Håndterer sletning af en Incident og opdaterer Carrier status.
+     * Handles the deletion of an Incident and updates the Carrier and Service status.
      *
      * @param  \App\Models\Incident  $incident
      * @return void
@@ -42,6 +50,27 @@ class IncidentObserver
     {
         foreach ($incident->carriers as $carrier) {
              $carrier->updateStatus();
+        }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
+        }
+    }
+
+    /**
+     * Handles the saving of an Incident and updates the Carrier and Service status.
+     *
+     * @param  \App\Models\Incident  $incident
+     * @return void
+     */
+    public function saved(Incident $incident)
+    {
+        foreach ($incident->carriers as $carrier) {
+             $carrier->updateStatus();
+        }
+
+        foreach ($incident->services as $service) {
+            $service->updateStatus();
         }
     }
 }

@@ -12,7 +12,7 @@ class CarrierController extends Controller
     {
         $carriers = Carrier::with('services', 'incidents')->get();
 
-        return view('carriers.index', compact('carriers'));
+        return response()->json($carriers);
     }
 
     public function store(Request $request)
@@ -31,6 +31,7 @@ class CarrierController extends Controller
         return response()->json($carrier, 201);
     }
 
+    // Show one carrier on id
     public function show($id)
     {
         $carrier = Carrier::find($id);
@@ -39,6 +40,29 @@ class CarrierController extends Controller
             return response()->json(['error' => 'Carrier not found'], 404);
         }
 
-        return response()->json($carrier);
+        return response()->json($carrier->load('services', 'incidents'), 200);
+    }
+
+     /**
+     * Delete a carrier.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $carrier = Carrier::find($id);
+
+        if (!$carrier) {
+            return response()->json(['message' => 'Carrier ikke fundet.'], 404);
+        }
+
+        $carrier->incidents()->detach();
+        $carrier->services()->delete();
+        $carrier->failureLogs()->delete();
+
+        $carrier->delete();
+
+        return response()->json(['message' => 'Carrier slettet.'], 200);
     }
 }

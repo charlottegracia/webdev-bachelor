@@ -8,7 +8,7 @@
             </div>
 
             <template #popper>
-                <div class="bg-white shadow rounded-[4px] px-4 py-2">
+                <div class="bg-white shadow-2xl rounded-[4px] px-4 py-2 max-w-48">
                     <p class="text-text-default text-sm tracking-[0.26px]">
                         <slot name="header">
                             {{ text }}

@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-40">
+    <div>
         <h2 class="text-6xl fields text-center mb-5">Hvad vil du gerne oprette?</h2>
         <div class="rounded-3xl bg-white p-8 max-w-screen-md mx-auto flex flex-col gap-5">
             <div>
@@ -33,8 +33,9 @@
             </div>
 
             <div v-if="selectedType === 'incident'" class="flex flex-col gap-6">
-                <InputField label="Titel" placeholder="Indtast titel" type="text" />
-                <InputField label="Beskrivelse" placeholder="Indtast beskrivelse" type="textarea" />
+                <InputField v-model="title" label="Titel" placeholder="Indtast titel" type="text" />
+                <InputField v-model="description" label="Beskrivelse" placeholder="Indtast beskrivelse"
+                    type="textarea" />
                 <div>
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex gap-1">
@@ -88,7 +89,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex gap-1">
-                            <Icon src="truck" size="2xl" class="mr-2" />
+                            <Icon src="graph" size="2xl" class="mr-2" />
                             <p class="text-lg">Tilføj services</p>
                         </div>
                         <button @click="resetServices" class="text-sm mr-3 text-text-tertiary">
@@ -110,9 +111,13 @@
                         </div>
                     </div>
                 </div>
-                <InputField label="Hvornår forventes problemet at være løst?" type="date" />
+                <InputField v-model="expectedResolution" label="Hvornår forventes problemet at være løst?"
+                    type="date" />
                 <div class="text-lg">
-                    <p><span>Er problemet kritisk?</span> <span>tooltip</span></p>
+                    <div class="flex items-center gap-2">
+                        <p>Er problemet kritisk?</p>
+                        <Tooltip text="Ved valg af 'Kritisk' ændres status på valgt transportør/service/land til rød" />
+                    </div>
                     <div class="flex gap-6">
                         <div class="flex gap-2">
                             <input type="radio" id="non-critical" value="0" v-model="selectedProblemStatus" />
@@ -124,15 +129,69 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-homeblue-08 rounded-lg">
+                    <div class="FIRST flex items-center justify-between gap-4 px-6 py-4" @click="toggleAccordion">
+                        <div class="flex items-center gap-4">
+                            <Icon src="Broadcast" size="3xl" />
+                            <p class="text-lg font-semibold">Preview på liveopdatering</p>
+                        </div>
+
+                        <Icon :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
+                            class="transition-all duration-300 transform" :class="showDetails ? 'rotate-180' : ''" />
+                    </div>
+
+                    <div class="accordion-content" :class="{ 'expanded': showDetails }">
+                        <div class="px-6 py-4">
+                    <div class="mb-4 fields text-3xl">
+                        <p v-if="title">{{ title }}</p>
+                        <p v-else>Ingen titel angivet</p>
+                    </div>
+                    <div class="mb-4">
+                        <p v-if="description">{{ description }}</p>
+                        <p v-else>Ingen beskrivelse angivet</p>
+                    </div>
+                    <p>TAGS</p>
+                    <div class="mb-4">
+                        <p class="font-semibold">Valgte lande:</p>
+                        <ul>
+                            <li v-for="country in selectedCountries" :key="country.code">{{ country.name }}</li>
+                        </ul>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold">Valgte transportører:</p>
+                        <ul>
+                            <li v-for="carrier in selectedCarriers" :key="carrier.carrier_id">{{ carrier.title }}</li>
+                        </ul>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold">Valgte services:</p>
+                        <ul>
+                            <li v-for="service in selectedServices" :key="service.service_id">{{ service.title }}</li>
+                        </ul>
+                    </div>
+                    <div v-if="expectedResolution" class="mb-4">
+                        <p class="font-semibold">Forventet løsningsdato:</p>
+                        <p>{{ expectedResolution }}</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Problemets status:</p>
+                        <p>{{ selectedProblemStatus === '1' ? 'Kritisk' : 'Ikke-kritisk' }}</p>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+                <Button text="Opret liveopdatering" @click="logFormData" />
             </div>
             <div v-if="selectedType === 'carrier'" class="flex flex-col gap-4">
                 <InputField label="Slug" placeholder="Indtast slug" type="text" />
                 <InputField label="Titel" placeholder="Indtast titel" type="text" />
                 <InputField label="Beskrivelse" placeholder="Indtast beskrivelse" type="textarea" />
+                <Button text="Opret transportør" />
             </div>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import countriesData from '~/public/countries.js';
@@ -155,6 +214,9 @@ interface Service {
 }
 
 // Data
+const title = ref('');
+const description = ref('');
+const expectedResolution = ref('');
 const countries = countriesData.COUNTRIES as Country[];
 const carriers = ref<Carrier[]>([]);
 const services = ref<Service[]>([]);
@@ -163,6 +225,7 @@ const selectedCarriers = ref<Carrier[]>([]);
 const selectedServices = ref<Service[]>([]);
 const selectedType = ref('incident');
 const selectedProblemStatus = ref('0');
+const showDetails = ref(false);
 
 // Computed
 const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
@@ -196,10 +259,25 @@ const resetServices = () => {
     console.log('Services selection has been reset');
 };
 
-// Watchers
+const toggleAccordion = () => {
+    showDetails.value = !showDetails.value;
+};
+
 watch(selectedCountries, (newValue) => {
     console.log('Selected countries:', newValue);
 });
+
+const logFormData = () => {
+    console.log({
+        title: title.value,
+        description: description.value,
+        selectedCountries: selectedCountries.value.map(c => c.name),
+        selectedCarriers: selectedCarriers.value.map(c => c.title),
+        selectedServices: selectedServices.value.map(s => s.title),
+        expectedResolution: expectedResolution.value,
+        selectedProblemStatus: selectedProblemStatus.value,
+    });
+};
 
 onMounted(async () => {
     try {
@@ -214,3 +292,15 @@ onMounted(async () => {
     }
 });
 </script>
+
+<style scoped>
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.accordion-content.expanded {
+    max-height: 500px;
+}
+</style>

@@ -20,6 +20,7 @@
     PhGraph,
     PhBroadcast,
     PhCalendar,
+    PhInfo
     // Add more icons here as needed
   } from '@phosphor-icons/vue/compact';
   
@@ -31,6 +32,7 @@
     PhGraph,
     PhBroadcast,
     PhCalendar,
+    PhInfo
     // Add more icons here as needed
 };
 

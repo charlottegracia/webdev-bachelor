@@ -1,26 +1,40 @@
 <template>
-  <div>
-    <component v-if="iconComponent" :is="iconComponent" :class="['icon', iconSizeClasses, iconColorClasses]"
-      :style="iconColorStyle" :weight="weight" />
-  </div>
-</template>
-<script setup lang="ts">
-import { computed } from 'vue';
-
-import {
-  PhTruck,
-  PhGlobeHemisphereWest,
-  PhBroadcast,
-  // Add more icons here as needed
-} from '@phosphor-icons/vue/compact';
-
-const icons: Record<string, Component> = {
-  PhTruck,
-  PhGlobeHemisphereWest,
-  PhBroadcast,
-  // Add more icons here as needed
+    <div>
+      <component
+        v-if="iconComponent"
+        :is="iconComponent"
+        :class="['icon', iconSizeClasses, iconColorClasses]"
+        :style="iconColorStyle"
+        :weight="weight"
+      />
+    </div>
+  </template>
+  <script setup lang="ts">
+  import { computed } from 'vue';
+  
+  // Import Phosphor icons you want to use
+  import {
+    PhTruck,
+    PhGlobeHemisphereWest,
+    PhArrowRight,
+    PhGraph,
+    PhBroadcast,
+    PhCalendar,
+    PhInfo
+    // Add more icons here as needed
+  } from '@phosphor-icons/vue/compact';
+  
+  // Mapping Phosphor icons to their components
+  const icons: Record<string, Component> = {
+    PhTruck,
+    PhGlobeHemisphereWest,
+    PhArrowRight,
+    PhGraph,
+    PhBroadcast,
+    PhCalendar,
+    PhInfo
+    // Add more icons here as needed
 };
-
 
 const props = withDefaults(
   defineProps<{

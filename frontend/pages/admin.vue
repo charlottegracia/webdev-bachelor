@@ -33,8 +33,8 @@
             </div>
 
             <div v-if="selectedType === 'incident'" class="flex flex-col gap-6">
-                <InputField v-model="title" label="Titel" placeholder="Indtast titel" type="text" />
-                <InputField v-model="description" label="Beskrivelse" placeholder="Indtast beskrivelse"
+                <InputField v-model="incidentTitle" label="Titel" placeholder="Indtast titel" type="text" />
+                <InputField v-model="incidentDescription" label="Beskrivelse" placeholder="Indtast beskrivelse"
                     type="textarea" />
                 <div>
                     <div class="flex items-center justify-between mb-2">
@@ -143,11 +143,11 @@
                     <div class="accordion-content" :class="{ 'expanded': showDetails }">
                         <div class="px-6 py-4">
                     <div class="mb-4 fields text-3xl">
-                        <p v-if="title">{{ title }}</p>
+                        <p v-if="incidentTitle">{{ incidentTitle }}</p>
                         <p v-else>Ingen titel angivet</p>
                     </div>
                     <div class="mb-4">
-                        <p v-if="description">{{ description }}</p>
+                        <p v-if="incidentDescription">{{ incidentDescription }}</p>
                         <p v-else>Ingen beskrivelse angivet</p>
                     </div>
                     <p>TAGS</p>
@@ -183,10 +183,10 @@
                 <Button text="Opret liveopdatering" @click="logFormData" />
             </div>
             <div v-if="selectedType === 'carrier'" class="flex flex-col gap-4">
-                <InputField label="Slug" placeholder="Indtast slug" type="text" />
-                <InputField label="Titel" placeholder="Indtast titel" type="text" />
-                <InputField label="Beskrivelse" placeholder="Indtast beskrivelse" type="textarea" />
-                <Button text="Opret transportør" />
+                <InputField v-model="carrierSlug" label="Slug" placeholder="Indtast slug" type="text" />
+                <InputField v-model="carrierTitle" label="Titel" placeholder="Indtast titel" type="text" />
+                <InputField v-model="carrierDescription" label="Beskrivelse" placeholder="Indtast beskrivelse" type="textarea" />
+                <Button text="Opret transportør" @click="logCarrierFormData" />
             </div>
         </div>
     </div>
@@ -214,8 +214,11 @@ interface Service {
 }
 
 // Data
-const title = ref('');
-const description = ref('');
+const incidentTitle = ref('');
+const incidentDescription = ref('');
+const carrierSlug = ref('');
+const carrierTitle = ref('');
+const carrierDescription = ref('');
 const expectedResolution = ref('');
 const countries = countriesData.COUNTRIES as Country[];
 const carriers = ref<Carrier[]>([]);
@@ -269,13 +272,21 @@ watch(selectedCountries, (newValue) => {
 
 const logFormData = () => {
     console.log({
-        title: title.value,
-        description: description.value,
+        title: incidentTitle.value,
+        description: incidentDescription.value,
         selectedCountries: selectedCountries.value.map(c => c.name),
         selectedCarriers: selectedCarriers.value.map(c => c.title),
         selectedServices: selectedServices.value.map(s => s.title),
         expectedResolution: expectedResolution.value,
         selectedProblemStatus: selectedProblemStatus.value,
+    });
+};
+
+const logCarrierFormData = () => {
+    console.log({
+        slug: carrierSlug.value,
+        title: carrierTitle.value,
+        description: carrierDescription.value,
     });
 };
 

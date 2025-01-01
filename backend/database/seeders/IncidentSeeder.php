@@ -1,0 +1,50 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Incident;
+use Carbon\Carbon;
+
+class IncidentSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Incident::insert([
+            [
+                'title' => 'System Maintenance',
+                'message' => 'Scheduled maintenance for server updates.',
+                'critical' => false,
+                'country' => 'Danmark',
+                'type' => 'maintenance',
+                'status' => 'active',
+                'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addMinutes(5),
+                'resolved_at' => null,
+            ],
+            [
+                'title' => 'Network Outage',
+                'message' => 'Unexpected outage affecting multiple regions.',
+                'critical' => true,
+                'country' => 'Canada',
+                'type' => 'network',
+                'status' => 'active',
+                'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addMinutes(10),
+                'resolved_at' => null,
+            ],
+            [
+                'title' => 'Power Failure',
+                'message' => 'Power outage impacting delivery systems.',
+                'critical' => true,
+                'country' => 'Germany',
+                'type' => 'power',
+                'status' => 'active',
+                'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addHours(2),
+                'resolved_at' => null,
+            ],
+        ]);
+    }
+}

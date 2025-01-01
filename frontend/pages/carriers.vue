@@ -42,6 +42,8 @@ const config = useRuntimeConfig();
 
 // Hent data fra API'et når komponenten loader
 onMounted(async () => {
+  const apiBase = config.public.apiBase;
+  console.log('Runtime Config API Base:', apiBase); // Log API URL to ensure it's correct
   try {
     const { data } = await axios.get(`${config.public.apiBase}/carriers`);
     carriers.value = data;

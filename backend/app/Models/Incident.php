@@ -17,7 +17,6 @@ class Incident extends Model
         'message',
         'critical',
         'country',
-        'type',
         'status',
         'expected_resolved_at',
         'resolved_at'

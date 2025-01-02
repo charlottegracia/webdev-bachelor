@@ -21,8 +21,7 @@ class IncidentController extends Controller
             'message' => 'required|string',
             'critical' => 'required|boolean',
             'country' => 'nullable|string',
-            'type' => 'required|string',
-            'status' => 'required|in:active,expired',
+            'status' => 'nullable|in:active,expired',
             'expected_resolved_at' => 'nullable|date',
             'resolved_at' => 'nullable|date',
             'carrier_ids' => 'nullable|array', 
@@ -54,13 +53,13 @@ class IncidentController extends Controller
             'message' => 'sometimes|required|string',
             'critical' => 'sometimes|required|boolean',
             'country' => 'nullable|string',
-            'type' => 'sometimes|required|string',
-            'status' => 'sometimes|required|in:active,expired',
+            'status' => 'sometimes|in:active,expired',
             'expected_resolved_at' => 'nullable|date',
             'resolved_at' => 'nullable|date',
         ]);
 
         $incident = Incident::findOrFail($id);
+
         $incident->update($validated); 
 
         return response()->json($incident->load('carriers', 'services'));

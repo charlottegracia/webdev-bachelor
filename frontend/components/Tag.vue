@@ -9,7 +9,7 @@ import { computed } from 'vue';
 
 const props = defineProps<{  
     text: string;
-    type:'country' | 'carrier' | 'itService';
+    type:'country' | 'carrier' | 'service';
 }>();
 
 const typeColors: Record<string, { background: string; text: string }> = {
@@ -21,7 +21,7 @@ const typeColors: Record<string, { background: string; text: string }> = {
         background: 'bg-home-tangerine',
         text: 'text-home-tangerine-300',
     },
-    itService: {
+    service: {
         background: 'bg-home-grape',
         text: 'text-home-grape-300',
     },

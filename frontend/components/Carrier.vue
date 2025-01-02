@@ -11,7 +11,7 @@
                             </div>
                             <p class="w-1/2 font-semibold hidden md:block">{{ carrier.title }}</p>
                         </div>
-                        <p class="w-1/3">{{ carrier.status }}</p>
+                        <Status :status="carrier.status" class="w-1/3"/>
                     </div>
                     <div class="flex justify-end items-center gap-4">
                         <div v-if="carrier.incidents.length > 0" v-for="incident in carrier.incidents.slice(0, 2)"
@@ -35,7 +35,7 @@
                                             <Tooltip text="Oversigt over servicepoints" placement="top" size="md" />
                                             <p>{{ service.title }}</p>
                                         </div>
-                                        <div class="md:w-1/3">{{ service.status }} brug status komponent</div>
+                                        <Status :status="service.status" class="md:w-1/3"/>
                                     </div>
                                 </div>
                             </div>

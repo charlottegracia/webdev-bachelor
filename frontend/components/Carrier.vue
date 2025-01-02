@@ -4,17 +4,20 @@
             <div class="bg-white rounded-lg">
                 <div class="flex items-center justify-between gap-4 px-6 py-7" @click="toggleAccordion">
                     <div class="w-1/2 flex items-center">
-                        <div class="w-1/3">
-                            <img v-if="carrier.slug" :src="`/carriers/${carrier.slug}.png`" :alt="carrier.title"
-                                class="h-6 object-contain" />
+                        <div class="w-2/3 flex items-center gap-4">
+                            <div class="w-1/2">
+                                <img v-if="carrier.slug" :src="`/carriers/${carrier.slug}.png`" :alt="carrier.title"
+                                    class="h-6 object-contain" />
+                            </div>
+                            <p class="w-1/2 font-semibold hidden md:block">{{ carrier.title }}</p>
                         </div>
-                        <p class="w-1/3 font-semibold">{{ carrier.title }}</p>
                         <p class="w-1/3">{{ carrier.status }}</p>
                     </div>
-                    <div v-if="carrier.incidents.length > 0" class="flex justify-end items-center gap-4">
-                        <div v-for="incident in carrier.incidents.slice(0, 2)" :key="incident.service_id"
-                            class="text-xs">
-                            <p>{{ incident.title }} LABEL COMPONENT</p>
+                    <div class="flex justify-end items-center gap-4">
+                        <div v-if="carrier.incidents.length > 0" v-for="incident in carrier.incidents.slice(0, 2)"
+                            :key="incident.incident_id" class="text-xs">
+                            <p class="truncate max-w-12 sm:max-w-24 md:max-w-40">{{ incident.title }} LABEL COMPONENT
+                            </p>
                         </div>
                         <Icon :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
                             class="transition-all duration-300 transform" :class="showDetails ? 'rotate-180' : ''" />
@@ -24,19 +27,17 @@
                 <div class="accordion-content" :class="{ 'expanded': showDetails }">
                     <div class="px-6">
                         <div class="flex flex-col">
-                            <div class="flex py-3 border-t border-homeblue-12">
-                                <div class="flex gap-4 items-center w-1/3">
-                                    <Tooltip text="Oversigt over servicepoints" placement="top" size="md" />
-                                    <p>Servicepoints</p>
+                            <div v-if="carrier.services.length > 0" v-for="service in carrier.services"
+                                :key="service.service_id">
+                                <div class="flex py-3 border-t border-homeblue-12">
+                                    <div class="flex w-full md:w-1/2 justify-between lg:justify-normal">
+                                        <div class="flex md:w-2/3 items-center gap-4">
+                                            <Tooltip text="Oversigt over servicepoints" placement="top" size="md" />
+                                            <p>{{ service.title }}</p>
+                                        </div>
+                                        <div class="md:w-1/3">{{ service.status }} brug status komponent</div>
+                                    </div>
                                 </div>
-                                <div class="w-1/6">status</div>
-                            </div>
-                            <div class="flex py-3 border-t border-homeblue-12">
-                                <div class="flex gap-4 items-center w-1/3">
-                                    <Tooltip text="Sporing af pakker" placement="top" size="md" />
-                                    <p>Tracking</p>
-                                </div>
-                                <div class="w-1/6">status</div>
                             </div>
                         </div>
                     </div>

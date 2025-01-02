@@ -38,11 +38,12 @@ import axios from 'axios';  // Sørg for at importere axios
 
 // Ref til at holde carrier-data
 const carriers = ref([]);
+const config = useRuntimeConfig();
 
 // Hent data fra API'et når komponenten loader
 onMounted(async () => {
   try {
-    const { data } = await axios.get('http://localhost:8000/api/carriers');
+    const { data } = await axios.get(`${config.public.apiBase}/carriers`);
     carriers.value = data;
   } catch (error) {
     console.error('Fejl ved hentning af transportører:', error);

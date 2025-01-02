@@ -196,6 +196,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import countriesData from '~/public/countries.js';
 import axios from 'axios';
+const config = useRuntimeConfig();
 
 // Interfaces
 interface Country {
@@ -270,32 +271,46 @@ watch(selectedCountries, (newValue) => {
     console.log('Selected countries:', newValue);
 });
 
-const logFormData = () => {
-    console.log({
+const logFormData = async () => {
+    const formData = {
         title: incidentTitle.value,
-        description: incidentDescription.value,
-        selectedCountries: selectedCountries.value.map(c => c.name),
-        selectedCarriers: selectedCarriers.value.map(c => c.title),
-        selectedServices: selectedServices.value.map(s => s.title),
-        expectedResolution: expectedResolution.value,
-        selectedProblemStatus: selectedProblemStatus.value,
-    });
+        message: incidentDescription.value,
+        country: selectedCountries.value.map(c => c.code), // Use code or appropriate field
+        carrier: selectedCarriers.value.map(c => c.carrier_id), // Use ID or appropriate field
+        service: selectedServices.value.map(s => s.service_id), // Use ID or appropriate field
+        expected_resolved_at: expectedResolution.value,
+        critical: selectedProblemStatus.value === '1', // Convert to boolean
+    };
+    console.log('Incident form data:', formData);
+    try {
+        const { data } = await axios.post(`${config.public.apiBase}/incidents`, formData);
+        console.log('Incident created successfully:', data);
+    } catch (error) {
+        console.error('Error creating incident:', error);
+    }
 };
 
-const logCarrierFormData = () => {
-    console.log({
+const logCarrierFormData = async () => {
+    const carrierFormData = {
         slug: carrierSlug.value,
         title: carrierTitle.value,
         description: carrierDescription.value,
-    });
-};
+    };
+    console.log('Carrier form data:', carrierFormData);
+    try {
+        const { data } = await axios.post(`${config.public.apiBase}/carriers`, carrierFormData);
+        console.log('Carrier created successfully:', data);
+    } catch (error) {
+        console.error('Error creating incident:', error);
+    }
+}
 
 onMounted(async () => {
     try {
-        const { data } = await axios.get('http://localhost:8000/api/carriers');
+        const { data } = await axios.get(`${config.public.apiBase}/carriers`);
         carriers.value = data;
         console.log('Carriers:', carriers.value);
-        const { data: serviceData } = await axios.get('http://localhost:8000/api/services');
+        const { data: serviceData } = await axios.get(`${config.public.apiBase}/services`);
         services.value = serviceData;
         console.log('Services:', services.value);
     } catch (error) {

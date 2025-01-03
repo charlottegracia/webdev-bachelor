@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-homeblue-08 rounded-2xl p-8 shadow max-w-screen-md w-full mx-auto">
-        <p class="text-homeblue-300">{{ formatDate(incident.updated_at) }}</p>
-        <p>LABEL</p>
+    <div class="bg-homeblue-08 rounded-2xl p-8 max-w-screen-md w-full mx-auto">
+        <p class="text-homeblue-300">{{ formatDate(incident.created_at) }} mangler incident.created_at</p>
+        <p>LABEL som viser incident.updated_at ?? måske</p>
         <h2 class="fields text-[24px] md:text-[32px] font-semibold text-homeblue-300">{{ incident.title }}</h2>
         <p class="text-[20px] mt-2 text-homeblue-300">{{ incident.message }}</p>
 

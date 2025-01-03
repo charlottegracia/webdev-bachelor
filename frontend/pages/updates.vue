@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8 items-center max-w-screen-md mx-auto pt-40">
+  <div class="flex flex-col gap-8 items-center max-w-screen-md mx-auto">
     <div class="flex items-center gap-4">
       <Icon src="Broadcast" size="6xl" color="text-homeblue-300" />
       <h1 class="fields text-[32px] md:text-[64px] text-homeblue-300">Liveopdateringer</h1>
@@ -13,7 +13,7 @@
       <div class="text-lg flex gap-4">
         <!-- Countries Button -->
         <button
-          :class="['py-2 px-4 transition duration-200 rounded shadow-lg flex items-center font-medium gap-2', filters.countries ? 'bg-home-kiwi-200 border border-home-kiwi-300' : 'bg-home-kiwi border border-home-kiwi']"
+          :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.countries ? 'bg-home-kiwi-200 border border-home-kiwi-300' : 'bg-home-kiwi border border-home-kiwi']"
           @click="toggleFilter('countries')">
           Lande
           <!-- Icon when 'countries' filter is active -->
@@ -22,7 +22,7 @@
 
         <!-- Carriers Button -->
         <button
-          :class="['py-2 px-4 transition duration-200 rounded shadow-lg flex items-center font-medium gap-2', filters.carriers ? 'bg-home-tangerine-200 border border-home-tangerine-300' : 'bg-home-tangerine border border-home-tangerine']"
+          :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.carriers ? 'bg-home-tangerine-200 border border-home-tangerine-300' : 'bg-home-tangerine border border-home-tangerine']"
           @click="toggleFilter('carriers')">
           Transportører
           <!-- Icon when 'carriers' filter is active -->
@@ -31,7 +31,7 @@
 
         <!-- Services Button -->
         <button
-          :class="['py-2 px-4 transition duration-200 rounded shadow-lg flex items-center font-medium gap-2', filters.services ? 'bg-home-grape-200 border border-home-grape-300' : 'bg-home-grape border border-home-grape']"
+          :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.services ? 'bg-home-grape-200 border border-home-grape-300' : 'bg-home-grape border border-home-grape']"
           @click="toggleFilter('services')">
           IT-services
           <Icon v-if="filters.services" src="Check" size="lg" color="text-home-grape-300" />
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Display message when no incidents match the filters -->
-    <div v-if="filteredIncidents.length === 0" class="text-center text-2xl fields mt-8 text-homeblue-300">
+    <div v-if="filteredIncidents.length === 0" class="text-center text-2xl fields text-homeblue-300 mt-20 mb-40">
       Der er ingen liveopdateringer med de valgte filtre.
     </div>
 

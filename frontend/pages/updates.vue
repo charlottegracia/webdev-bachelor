@@ -11,25 +11,20 @@
     <div class="self-start">
       <p class="text-lg mb-2">Filtrer efter kategori:</p>
       <div class="text-lg flex gap-4">
-        <!-- Countries Button -->
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.countries ? 'bg-home-kiwi-200 border border-home-kiwi-300' : 'bg-home-kiwi border border-home-kiwi']"
           @click="toggleFilter('countries')">
           Lande
-          <!-- Icon when 'countries' filter is active -->
           <Icon v-if="filters.countries" src="Check" size="lg" color="text-home-kiwi-300" />
         </button>
 
-        <!-- Carriers Button -->
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.carriers ? 'bg-home-tangerine-200 border border-home-tangerine-300' : 'bg-home-tangerine border border-home-tangerine']"
           @click="toggleFilter('carriers')">
           Transportører
-          <!-- Icon when 'carriers' filter is active -->
           <Icon v-if="filters.carriers" src="Check" size="lg" color="text-home-tangerine-300" />
         </button>
 
-        <!-- Services Button -->
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.services ? 'bg-home-grape-200 border border-home-grape-300' : 'bg-home-grape border border-home-grape']"
           @click="toggleFilter('services')">
@@ -45,12 +40,10 @@
       </div>
     </div>
 
-    <!-- Display message when no incidents match the filters -->
     <div v-if="filteredIncidents.length === 0" class="text-center text-2xl fields text-homeblue-300 mt-20 mb-40">
       Der er ingen liveopdateringer med de valgte filtre.
     </div>
 
-    <!-- Display filtered incidents -->
     <div v-else v-for="incident in filteredIncidents" :key="incident.incident_id" class="w-full">
       <Incident :incident="incident" />
     </div>
@@ -60,12 +53,11 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
-// Define types for the incidents and filters
 interface IncidentType {
   incident_id: number;
   title: string;
   message: string;
-  country: string;  // `country` skal være en streng
+  country: string;
   status: string;
   resolved_at?: string | null;
   expected_resolved_at?: string | null;
@@ -84,10 +76,9 @@ interface Filters {
   services: boolean;
 }
 
-// Declare incidents and filters with the types
 const incidents = ref<IncidentType[]>([]);
 const filters = ref<Filters>({
-  resolved: false,  // If the button is pressed, show only unresolved incidents
+  resolved: false,  // If checked show only unresolved incidents
   carriers: false,  // Show incidents with carriers
   countries: false, // Show incidents with countries
   services: false,  // Show incidents with services
@@ -100,19 +91,16 @@ onMounted(async () => {
     const { data } = await axios.get(`${config.public.apiBase}/incidents`);
     incidents.value = data.map((incident: any) => ({
       ...incident,
-      // Make sure `country` is a string and not an array
-      country: incident.country || '',  // If country is not available, use an empty string
+      country: incident.country || '',
 
-      // Ensure carriers is an array of objects with carrier_id and title
       carriers: Array.isArray(incident.carriers)
         ? incident.carriers
-        : [{ carrier_id: 1, title: incident.carriers }], // Mapping carriers if needed
+        : [{ carrier_id: 1, title: incident.carriers }],
 
-      // Ensure services is always an array, even if empty
       services: incident.services || [],
 
-      critical: incident.critical || 0,  // Default to 0 if `critical` is undefined
-      status: incident.status || '',     // Default to empty string if `status` is undefined
+      critical: incident.critical || 0,
+      status: incident.status || '',
     }));
     incidents.value = incidents.value.sort(
       (a: IncidentType, b: IncidentType) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()

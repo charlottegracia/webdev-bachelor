@@ -142,41 +142,43 @@
 
                     <div class="accordion-content" :class="{ 'expanded': showDetails }">
                         <div class="px-6 py-4">
-                    <div class="mb-4 fields text-3xl">
-                        <p v-if="incidentTitle">{{ incidentTitle }}</p>
-                        <p v-else>Ingen titel angivet</p>
-                    </div>
-                    <div class="mb-4">
-                        <p v-if="incidentDescription">{{ incidentDescription }}</p>
-                        <p v-else>Ingen beskrivelse angivet</p>
-                    </div>
-                    <p>TAGS</p>
-                    <div class="mb-4">
-                        <p class="font-semibold">Valgte lande:</p>
-                        <ul>
-                            <li v-for="country in selectedCountries" :key="country.code">{{ country.name }}</li>
-                        </ul>
-                    </div>
-                    <div class="mb-4">
-                        <p class="font-semibold">Valgte transportører:</p>
-                        <ul>
-                            <li v-for="carrier in selectedCarriers" :key="carrier.carrier_id">{{ carrier.title }}</li>
-                        </ul>
-                    </div>
-                    <div class="mb-4">
-                        <p class="font-semibold">Valgte services:</p>
-                        <ul>
-                            <li v-for="service in selectedServices" :key="service.service_id">{{ service.title }}</li>
-                        </ul>
-                    </div>
-                    <div v-if="expectedResolution" class="mb-4">
-                        <p class="font-semibold">Forventet løsningsdato:</p>
-                        <p>{{ expectedResolution }}</p>
-                    </div>
-                    <div>
-                        <p class="font-semibold">Problemets status:</p>
-                        <p>{{ selectedProblemStatus === '1' ? 'Kritisk' : 'Ikke-kritisk' }}</p>
-                    </div>
+                            <div class="mb-4 fields text-3xl">
+                                <p v-if="incidentTitle">{{ incidentTitle }}</p>
+                                <p v-else>Ingen titel angivet</p>
+                            </div>
+                            <div class="mb-4">
+                                <p v-if="incidentDescription">{{ incidentDescription }}</p>
+                                <p v-else>Ingen beskrivelse angivet</p>
+                            </div>
+                            <p>TAGS</p>
+                            <div class="mb-4">
+                                <p class="font-semibold">Valgte lande:</p>
+                                <ul>
+                                    <li v-for="country in selectedCountries" :key="country.code">{{ country.name }}</li>
+                                </ul>
+                            </div>
+                            <div class="mb-4">
+                                <p class="font-semibold">Valgte transportører:</p>
+                                <ul>
+                                    <li v-for="carrier in selectedCarriers" :key="carrier.carrier_id">{{ carrier.title
+                                        }}</li>
+                                </ul>
+                            </div>
+                            <div class="mb-4">
+                                <p class="font-semibold">Valgte services:</p>
+                                <ul>
+                                    <li v-for="service in selectedServices" :key="service.service_id">{{ service.title
+                                        }}</li>
+                                </ul>
+                            </div>
+                            <div v-if="expectedResolution" class="mb-4">
+                                <p class="font-semibold">Forventet løsningsdato:</p>
+                                <p>{{ expectedResolution }}</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Problemets status:</p>
+                                <p>{{ selectedProblemStatus === '1' ? 'Kritisk' : 'Ikke-kritisk' }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,10 +187,12 @@
             <div v-if="selectedType === 'carrier'" class="flex flex-col gap-4">
                 <InputField v-model="carrierSlug" label="Slug" placeholder="Indtast slug" type="text" />
                 <InputField v-model="carrierTitle" label="Titel" placeholder="Indtast titel" type="text" />
-                <InputField v-model="carrierDescription" label="Beskrivelse" placeholder="Indtast beskrivelse" type="textarea" />
+                <InputField v-model="carrierDescription" label="Beskrivelse" placeholder="Indtast beskrivelse"
+                    type="textarea" />
                 <Button text="Opret transportør" @click="logCarrierFormData" />
             </div>
         </div>
+        <ConfirmationModal :isVisible="showModal" :onConfirm="handleConfirmSubmission" :onCancel="handleCancelSubmission" :title="modalTitle" />
     </div>
 </template>
 
@@ -230,6 +234,8 @@ const selectedServices = ref<Service[]>([]);
 const selectedType = ref('incident');
 const selectedProblemStatus = ref('0');
 const showDetails = ref(false);
+const showModal = ref(false); // Control modal visibility
+const modalTitle = ref('Liveopdatering'); // Default modal title for incident
 
 // Computed
 const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
@@ -272,38 +278,44 @@ watch(selectedCountries, (newValue) => {
 });
 
 const logFormData = async () => {
-    const formData = {
-        title: incidentTitle.value,
-        message: incidentDescription.value,
-        country: selectedCountries.value.map(c => c.code), // Use code or appropriate field
-        carrier: selectedCarriers.value.map(c => c.carrier_id), // Use ID or appropriate field
-        service: selectedServices.value.map(s => s.service_id), // Use ID or appropriate field
-        expected_resolved_at: expectedResolution.value,
-        critical: selectedProblemStatus.value === '1', // Convert to boolean
-    };
-    console.log('Incident form data:', formData);
-    try {
-        const { data } = await axios.post(`${config.public.apiBase}/incidents`, formData);
-        console.log('Incident created successfully:', data);
-    } catch (error) {
-        console.error('Error creating incident:', error);
-    }
+    showModal.value = true; // Show modal when user clicks 'Opret'
+    modalTitle.value = 'Liveopdatering'; // Set title for incident
 };
 
 const logCarrierFormData = async () => {
-    const carrierFormData = {
-        slug: carrierSlug.value,
-        title: carrierTitle.value,
-        description: carrierDescription.value,
+    showModal.value = true; // Show modal when user clicks 'Opret' for carrier
+    modalTitle.value = 'Transportør'; // Set title for carrier
+};
+
+// Confirm form submission after modal confirmation
+const handleConfirmSubmission = async () => {
+    showModal.value = false;
+
+    const formData = {
+        title: selectedType.value === 'incident' ? incidentTitle.value : carrierTitle.value,
+        message: selectedType.value === 'incident' ? incidentDescription.value : carrierDescription.value,
+        country: selectedCountries.value.map(c => c.code).toString(),
+        carrier: selectedCarriers.value.map(c => c.carrier_id),
+        service: selectedServices.value.map(s => s.service_id),
+        expected_resolved_at: expectedResolution.value,
+        critical: selectedProblemStatus.value === '1',
     };
-    console.log('Carrier form data:', carrierFormData);
+
+    // Choose endpoint based on the selected type
+    const endpoint = selectedType.value === 'incident' ? '/incidents' : '/carriers';
+
     try {
-        const { data } = await axios.post(`${config.public.apiBase}/carriers`, carrierFormData);
-        console.log('Carrier created successfully:', data);
+        const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
+        console.log(`${selectedType.value} created successfully:`, data);
     } catch (error) {
-        console.error('Error creating incident:', error);
+        console.error(`Error creating ${selectedType.value}:`, error);
     }
-}
+};
+
+// Handle cancellation (close the modal)
+const handleCancelSubmission = () => {
+    showModal.value = false; // Close modal
+};
 
 onMounted(async () => {
     try {

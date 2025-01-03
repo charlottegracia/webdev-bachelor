@@ -1,90 +1,85 @@
 <template>
-    <div
-      :class="[
-        'label inline-block rounded px-4 py-2',
-        sizeClasses,
-        type === 'date' ? dateColorClass : 'bg-link-blue text-white',
-      ]"
-    >
-      <!-- Display content based on type -->
-      <template v-if="type === 'date'">
-        <span>{{ displayDate }}</span>
-      </template>
-      <template v-else-if="type === 'link'">
-        <a href="/updates" class="text-white underline">{{ incident?.title || 'No Title' }}</a>
-      </template>
+    <div class="inline-block text-md">
+        <div v-if="props.type === 'date'" :class="['rounded', sizeClass, colorClass]">
+            <span v-if="props.incident?.resolved_at">
+                Problemet er løst {{ formatDate(props.incident.resolved_at, true) }}
+            </span>
+            <span v-else-if="props.incident?.expected_resolved_at">
+                Forventes løst {{ formatDate(props.incident.expected_resolved_at) }}
+            </span>
+            <span v-else>
+                Ingen dato tilgængelig
+            </span>
+        </div>
+
+        <a v-else-if="props.type === 'link'" :href="'/updates'" :class="[sizeClass]"
+            class="flex items-center w-full rounded text-homeblue-300 bg-homeblue-12">
+            <div v-if="props.size === 'sm'" class="flex items-center w-full">
+                <Icon :src="'info'" :size="'lg'" :color="'text-homeblue-300'" class="mr-2" />
+                <p class="truncate flex-1">
+                    {{ props.incident?.title || 'View Updates' }}
+                </p>
+                <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-8" />
+            </div>
+
+            <div v-else-if="props.size === 'lg'" class="flex items-center w-full">
+                <p v-if="props.incident && props.incident.updated_at" class="whitespace-nowrap">
+                    {{ formatDate(props.incident.updated_at) + ' - ' }}
+                </p>
+                <p class="truncate flex-1">
+                    {{ props.incident?.title || 'View Updates' }}
+                </p>
+            </div>
+        </a>
+
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { computed } from 'vue';
-  import type { Incident } from '~/composables/useIncidents'; // Import Incident type
-  
-  // Props
-  const props = withDefaults(
-    defineProps<{
-      type: 'date' | 'link';
-      incident?: Incident; // Incident is optional to avoid runtime errors
-      size?: 'sm' | 'lg';
-    }>(),
-    {
-      size: 'sm',
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import type { Incident } from '~/composables/useIncidents'; 
+
+const props = withDefaults(defineProps<{
+    type: 'date' | 'link';
+    incident: Incident;
+    size?: 'sm' | 'lg';
+}>(), {
+    size: 'sm'
+});
+
+const sizeClass = computed(() => (props.size === 'lg' ? 'py-3 px-4 rounded-xl' : 'py-1 px-2 text-sm'));
+
+const colorClass = computed(() => {
+    if (props.incident?.resolved_at) {
+        return 'bg-homeblue-300 text-white'; 
+    } else if (props.incident?.expected_resolved_at) {
+        return 'bg-homeblue-12 text-homeblue-300'; 
     }
-  );
-  
-  // Computed class for size
-  const sizeClasses = computed(() => {
-    return props.size === 'lg'
-      ? 'text-lg py-3 px-6'
-      : 'text-sm py-2 px-4';
-  });
-  
-  // Computed class for date color
-  const dateColorClass = computed(() => {
-    if (!props.incident) return 'bg-gray-300'; // Fallback color
-    if (props.incident.status === 'expired') {
-      return 'bg-gray-400 text-white'; // Expired status
+});
+
+const formatDate = (dateString?: string, withTime?: boolean) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+
+    const optionsDate: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    };
+
+    const optionsTime: Intl.DateTimeFormatOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+
+    const dateFormatted = date.toLocaleDateString('da-DK', optionsDate);
+    const timeFormatted = date.toLocaleTimeString('da-DK', optionsTime);
+
+    if (withTime === true) {
+        return `${dateFormatted} ${timeFormatted}`;
     }
-    if (props.incident.resolved_at) {
-      return 'bg-dark-blue text-white'; // Resolved
+    else {
+        return `${dateFormatted}`;
     }
-    if (props.incident.expected_resolved_at) {
-      return 'bg-light-blue text-dark-blue'; // Expected
-    }
-    return 'bg-gray-300 text-dark-gray'; // Default
-  });
-  
-  // Computed display date
-  const displayDate = computed(() => {
-    if (!props.incident) return 'No date available'; // Fallback
-    if (props.incident.resolved_at) {
-      return `Resolved: ${new Date(props.incident.resolved_at).toLocaleDateString()}`;
-    }
-    if (props.incident.expected_resolved_at) {
-      return `Expected: ${new Date(props.incident.expected_resolved_at).toLocaleDateString()}`;
-    }
-    return 'No date available';
-  });
-  </script>
-  
-  <style scoped>
-  .bg-dark-blue {
-    background-color: #002a5f;
-  }
-  .bg-light-blue {
-    background-color: #a5d8ff;
-  }
-  .text-dark-blue {
-    color: #002a5f;
-  }
-  .bg-link-blue {
-    background-color: #0056b3;
-  }
-  .bg-gray-400 {
-    background-color: #b0b0b0;
-  }
-  .text-dark-gray {
-    color: #4a4a4a;
-  }
-  </style>
-  
+};
+</script>

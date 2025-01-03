@@ -1,9 +1,7 @@
-// composables/useIncidents.ts
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRuntimeConfig } from '#app';
 
-// Define the types for Incident and Carrier
 type Carrier = {
   carrier_id: number;
   slug: string;
@@ -24,14 +22,13 @@ export type Incident = {
   country: string;
   type: string;
   status: string;
-  expected_resolved_at: string;
-  resolved_at: string;
-  created_at: string | null;
+  expected_resolved_at?: string | null; 
+  resolved_at?: string | null;      
+  created_at?: string | null;
   updated_at: string;
-  carriers: Carrier[];  // Define carriers as an array of Carrier objects
+  carriers: Carrier[];
 };
 
-// Define a composable function called useIncidents
 export function useIncidents() {
   const incidents = ref<Incident[]>([]);
 

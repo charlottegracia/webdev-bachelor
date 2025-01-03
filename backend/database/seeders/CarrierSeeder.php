@@ -17,7 +17,6 @@ class CarrierSeeder extends Seeder
             [
                 'slug' => 'dao',
                 'title' => 'DAO',
-                'type' => 'express',
                 'description' => 'Express carrier for urgent deliveries.',
                 'status' => 'green',
                 'peak_up_charge' => 10.00,
@@ -25,7 +24,6 @@ class CarrierSeeder extends Seeder
             [
                 'slug' => 'bring',
                 'title' => 'Bring',
-                'type' => 'international',
                 'description' => 'An international carrier with fast delivery.',
                 'status' => 'green',
                 'peak_up_charge' => 20.00,
@@ -33,7 +31,6 @@ class CarrierSeeder extends Seeder
             [
                 'slug' => 'psn',
                 'title' => 'PostNord',
-                'type' => 'delivery',
                 'description' => 'A reliable local carrier.',
                 'status' => 'green',
                 'peak_up_charge' => 15.00,

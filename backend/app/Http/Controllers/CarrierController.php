@@ -20,9 +20,8 @@ class CarrierController extends Controller
         $validated = $request->validate([
             'slug' => 'required|string|unique:carriers',
             'title' => 'required|string|max:255',
-            'type' => 'required|string',
             'description' => 'nullable|string',
-            'status' => 'required|in:green,yellow,red',
+            'status' => 'nullable|in:green,yellow,red',
             'peak_up_charge' => 'nullable|numeric',
         ]);
 

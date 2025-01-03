@@ -56,8 +56,6 @@
     </div>
   </div>
 </template>
-
-
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
@@ -67,7 +65,7 @@ interface IncidentType {
   incident_id: number;
   title: string;
   message: string;
-  country: { country_id: number; title: string }[]; // Country must be an array of objects
+  country: string;  // `country` skal være en streng
   status: string;
   resolved_at?: string | null;
   expected_resolved_at?: string | null;
@@ -102,15 +100,13 @@ onMounted(async () => {
     const { data } = await axios.get(`${config.public.apiBase}/incidents`);
     incidents.value = data.map((incident: any) => ({
       ...incident,
-      // Ensure country is an array of objects with country_id and title
-      country: Array.isArray(incident.country)
-        ? incident.country
-        : [{ country_id: 1, title: incident.country }], // If country is a string, convert it to an object array
+      // Make sure `country` is a string and not an array
+      country: incident.country || '',  // If country is not available, use an empty string
 
       // Ensure carriers is an array of objects with carrier_id and title
       carriers: Array.isArray(incident.carriers)
         ? incident.carriers
-        : [{ carrier_id: 1, title: incident.carriers }], // Similar mapping for carriers
+        : [{ carrier_id: 1, title: incident.carriers }], // Mapping carriers if needed
 
       // Ensure services is always an array, even if empty
       services: incident.services || [],
@@ -159,7 +155,3 @@ const filteredIncidents = computed(() => {
   });
 });
 </script>
-
-<style scoped>
-/* Add your custom styles here */
-</style>

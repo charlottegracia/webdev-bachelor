@@ -11,29 +11,24 @@ class ServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $services = [
             [
                 'title' => 'SHOP INTEGRATIONER',
                 'status' => 'green',
                 'description' => 'Shop integrationer',
-                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'SHIPMENT API',
                 'status' => 'green',
                 'description' => 'Shipment API',
-                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'SERVICEPOINT API',
                 'status' => 'green',
                 'description' => 'Servicepoint API',
-                'created_at' => Carbon::now(),
             ],
         ];
 

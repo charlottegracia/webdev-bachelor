@@ -32,7 +32,7 @@ interface IncidentType {
     status: string;
     resolved_at?: string | null;
     expected_resolved_at?: string | null;
-    created_at?: string | null;
+    created_at: string;
     updated_at: string;
     critical: number;
     type: string;

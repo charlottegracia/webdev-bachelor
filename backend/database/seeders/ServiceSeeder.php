@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Service;
+use Carbon\Carbon;
 
 class ServiceSeeder extends Seeder
 {
@@ -19,17 +20,20 @@ class ServiceSeeder extends Seeder
             [
                 'title' => 'SHOP INTEGRATIONER',
                 'status' => 'green',
-                'description' => 'Shop integrationer'
+                'description' => 'Shop integrationer',
+                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'SHIPMENT API',
                 'status' => 'green',
-                'description' => 'Shipment API'
+                'description' => 'Shipment API',
+                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'SERVICEPOINT API',
                 'status' => 'green',
-                'description' => 'Servicepoint API'
+                'description' => 'Servicepoint API',
+                'created_at' => Carbon::now(),
             ],
         ];
 

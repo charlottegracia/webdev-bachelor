@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Carrier;
+use Carbon\Carbon;
 
 class CarrierSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class CarrierSeeder extends Seeder
                 'description' => 'Express carrier for urgent deliveries.',
                 'status' => 'green',
                 'peak_up_charge' => 10.00,
+                'created_at' => Carbon::now(),
             ],
             [
                 'slug' => 'bring',
@@ -27,6 +29,7 @@ class CarrierSeeder extends Seeder
                 'description' => 'An international carrier with fast delivery.',
                 'status' => 'green',
                 'peak_up_charge' => 20.00,
+                'created_at' => Carbon::now(),
             ],
             [
                 'slug' => 'psn',
@@ -34,6 +37,7 @@ class CarrierSeeder extends Seeder
                 'description' => 'A reliable local carrier.',
                 'status' => 'green',
                 'peak_up_charge' => 15.00,
+                'created_at' => Carbon::now(),
             ],
         ]);
     }

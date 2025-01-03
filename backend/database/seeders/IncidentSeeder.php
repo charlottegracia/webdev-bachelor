@@ -23,6 +23,7 @@ class IncidentSeeder extends Seeder
                 'status' => 'active',
                 'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addMinutes(5),
                 'resolved_at' => null,
+                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'Network Outage',
@@ -32,6 +33,7 @@ class IncidentSeeder extends Seeder
                 'status' => 'active',
                 'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addMinutes(10),
                 'resolved_at' => null,
+                'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'Power Failure',
@@ -41,6 +43,7 @@ class IncidentSeeder extends Seeder
                 'status' => 'active',
                 'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addHours(2),
                 'resolved_at' => null,
+                'created_at' => Carbon::now(),
             ],
         ]);
     }

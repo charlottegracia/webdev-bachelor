@@ -301,11 +301,8 @@ const handleConfirmSubmission = async () => {
             title: incidentTitle.value,
             message: incidentDescription.value,
             country: selectedCountries.value.map(c => c.code).toString(),
-            carrier: selectedCarriers.value.map(c => c.carrier_id),
-            service: selectedServices.value.map(s => ({
-                id: s.service_id,
-                description: s.description,
-            })),
+            carrier_ids: selectedCarriers.value.map(c => c.carrier_id),
+            service_ids: selectedServices.value.map(s => s.service_id),
             expected_resolved_at: expectedResolution.value,
             critical: selectedProblemStatus.value === '1',
         };

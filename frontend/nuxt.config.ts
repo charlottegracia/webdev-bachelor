@@ -18,9 +18,12 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: [
+    'floating-vue/nuxt'
+  ],
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8000/api',
+      apiBase: process.env.API_URL,
     },
   },
 });

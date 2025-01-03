@@ -21,9 +21,8 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|string',
             'description' => 'nullable|string',
-            'status' => 'required|in:green,yellow,red',
+            'status' => 'nullable|in:green,yellow,red',
             'carrier_ids' => 'nullable|array', 
             'carrier_ids.*' => 'exists:carriers,carrier_id', 
         ]);

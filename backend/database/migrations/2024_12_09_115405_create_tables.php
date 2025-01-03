@@ -17,8 +17,7 @@ return new class extends Migration
             $table->text('message');
             $table->integer('critical')->nullable();
             $table->string('country');
-            $table->string('type');
-            $table->enum('status', ['active', 'expired']);
+            $table->enum('status', ['active', 'expired'])->default('active');
             $table->timestamp('expected_resolved_at')->nullable();
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
@@ -38,7 +37,6 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id('service_id');
             $table->string('title');
-            $table->string('type');
             $table->enum('status', ['green', 'yellow', 'red'])->default('green');
             $table->text('description')->nullable();
             $table->timestamps();
@@ -48,7 +46,6 @@ return new class extends Migration
             $table->id('carrier_id');
             $table->text('slug');
             $table->text('title');
-            $table->string('type');
             $table->text('description')->nullable();
             $table->enum('status', ['green', 'yellow', 'red'])->default('green');
             $table->text('peak_up_charge')->nullable();

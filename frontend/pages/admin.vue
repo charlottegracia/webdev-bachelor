@@ -192,7 +192,8 @@
                 <Button text="Opret transportør" @click="logCarrierFormData" />
             </div>
         </div>
-        <ConfirmationModal :isVisible="showModal" :onConfirm="handleConfirmSubmission" :onCancel="handleCancelSubmission" :title="modalTitle" />
+        <ConfirmationModal :isVisible="showModal" :onConfirm="handleConfirmSubmission"
+            :onCancel="handleCancelSubmission" :title="modalTitle" />
     </div>
 </template>
 
@@ -291,15 +292,26 @@ const logCarrierFormData = async () => {
 const handleConfirmSubmission = async () => {
     showModal.value = false;
 
-    const formData = {
-        title: selectedType.value === 'incident' ? incidentTitle.value : carrierTitle.value,
-        message: selectedType.value === 'incident' ? incidentDescription.value : carrierDescription.value,
-        country: selectedCountries.value.map(c => c.code).toString(),
-        carrier: selectedCarriers.value.map(c => c.carrier_id),
-        service: selectedServices.value.map(s => s.service_id),
-        expected_resolved_at: expectedResolution.value,
-        critical: selectedProblemStatus.value === '1',
-    };
+    // Initialize formData based on the selected type (incident or carrier)
+    let formData = {};
+
+    if (selectedType.value === 'incident') {
+        formData = {
+            title: incidentTitle.value,
+            message: incidentDescription.value,
+            country: selectedCountries.value.map(c => c.code).toString(),
+            carrier: selectedCarriers.value.map(c => c.carrier_id),
+            service: selectedServices.value.map(s => s.service_id),
+            expected_resolved_at: expectedResolution.value,
+            critical: selectedProblemStatus.value === '1',
+        };
+    } else if (selectedType.value === 'carrier') {
+        formData = {
+            slug: carrierSlug.value,
+            title: carrierTitle.value,
+            description: carrierDescription.value,
+        };
+    }
 
     // Choose endpoint based on the selected type
     const endpoint = selectedType.value === 'incident' ? '/incidents' : '/carriers';
@@ -311,6 +323,7 @@ const handleConfirmSubmission = async () => {
         console.error(`Error creating ${selectedType.value}:`, error);
     }
 };
+
 
 // Handle cancellation (close the modal)
 const handleCancelSubmission = () => {

@@ -320,13 +320,12 @@ const handleConfirmSubmission = async () => {
     // Choose endpoint based on the selected type
     const endpoint = selectedType.value === 'incident' ? '/incidents' : '/carriers';
 
-    console.log('Form data:', formData);
-    /*try {
+    try {
         const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
         console.log(`${selectedType.value} created successfully:`, data);
     } catch (error) {
         console.error(`Error creating ${selectedType.value}:`, error);
-    }*/
+    }
 };
 
 

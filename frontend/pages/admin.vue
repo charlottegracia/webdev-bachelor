@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div v-if="showSuccessMessage" class="bg-home-kiwi-200 text-home-kiwi-300 font-semibold p-4 rounded-md mb-4 max-w-screen-md transition duration-500 mx-auto">
+            <p>{{ successMessage }}</p>
+        </div>
         <h2 class="text-6xl fields text-center mb-5">Hvad vil du gerne oprette?</h2>
         <div class="rounded-3xl bg-white p-8 max-w-screen-md mx-auto flex flex-col gap-5">
             <div>
@@ -203,7 +206,6 @@ import countriesData from '~/public/countries.js';
 import axios from 'axios';
 const config = useRuntimeConfig();
 
-// Interfaces
 interface Country {
     name: string;
     code: string;
@@ -220,7 +222,6 @@ interface Service {
     description: string;
 }
 
-// Data
 const incidentTitle = ref('');
 const incidentDescription = ref('');
 const carrierSlug = ref('');
@@ -237,9 +238,10 @@ const selectedType = ref('incident');
 const selectedProblemStatus = ref('0');
 const showDetails = ref(false);
 const showModal = ref(false); // Control modal visibility
-const modalTitle = ref('Liveopdatering'); // Default modal title for incident
+const modalTitle = ref('Liveopdatering');
+const showSuccessMessage = ref(false);
+const successMessage = ref('');
 
-// Computed
 const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
 const isAllCarriersSelected = computed(() => selectedCarriers.value.length === carriers.value.length);
 const isAllServicesSelected = computed(() => selectedServices.value.length === services.value.length);
@@ -279,18 +281,32 @@ const checkRequired = async () => {
             alert('Liveopdateringens titel og beskrivelse skal udfyldes.');
             return;
         }
-        modalTitle.value = 'Liveopdatering'; // Set modal title for incident
+        modalTitle.value = 'Liveopdatering';
     } else if (selectedType.value === 'carrier') {
         // Check if carrier slug and title are filled
         if (!carrierSlug.value || !carrierTitle.value) {
             alert('Transportørens slug og titel skal udfyldes.');
             return;
         }
-        modalTitle.value = 'Transportør'; // Set modal title for carrier
+        modalTitle.value = 'Transportør';
     }
 
-    // Show the modal after validation
     showModal.value = true;
+};
+
+const handlePostCreationSuccess = (data: any) => {
+    if (selectedType.value === 'incident') {
+        successMessage.value = `Liveopdateringen blev oprettet.`;
+        resetIncidentForm();
+    } else if (selectedType.value === 'carrier') {
+        successMessage.value = `Transportøren ${data.title} blev oprettet.`;
+        resetCarrierForm();
+    }
+    
+    showSuccessMessage.value = true;
+    setTimeout(() => {
+        showSuccessMessage.value = false;
+    }, 3000);
 };
 
 // Confirm form submission after modal confirmation
@@ -322,15 +338,36 @@ const handleConfirmSubmission = async () => {
 
     try {
         const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
+        handlePostCreationSuccess(data);
     } catch (error) {
         console.error(`Error creating ${selectedType.value}:`, error);
+        successMessage.value = `Der opstod en fejl ved oprettelsen af ${selectedType.value}.`;
+        showSuccessMessage.value = true;
+        setTimeout(() => {
+            showSuccessMessage.value = false;
+        }, 3000);
     }
 };
 
+// Reset forms after successful submission
+const resetIncidentForm = () => {
+    incidentTitle.value = '';
+    incidentDescription.value = '';
+    selectedCountries.value = [];
+    selectedCarriers.value = [];
+    selectedServices.value = [];
+    expectedResolution.value = '';
+    selectedProblemStatus.value = '0';
+};
 
-// Handle cancellation (close the modal)
+const resetCarrierForm = () => {
+    carrierSlug.value = '';
+    carrierTitle.value = '';
+    carrierDescription.value = '';
+};
+
 const handleCancelSubmission = () => {
-    showModal.value = false; // Close modal
+    showModal.value = false;
 };
 
 onMounted(async () => {

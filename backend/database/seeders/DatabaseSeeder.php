@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CarrierSeeder::class,
             IncidentSeeder::class,
+            ServiceSeeder::class,
             IncidentCarrierSeeder::class,
         ]);
         

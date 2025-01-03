@@ -16,7 +16,6 @@ class Carrier extends Model
     protected $fillable = [
         'slug',
         'title',
-        'type',
         'description',
         'status',
         'peak_up_charge'

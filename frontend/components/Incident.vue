@@ -9,7 +9,7 @@
             <Tag v-if="incident.country != ''" v-for="countryCode in incident.country.split(',')" :key="countryCode"
                 :text="getCountryName(countryCode)" type="country" />
             <Tag v-for="carrier in incident.carriers" :key="carrier.carrier_id" :text="carrier.title" type="carrier" />
-            <Tag v-for="service in incident.services" :key="service.id" :text="service.title" type="service" />
+            <Tag v-for="service in incident.services" :key="service.id" :text="service.description" type="service" />
         </div>
     </div>
 </template>
@@ -33,7 +33,7 @@ interface IncidentType {
     updated_at: string;
     critical: number;
     type: string;
-    services: { id: number; title: string }[];
+    services: { id: number; title: string, description: string }[];
     carriers: { carrier_id: number; title: string }[];
 }
 

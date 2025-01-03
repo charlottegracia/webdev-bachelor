@@ -65,7 +65,7 @@ interface IncidentType {
   updated_at: string;
   critical: number;
   type: string;
-  services: { id: number; title: string }[];
+  services: { id: number; title: string, description: string }[];
   carriers: { carrier_id: number; title: string }[];
 }
 

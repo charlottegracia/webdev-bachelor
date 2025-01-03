@@ -6,7 +6,7 @@
         <p class="text-[20px] mt-2 text-homeblue-300">{{ incident.message }}</p>
 
         <div class="flex gap-4 mt-4 flex-wrap">
-            <Tag v-for="countryCode in incident.country.split(',')" :key="countryCode"
+            <Tag v-if="incident.country != ''" v-for="countryCode in incident.country.split(',')" :key="countryCode"
                 :text="getCountryName(countryCode)" type="country" />
             <Tag v-for="carrier in incident.carriers" :key="carrier.carrier_id" :text="carrier.title" type="carrier" />
             <Tag v-for="service in incident.services" :key="service.id" :text="service.title" type="service" />

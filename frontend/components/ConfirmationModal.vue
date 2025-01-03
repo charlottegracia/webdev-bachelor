@@ -1,73 +1,45 @@
 <template>
-    <div v-if="isVisible" class="modal-overlay">
-      <div class="modal-content">
-        <h3 class="text-xl font-semibold">Er du sikker?</h3>
-        <p class="mb-4">Er du sikker på, at du vil oprette denne {{ title }}?</p>
-        <div class="flex gap-4">
-          <Button text="Ja, opret" @click="confirm" />
-          <Button text="Nej, annuller" @click="cancel" />
+    <div v-if="isVisible" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+        <div class="bg-white p-6 rounded-lg max-w-md shadow-lg">
+            <h3 class="text-xl font-semibold mb-2">Er du sikker?</h3>
+            <p class="mb-4">Er du sikker på, at du vil oprette denne {{ lowercasedTitle }}?</p>
+            <div class="flex justify-center gap-4">
+                <Button @click="confirm" :text="`Opret ${lowercasedTitle}`" />
+                <Button @click="cancel" text="Annuller" class="bg-white border border-homeblue-120 !text-homeblue-300" />
+            </div>
         </div>
-      </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-import { Title } from '#build/components';
+</template>
 
-  const props = defineProps({
+<script setup lang="ts">
+import { computed } from 'vue';
+
+const props = defineProps({
     isVisible: {
-      type: Boolean,
-      required: true
+        type: Boolean,
+        required: true,
     },
     onConfirm: {
-      type: Function,
-      required: true
+        type: Function,
+        required: true,
     },
     onCancel: {
-      type: Function,
-      required: true
+        type: Function,
+        required: true,
     },
     title: {
-      type: String,
-      required: true
-    }
-  });
-  
-  const confirm = () => {
+        type: String,
+        required: true,
+    },
+});
+
+const lowercasedTitle = computed(() => props.title.toLowerCase());
+
+const confirm = () => {
     props.onConfirm();
-  };
-  
-  const cancel = () => {
+};
+
+const cancel = () => {
     props.onCancel();
-  };
-  </script>
-  
-  <style scoped>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
-    text-align: center;
-  }
-  
-  button {
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  </style>
-  
+};
+</script>

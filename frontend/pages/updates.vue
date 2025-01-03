@@ -71,7 +71,7 @@ interface IncidentType {
   status: string;
   resolved_at?: string | null;
   expected_resolved_at?: string | null;
-  created_at?: string | null;
+  created_at: string;
   updated_at: string;
   critical: number;
   type: string;
@@ -119,7 +119,7 @@ onMounted(async () => {
       status: incident.status || '',     // Default to empty string if `status` is undefined
     }));
     incidents.value = incidents.value.sort(
-      (a: IncidentType, b: IncidentType) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      (a: IncidentType, b: IncidentType) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
     console.log('opdateringer:', incidents.value);
   } catch (error) {

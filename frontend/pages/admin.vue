@@ -106,7 +106,7 @@
                             <div class="flex items-center gap-6">
                                 <input type="checkbox" :id="service.service_id.toString()" :value="service"
                                     v-model="selectedServices" />
-                                <span>{{ service.title }}</span>
+                                <span>{{ service.description }}</span>
                             </div>
                         </div>
                     </div>
@@ -217,6 +217,7 @@ interface Carrier {
 interface Service {
     service_id: number;
     title: string;
+    description: string;
 }
 
 // Data
@@ -301,7 +302,10 @@ const handleConfirmSubmission = async () => {
             message: incidentDescription.value,
             country: selectedCountries.value.map(c => c.code).toString(),
             carrier: selectedCarriers.value.map(c => c.carrier_id),
-            service: selectedServices.value.map(s => s.service_id),
+            service: selectedServices.value.map(s => ({
+                id: s.service_id,
+                description: s.description,
+            })),
             expected_resolved_at: expectedResolution.value,
             critical: selectedProblemStatus.value === '1',
         };
@@ -316,12 +320,13 @@ const handleConfirmSubmission = async () => {
     // Choose endpoint based on the selected type
     const endpoint = selectedType.value === 'incident' ? '/incidents' : '/carriers';
 
-    try {
+    console.log('Form data:', formData);
+    /*try {
         const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
         console.log(`${selectedType.value} created successfully:`, data);
     } catch (error) {
         console.error(`Error creating ${selectedType.value}:`, error);
-    }
+    }*/
 };
 
 

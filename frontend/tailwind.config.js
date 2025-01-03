@@ -18,7 +18,8 @@ export default {
           'default': '#292D33',
           'secondary': '#42464C',
           'tertiary': '#60656C',
-          'light-grey': '#6F7276' // navngivning idk 
+          'homegrey': '#4B4F54',
+          'lightgrey': '#6F7276',
         },
         home: {
           'bg': '#FAFAF8',
@@ -41,7 +42,6 @@ export default {
           'tangerine': '#F0AB84',
           'tangerine-200': '#E39A71',
           'tangerine-300': '#402626',
-          'dark-grey': '#4b4f54' // måske anden navngivning, brugt til border i footeren
         },
         homeblue: {
           '08': '#EBF1FB',

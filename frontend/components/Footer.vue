@@ -1,64 +1,69 @@
 <template>
     <footer class="max-w-content mx-auto mt-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 border-y border-home-dark-grey py-10 gap-10 md:gap-0">
-        <img class="h-6 ml-1" :src="logoPath" alt="Homerunner Logo">
-        <div class="md:mx-auto grid grid-cols-1 md:grid-cols-3 px-0 gap-4">
-            <div v-for="(footer, index) in footerLinks" :key="footer.title" class="mb-6">
-                <p class="font-bold mb-4">{{ footer.title }}</p>
-                <ul>
-                    <li v-for="link in footer.links" :key="link.text" class="mb-2">
-                        <div class="cursor-pointer mb-4 text-text-light-grey" v-if="link.url">
-                            <a :href="link.url" target="_blank" rel="noopener noreferrer" class="mb-4 text-text-light-grey">
-                                {{ link.text }}
-                            </a>
-                        </div>
-                        <template v-else>
-                            <span class="text-text-light-grey">{{ link.text }}</span>
-                        </template>
-                    </li>
-                </ul>
+        <div class="grid grid-cols-1 sm:grid-cols-2 border-y border-text-homegrey py-10 gap-10 md:gap-0">
+            <img class="h-6 ml-1" :src="logoPath" alt="Homerunner Logo">
+            <div class="md:mx-auto grid grid-cols-1 md:grid-cols-3 px-0 gap-4">
+                <div v-for="(footer, index) in footerLinks" :key="footer.title" class="mb-6">
+                    <p class="font-bold mb-4">{{ footer.title }}</p>
+                    <ul>
+                        <li v-for="link in footer.links" :key="link.text" class="mb-2">
+                            <div class="cursor-pointer mb-4 text-text-lightgrey" v-if="link.url">
+                                <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                    class="mb-4 text-text-lightgrey">
+                                    {{ link.text }}
+                                </a>
+                            </div>
+                            <template v-else>
+                                <span class="text-text-lightgrey">{{ link.text }}</span>
+                            </template>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <p class="py-10">© Homerunner {{ currentYear }}</p>
-</footer>
+        <p class="py-10">© Homerunner {{ currentYear }}</p>
+    </footer>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-    data() {
+    setup() {
+        const logoPath = ref('/images/homerunner-logo.png');
+        const currentYear = ref(new Date().getFullYear());
+        const footerLinks = ref([
+            {
+                title: "Produkt",
+                links: [
+                    { text: "Løsning", url: "https://www.homerunner.com/solution" },
+                    { text: "Features", url: "https://homerunner.com/features" },
+                    { text: "Integrationer", url: "https://www.homerunner.com/integrations/" },
+                ],
+            },
+            {
+                title: "Ressourcer",
+                links: [
+                    { text: "Cases", url: "https://www.homerunner.com/cases" },
+                    { text: "Blog", url: "https://www.homerunner.com/blog" },
+                    { text: "Kontakt", url: "https://www.homerunner.com/contact" },
+                ],
+            },
+            {
+                title: "Homerunner",
+                links: [
+                    { text: "Om os", url: "https://www.homerunner.com/about" },
+                    { text: "Østerågade 27, 9000 Aalborg" },
+                    { text: "CVR: 36721146" },
+                ],
+            },
+        ]);
+
         return {
-            logoPath: '/images/homerunner-logo.png',
-            currentYear: new Date().getFullYear(),
-            footerLinks: [
-                {
-                    title: "Produkt",
-                    links: [
-                        { text: "Løsning", url: "https://www.homerunner.com/solution" },
-                        { text: "Features", url: "https://homerunner.com/features" },
-                        { text: "Integrationer", url: "https://www.homerunner.com/integrations/" },
-                    ],
-                },
-                {
-                    title: "Ressourcer",
-                    links: [
-                        { text: "Cases", url: "https://www.homerunner.com/cases" },
-                        { text: "Blog", url: "https://www.homerunner.com/blog" },
-                        { text: "Kontakt", url: "https://www.homerunner.com/contact" },
-                    ],
-                },
-                {
-                    title: "Homerunner",
-                    links: [
-                        { text: "Om os", url: "https://www.homerunner.com/about" },
-                        { text: "Østerågade 27, 9000 Aalborg" },
-                        { text: "CVR: 36721146" },
-                    ]
-                },
-            ],
+            logoPath,
+            currentYear,
+            footerLinks,
         };
     },
 };
 </script>
-
-<style></style>

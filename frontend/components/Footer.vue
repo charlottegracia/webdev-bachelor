@@ -25,45 +25,35 @@
     </footer>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 
-export default {
-    setup() {
-        const logoPath = ref('/images/homerunner-logo.png');
-        const currentYear = ref(new Date().getFullYear());
-        const footerLinks = ref([
-            {
-                title: "Produkt",
-                links: [
-                    { text: "Løsning", url: "https://www.homerunner.com/solution" },
-                    { text: "Features", url: "https://homerunner.com/features" },
-                    { text: "Integrationer", url: "https://www.homerunner.com/integrations/" },
-                ],
-            },
-            {
-                title: "Ressourcer",
-                links: [
-                    { text: "Cases", url: "https://www.homerunner.com/cases" },
-                    { text: "Blog", url: "https://www.homerunner.com/blog" },
-                    { text: "Kontakt", url: "https://www.homerunner.com/contact" },
-                ],
-            },
-            {
-                title: "Homerunner",
-                links: [
-                    { text: "Om os", url: "https://www.homerunner.com/about" },
-                    { text: "Østerågade 27, 9000 Aalborg" },
-                    { text: "CVR: 36721146" },
-                ],
-            },
-        ]);
-
-        return {
-            logoPath,
-            currentYear,
-            footerLinks,
-        };
+const logoPath = ref('/images/homerunner-logo.png');
+const currentYear = ref(new Date().getFullYear());
+const footerLinks = ref([
+    {
+        title: "Produkt",
+        links: [
+            { text: "Løsning", url: "https://www.homerunner.com/solution" },
+            { text: "Features", url: "https://homerunner.com/features" },
+            { text: "Integrationer", url: "https://www.homerunner.com/integrations/" },
+        ],
     },
-};
+    {
+        title: "Ressourcer",
+        links: [
+            { text: "Cases", url: "https://www.homerunner.com/cases" },
+            { text: "Blog", url: "https://www.homerunner.com/blog" },
+            { text: "Kontakt", url: "https://www.homerunner.com/contact" },
+        ],
+    },
+    {
+        title: "Homerunner",
+        links: [
+            { text: "Om os", url: "https://www.homerunner.com/about" },
+            { text: "Østerågade 27, 9000 Aalborg" },
+            { text: "CVR: 36721146" },
+        ],
+    },
+]);
 </script>

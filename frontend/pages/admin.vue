@@ -33,8 +33,8 @@
             </div>
 
             <div v-if="selectedType === 'incident'" class="flex flex-col gap-6">
-                <InputField v-model="incidentTitle" label="Titel" placeholder="Indtast titel" type="text" />
-                <InputField v-model="incidentDescription" label="Beskrivelse" placeholder="Indtast beskrivelse"
+                <InputField v-model="incidentTitle" label="Titel *" placeholder="Indtast titel" type="text" />
+                <InputField v-model="incidentDescription" label="Beskrivelse *" placeholder="Indtast beskrivelse"
                     type="textarea" />
                 <div>
                     <div class="flex items-center justify-between mb-2">
@@ -182,14 +182,14 @@
                         </div>
                     </div>
                 </div>
-                <Button text="Opret liveopdatering" @click="logFormData" />
+                <Button text="Opret liveopdatering" @click="checkRequired" />
             </div>
             <div v-if="selectedType === 'carrier'" class="flex flex-col gap-4">
-                <InputField v-model="carrierSlug" label="Slug" placeholder="Indtast slug" type="text" />
-                <InputField v-model="carrierTitle" label="Titel" placeholder="Indtast titel" type="text" />
+                <InputField v-model="carrierSlug" label="Slug *" placeholder="Indtast slug" type="text" />
+                <InputField v-model="carrierTitle" label="Titel *" placeholder="Indtast titel" type="text" />
                 <InputField v-model="carrierDescription" label="Beskrivelse" placeholder="Indtast beskrivelse"
                     type="textarea" />
-                <Button text="Opret transportør" @click="logCarrierFormData" />
+                <Button text="Opret transportør" @click="checkRequired" />
             </div>
         </div>
         <ConfirmationModal :isVisible="showModal" :onConfirm="handleConfirmSubmission"
@@ -258,41 +258,44 @@ const toggleSelectAllServices = () => {
 
 const resetCountries = () => {
     selectedCountries.value = [];
-    console.log('Countries selection has been reset');
 };
 
 const resetCarriers = () => {
     selectedCarriers.value = [];
-    console.log('Carriers selection has been reset');
 };
 
 const resetServices = () => {
     selectedServices.value = [];
-    console.log('Services selection has been reset');
 };
 
 const toggleAccordion = () => {
     showDetails.value = !showDetails.value;
 };
 
-watch(selectedCountries, (newValue) => {
-    console.log('Selected countries:', newValue);
-});
+const checkRequired = async () => {
+    if (selectedType.value === 'incident') {
+        // Check if incident title and description are filled
+        if (!incidentTitle.value || !incidentDescription.value) {
+            alert('Liveopdateringens titel og beskrivelse skal udfyldes.');
+            return;
+        }
+        modalTitle.value = 'Liveopdatering'; // Set modal title for incident
+    } else if (selectedType.value === 'carrier') {
+        // Check if carrier slug and title are filled
+        if (!carrierSlug.value || !carrierTitle.value) {
+            alert('Transportørens slug og titel skal udfyldes.');
+            return;
+        }
+        modalTitle.value = 'Transportør'; // Set modal title for carrier
+    }
 
-const logFormData = async () => {
-    showModal.value = true; // Show modal when user clicks 'Opret'
-    modalTitle.value = 'Liveopdatering'; // Set title for incident
-};
-
-const logCarrierFormData = async () => {
-    showModal.value = true; // Show modal when user clicks 'Opret' for carrier
-    modalTitle.value = 'Transportør'; // Set title for carrier
+    // Show the modal after validation
+    showModal.value = true;
 };
 
 // Confirm form submission after modal confirmation
 const handleConfirmSubmission = async () => {
     showModal.value = false;
-
     // Initialize formData based on the selected type (incident or carrier)
     let formData = {};
 
@@ -319,7 +322,6 @@ const handleConfirmSubmission = async () => {
 
     try {
         const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
-        console.log(`${selectedType.value} created successfully:`, data);
     } catch (error) {
         console.error(`Error creating ${selectedType.value}:`, error);
     }
@@ -335,10 +337,8 @@ onMounted(async () => {
     try {
         const { data } = await axios.get(`${config.public.apiBase}/carriers`);
         carriers.value = data;
-        console.log('Carriers:', carriers.value);
         const { data: serviceData } = await axios.get(`${config.public.apiBase}/services`);
         services.value = serviceData;
-        console.log('Services:', services.value);
     } catch (error) {
         console.error('Fejl ved hentning af transportører:', error);
     }

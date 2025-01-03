@@ -1,6 +1,9 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Incident;
+use App\Models\Carrier;
+use App\Models\Service;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -13,12 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            CarrierSeeder::class,
-            IncidentSeeder::class,
-            ServiceSeeder::class,
-            IncidentCarrierSeeder::class,
-        ]);
+        if (Carrier::count() == 0 && Incident::count() == 0 && Service::count() == 0) {
+            $this->call([
+                IncidentSeeder::class,
+                CarrierSeeder::class,
+                ServiceSeeder::class,
+                IncidentCarrierSeeder::class,
+            ]);
+        } else {
+            echo "Database is not empty, seeders will not run.";
         
         // User::factory(10)->create();
 
@@ -26,5 +32,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        }
     }
 }

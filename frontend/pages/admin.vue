@@ -1,15 +1,18 @@
 <template>
     <div>
-        <div v-if="showSuccessMessage" class="bg-home-kiwi-200 text-home-kiwi-300 font-semibold p-4 rounded-md mb-4 max-w-screen-md transition duration-500 mx-auto">
+        <div v-if="showSuccessMessage" :class="{
+            'bg-home-kiwi-200 text-home-kiwi-300': isSuccess,
+            'bg-red-200 text-red-500': !isSuccess
+        }" class="font-semibold p-4 rounded-md mb-4 max-w-screen-md transition duration-500 mx-auto">
             <p>{{ successMessage }}</p>
         </div>
-        <h2 class="text-6xl fields text-center mb-5">Hvad vil du gerne oprette?</h2>
+        <h2 class="text-4xl md:text-6xl fields text-center mb-5">Hvad vil du gerne oprette?</h2>
         <div class="rounded-3xl bg-white p-8 max-w-screen-md mx-auto flex flex-col gap-5">
             <div>
                 <p class="text-lg mb-2">Type</p>
                 <div class="flex gap-4">
                     <label
-                        class="flex items-center justify-center gap-2 cursor-pointer px-8 py-2 border rounded-xl transition duration-200 ease-in-out"
+                        class="flex items-center justify-center gap-1 sm:gap-2 cursor-pointer px-4 sm:px-8 py-2 border rounded-xl transition duration-200 ease-in-out"
                         :class="{
                             'bg-[#F8F8F8] border-[#EBEBEB] text-text-default': selectedType !== 'incident',
                             'border-homeblue-100 bg-homeblue-08 text-homeblue-100': selectedType === 'incident'
@@ -21,7 +24,7 @@
                         <span class="text-lg">Liveopdatering</span>
                     </label>
                     <label
-                        class="flex items-center justify-center gap-2 cursor-pointer px-8 py-2 border rounded-xl transition duration-200 ease-in-out"
+                        class="flex items-center justify-center gap-1 sm:gap-2 cursor-pointer px-4 sm:px-8 py-2 border rounded-xl transition duration-200 ease-in-out"
                         :class="{
                             'bg-[#F8F8F8] border-[#EBEBEB] text-text-default': selectedType !== 'carrier',
                             'border-homeblue-100 bg-homeblue-08 text-homeblue-100': selectedType === 'carrier'
@@ -133,7 +136,7 @@
                     </div>
                 </div>
                 <div class="bg-homeblue-08 rounded-lg">
-                    <div class="FIRST flex items-center justify-between gap-4 px-6 py-4" @click="toggleAccordion">
+                    <div class="flex items-center justify-between gap-4 px-6 py-4" @click="toggleAccordion">
                         <div class="flex items-center gap-4">
                             <Icon src="Broadcast" size="3xl" />
                             <p class="text-lg font-semibold">Preview på liveopdatering</p>
@@ -240,6 +243,7 @@ const showDetails = ref(false);
 const showModal = ref(false); // Control modal visibility
 const modalTitle = ref('Liveopdatering');
 const showSuccessMessage = ref(false);
+const isSuccess = ref(true);
 const successMessage = ref('');
 
 const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
@@ -295,6 +299,7 @@ const checkRequired = async () => {
 };
 
 const handlePostCreationSuccess = (data: any) => {
+    isSuccess.value = true;
     if (selectedType.value === 'incident') {
         successMessage.value = `Liveopdateringen blev oprettet.`;
         resetIncidentForm();
@@ -302,7 +307,7 @@ const handlePostCreationSuccess = (data: any) => {
         successMessage.value = `Transportøren ${data.title} blev oprettet.`;
         resetCarrierForm();
     }
-    
+
     showSuccessMessage.value = true;
     setTimeout(() => {
         showSuccessMessage.value = false;
@@ -341,6 +346,7 @@ const handleConfirmSubmission = async () => {
         handlePostCreationSuccess(data);
     } catch (error) {
         console.error(`Error creating ${selectedType.value}:`, error);
+        isSuccess.value = false;
         successMessage.value = `Der opstod en fejl ved oprettelsen af ${selectedType.value}.`;
         showSuccessMessage.value = true;
         setTimeout(() => {
@@ -349,7 +355,6 @@ const handleConfirmSubmission = async () => {
     }
 };
 
-// Reset forms after successful submission
 const resetIncidentForm = () => {
     incidentTitle.value = '';
     incidentDescription.value = '';

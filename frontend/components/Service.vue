@@ -8,7 +8,7 @@
                         <Status :status="service.status" class="w-1/2" />
                     </div>
                     <div class="flex justify-end items-center gap-4">
-                        <div v-if="service.services && service.services.length > 0" v-for="incident in service.incidents.slice(0, 2)"
+                        <div v-if="service.incidents.length > 0" v-for="incident in service.incidents.slice(0, 2)"
                             :key="incident.incident_id" class="text-xs">
                             <p class="truncate max-w-12 sm:max-w-24 md:max-w-40">{{ incident.title }} LABEL COMPONENT
                             </p>

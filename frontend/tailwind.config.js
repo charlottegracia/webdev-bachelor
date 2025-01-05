@@ -18,6 +18,8 @@ export default {
           'default': '#292D33',
           'secondary': '#42464C',
           'tertiary': '#60656C',
+          'homegrey': '#4B4F54',
+          'lightgrey': '#6F7276',
         },
         home: {
           'bg': '#FAFAF8',
@@ -28,9 +30,9 @@ export default {
           'grape': '#D1D4F0',
           'grape-200': '#BABEE3',
           'grape-300': '#383C70',
-          'raspberry' : '#F0D1DE',
-          'raspberry-200' : '#E3BACB',
-          'raspberry-300' : '#63324D',
+          'raspberry': '#F0D1DE',
+          'raspberry-200': '#E3BACB',
+          'raspberry-300': '#63324D',
           'kiwi': '#C1E6D3',
           'kiwi-200': '#ABD9C1',
           'kiwi-300': '#264D32',
@@ -48,7 +50,7 @@ export default {
           '120': '#0547A9',
           '300': '#16405F',
         },
-      }, 
+      },
       maxWidth: {
         'content': '1320px'
       },

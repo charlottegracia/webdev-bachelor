@@ -53,10 +53,6 @@ const showDetails = ref(false);
 const toggleAccordion = () => {
     showDetails.value = !showDetails.value;
 };
-
-onMounted(() => {
-    console.log('service:', props.service);
-});
 </script>
 
 <style scoped>

@@ -39,7 +39,6 @@ onMounted(async () => {
     try {
         const { data } = await axios.get(`${config.public.apiBase}/services`);
         services.value = data;
-        console.log('Services:', services.value);
     } catch (error) {
         console.error('Fejl ved hentning af services:', error);
     }

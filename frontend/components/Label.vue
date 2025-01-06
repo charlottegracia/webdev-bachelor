@@ -21,10 +21,11 @@
                 <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-8" />
             </div>
 
-            <div v-else-if="props.size === 'lg'" class="flex items-center w-full">
+            <div v-else-if="props.size === 'lg'" class="flex items-center w-full gap-1">
                 <p v-if="props.incident && props.incident.updated_at" class="whitespace-nowrap">
-                    {{ formatDate(props.incident.updated_at) + ' - ' }}
+                    {{ formatDate(props.incident.updated_at) }}
                 </p>
+                <span>-</span>
                 <p class="truncate flex-1">
                     {{ props.incident?.title || 'Vis opdateringer' }}
                 </p>

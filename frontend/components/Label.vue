@@ -17,7 +17,7 @@
             <div v-if="props.size === 'sm'" class="flex items-center w-full">
                 <Icon :src="'info'" :size="'lg'" :color="'text-homeblue-300'" class="mr-2" />
                 <p class="truncate flex-1">
-                    {{ props.incident?.title || 'View Updates' }}
+                    {{ props.incident?.title || 'Vis opdateringer' }}
                 </p>
                 <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-8" />
             </div>
@@ -27,7 +27,7 @@
                     {{ formatDate(props.incident.updated_at) + ' - ' }}
                 </p>
                 <p class="truncate flex-1">
-                    {{ props.incident?.title || 'View Updates' }}
+                    {{ props.incident?.title || 'Vis opdateringer' }}
                 </p>
             </div>
         </a>

@@ -42,6 +42,30 @@ class CarrierController extends Controller
         return response()->json($carrier->load('services', 'incidents'), 200);
     }
 
+    /**
+     * Update a carrier.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'slug' => 'sometimes|required|string|max:50',
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'nullable|in:green,yellow,red',
+            'peak_up_charge' => 'nullable|numeric',
+        ]);
+
+        $carrier = Carrier::findOrFail($id);
+
+        $carrier->update($validated);
+
+        return response()->json($carrier->load('services', 'incidents'), 200);
+    }
+
      /**
      * Delete a carrier.
      *

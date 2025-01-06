@@ -43,8 +43,19 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 const modelValue = ref('');
 
+// Sanitize input to ensure no HTML or script tags are allowed, by not allowing characters in between the < and > symbols
+function sanitizeInput(input: string): string {
+    const sanitizedInput = input.match(/^(?!.*<[^>]+>).*$/)?.[0] || ''; 
+    return sanitizedInput;
+}
+
 watch(modelValue, (newValue) => {
-    emit('update:modelValue', newValue);
+    const sanitizedValue = sanitizeInput(newValue); 
+    emit('update:modelValue', sanitizedValue); 
+    // Update `modelValue` if the sanitization changed the input 
+    if (sanitizedValue !== newValue) {
+        modelValue.value = sanitizedValue;
+    }
 });
 </script>
 

@@ -19,7 +19,7 @@
                             <p class="truncate max-w-12 sm:max-w-24 md:max-w-40">{{ incident.title }} LABEL COMPONENT
                             </p>
                         </div>
-                        <Icon :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
+                        <Icon v-if="carrier.services && carrier.services.length > 0" :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
                             class="transition-all duration-300 transform" :class="showDetails ? 'rotate-180' : ''" />
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <div class="accordion-content" :class="{ 'expanded': showDetails }">
                     <div class="px-6">
                         <div class="flex flex-col">
-                            <div v-if="carrier.services.length > 0" v-for="service in carrier.services"
+                            <div v-if="carrier.services && carrier.services.length > 0" v-for="service in carrier.services"
                                 :key="service.service_id">
                                 <div class="flex py-3 border-t border-homeblue-12">
                                     <div class="flex w-full md:w-1/2 justify-between lg:justify-normal">
@@ -59,7 +59,6 @@ const showDetails = ref(false);
 const toggleAccordion = () => {
     showDetails.value = !showDetails.value;
 };
-
 </script>
 
 <style scoped>

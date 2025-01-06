@@ -1,5 +1,5 @@
 <template>
-    <footer class="max-w-content mx-auto mt-10">
+    <footer class="max-w-content mx-auto mt-10 relative">
         <div class="grid grid-cols-1 sm:grid-cols-2 border-y border-text-homegrey py-10 gap-10 md:gap-0">
             <img class="h-6 ml-1" :src="logoPath" alt="Homerunner Logo">
             <div class="md:mx-auto grid grid-cols-1 md:grid-cols-3 px-0 gap-4">

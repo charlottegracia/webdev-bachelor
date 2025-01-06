@@ -2,9 +2,8 @@
     <div class="group relative w-fit">
         <VTooltip :placement="placement" class="h-[inherit]">
             <div class="peer h-[inherit]">
-                <slot>
-                    <Icon src="info"></Icon>
-                </slot>
+                <!-- No default icon here, only render the passed content -->
+                <slot></slot>
             </div>
 
             <template #popper>
@@ -29,8 +28,6 @@ const props = withDefaults(
     }>(),
     {
         placement: 'top',
-
     }
 );
-
 </script>

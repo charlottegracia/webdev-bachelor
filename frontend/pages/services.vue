@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col gap-8">
         <div class="flex gap-8 items-center">
-            <Icon src="Graph" size="6xl" />
-            <h1 class="fields text-[32px] md:text-[64px]">IT-services</h1>
+            <Icon src="Graph" size="6xl" color="text-homeblue-300"/>
+            <h1 class="fields text-[32px] md:text-[64px] text-text-default">IT-services</h1>
         </div>
         <p class="md:max-w-[75%] font-semibold">Her kan du se status for Homerunners forskellige transportører</p>
         <div class="flex flex-col gap-4">

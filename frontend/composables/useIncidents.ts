@@ -37,7 +37,6 @@ export function useIncidents() {
       const config = useRuntimeConfig();
       const { data } = await axios.get(`${config.public.apiBase}/incidents`);
       incidents.value = data;
-      console.log('Incidents:', incidents.value);
     } catch (error) {
       console.error('Error fetching incidents:', error);
     }

@@ -1,5 +1,5 @@
 <template>
-    <div :class="['inline-block mr-4 text-base py-2 px-4 rounded-lg', backgroundColorClass, textColorClass]">
+    <div :class="['inline-block text-base py-2 px-4 rounded-lg', backgroundColorClass, textColorClass]">
         {{ text }}
     </div>
 </template>

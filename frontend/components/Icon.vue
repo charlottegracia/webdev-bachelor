@@ -22,7 +22,8 @@
     PhCalendar,
     PhInfo,
     PhPlusCircle,
-    PhMinusCircle
+    PhMinusCircle,
+    PhCheck
     // Add more icons here as needed
   } from '@phosphor-icons/vue/compact';
   
@@ -35,8 +36,9 @@
     PhBroadcast,
     PhCalendar,
     PhInfo,
+    PhMinusCircle,
     PhPlusCircle,
-    PhMinusCircle
+    PhCheck
     // Add more icons here as needed
 };
 

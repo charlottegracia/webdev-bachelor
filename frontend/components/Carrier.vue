@@ -60,9 +60,6 @@ const toggleAccordion = () => {
     showDetails.value = !showDetails.value;
 };
 
-onMounted(() => {
-    console.log('Carrier:', props.carrier);
-});
 </script>
 
 <style scoped>

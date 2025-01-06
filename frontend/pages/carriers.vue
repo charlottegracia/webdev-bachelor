@@ -39,7 +39,6 @@ onMounted(async () => {
   try {
     const { data } = await axios.get(`${config.public.apiBase}/carriers`);
     carriers.value = data;
-    console.log('Transportører:', carriers.value);
   } catch (error) {
     console.error('Fejl ved hentning af transportører:', error);
   }

@@ -12,18 +12,20 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('/carriers', [CarrierController::class, 'index'])->name('api.carriers.index');
 Route::post('/carriers', [CarrierController::class, 'store']);
-Route::get('carriers/{id}', [CarrierController::class, 'show']);
+Route::get('/carriers/{id}', [CarrierController::class, 'show']);
+Route::put('/carriers/{id}', [CarrierController::class, 'update']);
 Route::delete('/carriers/{id}', [CarrierController::class, 'delete']);
 
 Route::get('/incidents', [IncidentController::class, 'index'])->name('api.incidents.index');
 Route::post('/incidents', [IncidentController::class, 'store']);
-Route::get('incidents/{id}', [IncidentController::class, 'show']);
+Route::get('/incidents/{id}', [IncidentController::class, 'show']);
 Route::put('/incidents/{id}', [IncidentController::class, 'update']);
 Route::delete('/incidents/{id}', [IncidentController::class, 'delete']);
 
 Route::get('/services', [ServiceController::class, 'index'])->name('api.services.index');
 Route::post('/services', [ServiceController::class, 'store']);
-Route::get('services/{id}', [ServiceController::class, 'show']);
+Route::get('/services/{id}', [ServiceController::class, 'show']);
+Route::put('/services/{id}', [ServiceController::class, 'update']);
 Route::delete('/services/{id}', [ServiceController::class, 'delete']);
 
 Route::get('/test', function () {

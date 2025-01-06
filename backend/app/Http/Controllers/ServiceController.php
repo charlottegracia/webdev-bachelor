@@ -48,6 +48,29 @@ class ServiceController extends Controller
     }
 
     /**
+     * Update a service.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'nullable|in:green,yellow,red',
+        ]);
+
+        $service = Service::findOrFail($id);
+
+        $service->update($validated);
+
+        return response()->json($service->load('carriers', 'incidents'), 200);
+    }
+
+
+    /**
      * Delete a service.
      *
      * @param  int  $id

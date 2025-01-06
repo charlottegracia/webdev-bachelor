@@ -373,6 +373,10 @@ onMounted(async () => {
     try {
         const { data } = await axios.get(`${config.public.apiBase}/carriers`);
         carriers.value = data;
+        carriers.value = data.sort((a: Carrier, b: Carrier) => {
+            // sorting carriers alphabetically by title
+            return a.title.localeCompare(b.title);
+        });
         const { data: serviceData } = await axios.get(`${config.public.apiBase}/services`);
         services.value = serviceData;
     } catch (error) {

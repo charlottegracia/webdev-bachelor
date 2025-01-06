@@ -4,7 +4,7 @@
             class="flex relative items-center justify-between bg-white rounded-full shadow-home p-3 mt-8 max-w-content mx-auto z-50">
             <div>
                 <nuxt-link to="/">
-                    logo!
+                    <img src="/images/homerunner-logo.png" alt="Homerunner Logo" class="h-6">
                 </nuxt-link>
             </div>
             <nav class="hidden md:flex py-2 items-start gap-6">

@@ -13,7 +13,7 @@ class CarrierSeeder extends Seeder
      */
     public function run(): void
     {
-        Carrier::insert([
+        $carriers = [
             [
                 'slug' => 'dao',
                 'title' => 'DAO',
@@ -35,6 +35,10 @@ class CarrierSeeder extends Seeder
                 'status' => 'green',
                 'peak_up_charge' => 15.00,
             ],
-        ]);
+        ];
+
+        foreach ($carriers as $carrier) {
+            Carrier::create($carrier);
+        }
     }
 }

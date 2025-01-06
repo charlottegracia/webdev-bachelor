@@ -14,7 +14,7 @@ class IncidentSeeder extends Seeder
      */
     public function run(): void
     {
-        Incident::insert([
+        $incidents = [
             [
                 'title' => 'System Maintenance',
                 'message' => 'Scheduled maintenance for server updates.',
@@ -42,6 +42,10 @@ class IncidentSeeder extends Seeder
                 'expected_resolved_at' => Carbon::now('Europe/Copenhagen')->addHours(2),
                 'resolved_at' => null,
             ],
-        ]);
+        ];
+
+        foreach ($incidents as $incident) {
+            Incident::create($incident);
+        }
     }
 }

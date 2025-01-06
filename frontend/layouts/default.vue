@@ -72,6 +72,6 @@
         <main class="relative max-w-content mx-auto pt-40 z-10">
             <NuxtPage />
         </main>
-        <div>footer</div>
+        <Footer />
     </div>
 </template>

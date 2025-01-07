@@ -52,9 +52,20 @@ class Incident extends Model
     // Update the status to expired if the date has been exceeded
     public function checkAndExpire()
     {
-        if ($this->expected_resolved_at && Carbon::now('Europe/Copenhagen')->greaterThan($this->expected_resolved_at) && $this->status === 'active') {
-            $this->status = 'expired';
-            $this->resolved_at = Carbon::now('Europe/Copenhagen');
+        $currentTime = Carbon::now('Europe/Copenhagen');
+
+        // Check if the incident should be marked as expired and if resolved_at is reached
+        if ($this->status === 'active') {
+            if ($this->resolved_at && $currentTime->greaterThanOrEqualTo($this->resolved_at)) {
+                $this->status = 'expired';
+            }
+
+            // If expected_resolved_at is reached and resolved_at is not already set
+            if ($this->expected_resolved_at && $currentTime->greaterThanOrEqualTo($this->expected_resolved_at) && !$this->resolved_at) {
+                $this->status = 'expired';
+                $this->resolved_at = $currentTime;
+            }
+
             $this->save();
         }
     }

@@ -10,7 +10,7 @@ class ExpireIncidents extends Command
 {
     //The signature and description of the console command.
     protected $signature = 'expire:incidents';
-    protected $description = 'Update status for incidents based on expected_resolved_at';
+    protected $description = 'Update status for incidents based on resolved_at and expected_resolved_at';
 
     public function __construct()
     {
@@ -25,10 +25,14 @@ class ExpireIncidents extends Command
         $this->info('ExpireIncidents command is running');
 
         $incidents = Incident::where('status', 'active')
-        ->whereNotNull('expected_resolved_at')
-        ->where('expected_resolved_at', '<=', Carbon::now('Europe/Copenhagen'))
+        ->where(function ($query) {
+            $query->whereNotNull('expected_resolved_at')
+                  ->where('expected_resolved_at', '<=', Carbon::now('Europe/Copenhagen'))
+                  ->orWhereNotNull('resolved_at')
+                  ->where('resolved_at', '<=', Carbon::now('Europe/Copenhagen'));
+        })
         ->get();
-
+        
         foreach ($incidents as $incident) {
             $incident->checkAndExpire();
         }

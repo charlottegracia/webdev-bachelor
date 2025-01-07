@@ -60,6 +60,10 @@ class IncidentController extends Controller
 
         $incident = Incident::findOrFail($id);
 
+        if (isset($validated['resolved_at']) && $validated['resolved_at'] <= now()) {
+            $validated['status'] = 'expired'; 
+        }
+
         $incident->update($validated); 
 
         return response()->json($incident->load('carriers', 'services'));

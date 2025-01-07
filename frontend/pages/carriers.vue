@@ -21,11 +21,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
-
-const carriers = ref([]);
-const config = useRuntimeConfig();
+const { carriers, fetchCarriers } = useCarriers();
 
 function sortCarriersByName(carriers) {
   return carriers.sort((a, b) => {
@@ -48,11 +44,6 @@ const carriersWithoutIncidents = computed(() =>
 );
 
 onMounted(async () => {
-  try {
-    const { data } = await axios.get(`${config.public.apiBase}/carriers`);
-    carriers.value = data;
-  } catch (error) {
-    console.error('Fejl ved hentning af transportører:', error);
-  }
+  await fetchCarriers();
 });
 </script>

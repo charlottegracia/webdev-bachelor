@@ -18,7 +18,7 @@
                 <p class="truncate flex-1">
                     {{ props.incident?.title || 'Vis opdateringer' }}
                 </p>
-                <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-8" />
+                <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-3" />
             </div>
 
             <div v-else-if="props.size === 'lg'" class="flex items-center w-full gap-1">
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Incident } from '~/composables/useIncidents';
+import type { Incident } from '~/types.ts';
 
 const props = withDefaults(defineProps<{
     type: 'date' | 'link';

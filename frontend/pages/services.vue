@@ -21,11 +21,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
-
-const services = ref([]);
-const config = useRuntimeConfig();
+const { services, fetchServices } = useServices();
 
 // Computed properties to separate services
 const servicesWithIncidents = computed(() =>
@@ -36,11 +32,6 @@ const servicesWithoutIncidents = computed(() =>
 );
 
 onMounted(async () => {
-    try {
-        const { data } = await axios.get(`${config.public.apiBase}/services`);
-        services.value = data;
-    } catch (error) {
-        console.error('Fejl ved hentning af services:', error);
-    }
+    await fetchServices();
 });
 </script>

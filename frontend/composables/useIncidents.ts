@@ -1,33 +1,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRuntimeConfig } from '#app';
-
-type Carrier = {
-  carrier_id: number;
-  slug: string;
-  title: string;
-  type: string;
-  description: string;
-  status: string;
-  peak_up_charge: string;
-  created_at: string | null;
-  updated_at: string;
-};
-
-export type Incident = {
-  incident_id: number;
-  title: string;
-  message: string;
-  critical: number;
-  country: string;
-  type: string;
-  status: string;
-  expected_resolved_at?: string | null; 
-  resolved_at?: string | null;      
-  created_at?: string | null;
-  updated_at: string;
-  carriers: Carrier[];
-};
+import type { Incident } from '~/types.ts';
 
 export function useIncidents() {
   const incidents = ref<Incident[]>([]);
@@ -36,14 +10,71 @@ export function useIncidents() {
     try {
       const config = useRuntimeConfig();
       const { data } = await axios.get(`${config.public.apiBase}/incidents`);
-      incidents.value = data;
+
+      // sort incidents by `created_at` to show newest incidents first
+      incidents.value = data.sort((a: Incident, b: Incident) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     } catch (error) {
       console.error('Error fetching incidents:', error);
+    }
+  };
+
+  const resolveIncident = async (incidentId: number, resolvedAt: string) => {
+    try {
+      const config = useRuntimeConfig();
+      const response = await axios.put(
+        `${config.public.apiBase}/incidents/${incidentId}`,
+        { resolved_at: resolvedAt },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      if (response.status !== 200) {
+        throw new Error('Failed to mark incident as resolved');
+      }
+    } catch (error) {
+      console.error('Error resolving incident:', error);
+      throw error;
+    }
+  };
+
+  const postIncident = async (data: Incident) => {
+    try {
+      const config = useRuntimeConfig();
+      const response = await axios.post(`${config.public.apiBase}/incidents`, data)
+
+      if (response.status >= 200 && response.status <= 299) {
+        return response.data;
+      } else {
+        throw new Error('Failed to post incident');
+      }
+    } catch (error) {
+      console.error('Error posting incident:', error);
+      throw new Error('Failed to post incident');
+    }
+  };
+
+  const deleteIncident = async (incidentId: number) => {
+    try {
+      const config = useRuntimeConfig();
+      const response = await axios.delete(`${config.public.apiBase}/incidents/${incidentId}`, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status !== 200) {
+        throw new Error('Failed to delete incident');
+      }
+    } catch (error) {
+      console.error('Error deleting incident:', error);
+      throw error;
     }
   };
 
   return {
     incidents,
     fetchIncidents,
+    resolveIncident,
+    deleteIncident,
+    postIncident
   };
 }

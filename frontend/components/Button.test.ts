@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import Button from "./Button.vue"; // Adjust path if needed
+import Button from "./Button.vue"; 
 
 describe("Button.vue", () => {
   it("renders the correct text when passed as a prop", () => {
@@ -10,6 +10,26 @@ describe("Button.vue", () => {
 
     // Check if the button contains the correct text
     expect(wrapper.text()).toBe(text);
+  });
+});
+
+describe('Button.vue', () => {
+  it('throws a warning if the `text` prop is not provided', () => {
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    mount(Button, {
+      props: {}, 
+    });
+
+    // Ensure a warning was called
+    expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+
+    // Check that the warning contains the required prop message
+    expect(consoleWarnSpy.mock.calls[0][0]).toEqual(
+      expect.stringContaining('[Vue warn]: Missing required prop: "text"')
+    );
+
+    consoleWarnSpy.mockRestore();
   });
 });
 
@@ -32,11 +52,18 @@ describe("Button.vue", () => {
       props: { text: "Click Me" },
     });
 
-    // Simulate a click on the button
     await wrapper.trigger("click");
 
-    // Check if the click event has been emitted (if your button emits anything)
-    // In this case, since no event is emitted by default, you can test for a click handler
-    // expect(wrapper.emitted()).toHaveProperty('click');
+    // Check if the click event has been emitted by testing for a click handler
+    expect(wrapper.emitted()).toHaveProperty('click');
   });
+});
+
+it('has hover-related classes for interactivity', () => {
+  const wrapper = mount(Button, {
+    props: { text: 'Hover Me' },
+  });
+
+  expect(wrapper.classes()).toContain('hover:bg-white');
+  expect(wrapper.classes()).toContain('hover:text-homeblue-100');
 });

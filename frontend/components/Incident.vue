@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import countriesData from '~/public/countries.js';
+import countriesData from '../public/countries.js';
 
 const props = defineProps<{
     incident: IncidentType;

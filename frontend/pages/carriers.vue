@@ -31,15 +31,25 @@ function sortCarriersByName(carriers) {
   });
 }
 
+function filterActiveIncidents(incidents) {
+  return incidents.filter(incident => incident.status !== 'expired');
+}
+
 // Computed properties to separate and sort carriers
 const carriersWithIncidents = computed(() => 
   sortCarriersByName(
-    carriers.value.filter(carrier => carrier.incidents && carrier.incidents.length > 0)
+    carriers.value.filter(carrier => {
+      if (carrier.incidents && carrier.incidents.length > 0) {
+        carrier.incidents = filterActiveIncidents(carrier.incidents);
+        return carrier.incidents.length > 0;
+      }
+      return false;
+    })
   )
 );
 const carriersWithoutIncidents = computed(() => 
   sortCarriersByName(
-    carriers.value.filter(carrier => !carrier.incidents || carrier.incidents.length === 0)
+    carriers.value.filter(carrier => !carrier.incidents || filterActiveIncidents(carrier.incidents).length === 0)
   )
 );
 

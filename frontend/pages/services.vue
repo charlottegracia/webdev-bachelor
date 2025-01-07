@@ -23,12 +23,22 @@
 <script setup>
 const { services, fetchServices } = useServices();
 
-// Computed properties to separate services
+function filterActiveIncidents(incidents) {
+    return incidents.filter(incident => incident.status !== 'expired');
+}
+
+// Computed properties to separate and sort services
 const servicesWithIncidents = computed(() =>
-    services.value.filter(service => service.incidents && service.incidents.length > 0)
+    services.value.filter(service => {
+        if (service.incidents && service.incidents.length > 0) {
+            service.incidents = filterActiveIncidents(service.incidents);
+            return service.incidents.length > 0;
+        }
+        return false;
+    })
 );
 const servicesWithoutIncidents = computed(() =>
-    services.value.filter(service => !service.incidents || service.incidents.length === 0)
+    services.value.filter(service => !service.incidents || filterActiveIncidents(service.incidents).length === 0)
 );
 
 onMounted(async () => {

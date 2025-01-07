@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col gap-8 items-center max-w-screen-md mx-auto">
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-8">
       <Icon src="Broadcast" size="6xl" color="text-homeblue-300" />
-      <h1 class="fields text-[32px] md:text-[64px] text-homeblue-300">Liveopdateringer</h1>
+      <h1 class="fields text-[32px] md:text-[64px] text-text-default">Liveopdateringer</h1>
     </div>
     <p class="md:max-w-[75%] font-semibold text-center">
       På denne side findes en liste med Homerunners liveopdateringer. De opdateres løbende, når de bliver løst.
@@ -45,29 +45,13 @@
     </div>
 
     <div v-else v-for="incident in filteredIncidents" :key="incident.incident_id" class="w-full">
-      <Incident :incident="incident" />
+      <Incident :incident="incident" :editAllowed="true" />
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
 
-interface IncidentType {
-  incident_id: number;
-  title: string;
-  message: string;
-  country: string;
-  status: string;
-  resolved_at?: string | null;
-  expected_resolved_at?: string | null;
-  created_at: string;
-  updated_at: string;
-  critical: number;
-  type: string;
-  services: { id: number; title: string, description: string }[];
-  carriers: { carrier_id: number; title: string }[];
-}
+<script setup lang="ts">
+import { useIncidents } from '@/composables/useIncidents';
 
 interface Filters {
   resolved: boolean;
@@ -76,39 +60,17 @@ interface Filters {
   services: boolean;
 }
 
-const incidents = ref<IncidentType[]>([]);
+const { incidents, fetchIncidents } = useIncidents();
+
 const filters = ref<Filters>({
-  resolved: false,  // If checked show only unresolved incidents
+  resolved: false,  // If checked, show only unresolved incidents
   carriers: false,  // Show incidents with carriers
   countries: false, // Show incidents with countries
   services: false,  // Show incidents with services
 });
 
-const config = useRuntimeConfig();
-
-onMounted(async () => {
-  try {
-    const { data } = await axios.get(`${config.public.apiBase}/incidents`);
-    incidents.value = data.map((incident: any) => ({
-      ...incident,
-      country: incident.country || '',
-
-      carriers: Array.isArray(incident.carriers)
-        ? incident.carriers
-        : [{ carrier_id: 1, title: incident.carriers }],
-
-      services: incident.services || [],
-
-      critical: incident.critical || 0,
-      status: incident.status || '',
-    }));
-    incidents.value = incidents.value.sort(
-      (a: IncidentType, b: IncidentType) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
-    console.log('opdateringer:', incidents.value);
-  } catch (error) {
-    console.error('Fejl ved hentning af liveopdateringer:', error);
-  }
+onMounted(() => {
+  fetchIncidents();
 });
 
 // Function to toggle filter state

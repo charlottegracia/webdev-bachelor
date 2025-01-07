@@ -122,7 +122,9 @@
                 <div class="text-lg">
                     <div class="flex items-center gap-2">
                         <p>Er problemet kritisk?</p>
-                        <Tooltip text="Ved valg af 'Kritisk' ændres status på valgt transportør/service/land til rød" />
+                        <Tooltip text="Ved valg af 'Kritisk' ændres status på valgt transportør/service/land til rød">
+                            <Icon src="info" size="lg" />
+                        </Tooltip>
                     </div>
                     <div class="flex gap-6">
                         <div class="flex gap-2">
@@ -147,45 +149,7 @@
                     </div>
 
                     <div class="accordion-content" :class="{ 'expanded': showDetails }">
-                        <div class="px-6 py-4">
-                            <div class="mb-4 fields text-3xl">
-                                <p v-if="incidentTitle">{{ incidentTitle }}</p>
-                                <p v-else>Ingen titel angivet</p>
-                            </div>
-                            <div class="mb-4">
-                                <p v-if="incidentDescription">{{ incidentDescription }}</p>
-                                <p v-else>Ingen beskrivelse angivet</p>
-                            </div>
-                            <p>TAGS</p>
-                            <div class="mb-4">
-                                <p class="font-semibold">Valgte lande:</p>
-                                <ul>
-                                    <li v-for="country in selectedCountries" :key="country.code">{{ country.name }}</li>
-                                </ul>
-                            </div>
-                            <div class="mb-4">
-                                <p class="font-semibold">Valgte transportører:</p>
-                                <ul>
-                                    <li v-for="carrier in selectedCarriers" :key="carrier.carrier_id">{{ carrier.title
-                                        }}</li>
-                                </ul>
-                            </div>
-                            <div class="mb-4">
-                                <p class="font-semibold">Valgte services:</p>
-                                <ul>
-                                    <li v-for="service in selectedServices" :key="service.service_id">{{ service.title
-                                        }}</li>
-                                </ul>
-                            </div>
-                            <div v-if="expectedResolution" class="mb-4">
-                                <p class="font-semibold">Forventet løsningsdato:</p>
-                                <p>{{ expectedResolution }}</p>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Problemets status:</p>
-                                <p>{{ selectedProblemStatus === '1' ? 'Kritisk' : 'Ikke-kritisk' }}</p>
-                            </div>
-                        </div>
+                        <Incident :incident="previewIncident" :editAllowed="false" />
                     </div>
                 </div>
                 <Button text="Opret liveopdatering" @click="checkRequired" />
@@ -199,31 +163,15 @@
             </div>
         </div>
         <ConfirmationModal :isVisible="showModal" :onConfirm="handleConfirmSubmission"
-            :onCancel="handleCancelSubmission" :title="modalTitle" />
+            :onCancel="handleCancelSubmission" :title="modalTitle" :button="modalButton" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { useServices } from '~/composables/useServices';
 import countriesData from '~/public/countries.js';
-import axios from 'axios';
-const config = useRuntimeConfig();
 
-interface Country {
-    name: string;
-    code: string;
-}
-
-interface Carrier {
-    carrier_id: number;
-    title: string;
-}
-
-interface Service {
-    service_id: number;
-    title: string;
-    description: string;
-}
+import type { Carrier, Country, Service, Incident } from '~/types.ts';
 
 const incidentTitle = ref('');
 const incidentDescription = ref('');
@@ -232,23 +180,46 @@ const carrierTitle = ref('');
 const carrierDescription = ref('');
 const expectedResolution = ref('');
 const countries = countriesData.COUNTRIES as Country[];
-const carriers = ref<Carrier[]>([]);
-const services = ref<Service[]>([]);
 const selectedCountries = ref<Country[]>([]);
 const selectedCarriers = ref<Carrier[]>([]);
 const selectedServices = ref<Service[]>([]);
-const selectedType = ref('incident');
-const selectedProblemStatus = ref('0');
+const selectedType = ref<'incident' | 'carrier'>('incident');
+const selectedProblemStatus = ref<'0' | '1'>('0');
 const showDetails = ref(false);
-const showModal = ref(false); // Control modal visibility
-const modalTitle = ref('Liveopdatering');
+const showModal = ref(false);
+const modalTitle = ref('Er du sikker på, at du vil oprette denne liveopdatering?');
+const modalButton = ref('Opret liveopdatering');
 const showSuccessMessage = ref(false);
 const isSuccess = ref(true);
 const successMessage = ref('');
 
+const { postIncident } = useIncidents();
+const { carriers, fetchCarriers, postCarrier } = useCarriers();
+const { services, fetchServices } = useServices();
+
 const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
 const isAllCarriersSelected = computed(() => selectedCarriers.value.length === carriers.value.length);
 const isAllServicesSelected = computed(() => selectedServices.value.length === services.value.length);
+
+// preview data of incident
+const previewIncident = computed(() => ({
+    title: incidentTitle.value || 'Ingen titel angivet',
+    message: incidentDescription.value || 'Ingen beskrivelse angivet',
+    country: selectedCountries.value.map(c => c.code).join(','),
+    expected_resolved_at: expectedResolution.value || null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    critical: parseInt(selectedProblemStatus.value),
+    services: selectedServices.value.map(s => ({
+        id: s.service_id,
+        title: s.title,
+        description: s.description,
+    })),
+    carriers: selectedCarriers.value.map(c => ({
+        carrier_id: c.carrier_id,
+        title: c.title,
+    })),
+}));
 
 const toggleSelectAllCountries = () => {
     selectedCountries.value = isAllCountriesSelected.value ? [] : [...countries];
@@ -278,21 +249,21 @@ const toggleAccordion = () => {
     showDetails.value = !showDetails.value;
 };
 
-const checkRequired = async () => {
+const checkRequired = () => {
     if (selectedType.value === 'incident') {
-        // Check if incident title and description are filled
         if (!incidentTitle.value || !incidentDescription.value) {
             alert('Liveopdateringens titel og beskrivelse skal udfyldes.');
             return;
         }
-        modalTitle.value = 'Liveopdatering';
+        modalTitle.value = 'Er du sikker på, at du vil oprette denne liveopdatering?';
+        modalButton.value = 'Opret liveopdatering';
     } else if (selectedType.value === 'carrier') {
-        // Check if carrier slug and title are filled
         if (!carrierSlug.value || !carrierTitle.value) {
             alert('Transportørens slug og titel skal udfyldes.');
             return;
         }
-        modalTitle.value = 'Transportør';
+        modalTitle.value = 'Er du sikker på, at du vil oprette denne transportør?';
+        modalButton.value = 'Opret transportør';
     }
 
     showModal.value = true;
@@ -311,48 +282,57 @@ const handlePostCreationSuccess = (data: any) => {
     showSuccessMessage.value = true;
     setTimeout(() => {
         showSuccessMessage.value = false;
-    }, 3000);
+    }, 10000);
 };
 
-// Confirm form submission after modal confirmation
 const handleConfirmSubmission = async () => {
     showModal.value = false;
-    // Initialize formData based on the selected type (incident or carrier)
     let formData = {};
 
     if (selectedType.value === 'incident') {
         formData = {
             title: incidentTitle.value,
             message: incidentDescription.value,
-            country: selectedCountries.value.map(c => c.code).toString(),
+            country: selectedCountries.value.map(c => c.code).join(','),
             carrier_ids: selectedCarriers.value.map(c => c.carrier_id),
             service_ids: selectedServices.value.map(s => s.service_id),
             expected_resolved_at: expectedResolution.value,
-            critical: selectedProblemStatus.value === '1',
+            critical: parseInt(selectedProblemStatus.value),
         };
+
+        try {
+            const incidentData = await postIncident(formData as Incident);
+            handlePostCreationSuccess(incidentData);
+        } catch (error) {
+            handlePostCreationFailure();
+        }
     } else if (selectedType.value === 'carrier') {
         formData = {
             slug: carrierSlug.value,
             title: carrierTitle.value,
             description: carrierDescription.value,
         };
-    }
 
-    // Choose endpoint based on the selected type
-    const endpoint = selectedType.value === 'incident' ? '/incidents' : '/carriers';
-
-    try {
-        const { data } = await axios.post(`${config.public.apiBase}${endpoint}`, formData);
-        handlePostCreationSuccess(data);
-    } catch (error) {
-        console.error(`Error creating ${selectedType.value}:`, error);
-        isSuccess.value = false;
-        successMessage.value = `Der opstod en fejl ved oprettelsen af ${selectedType.value}.`;
-        showSuccessMessage.value = true;
-        setTimeout(() => {
-            showSuccessMessage.value = false;
-        }, 3000);
+        try {
+            const carrierData = await postCarrier(formData as Carrier);
+            handlePostCreationSuccess(carrierData);
+        } catch (error) {
+            handlePostCreationFailure();
+        }
     }
+};
+
+const handlePostCreationFailure = () => {
+    isSuccess.value = false;
+    if (selectedType.value === 'incident') {
+        successMessage.value = `Der opstod en fejl ved oprettelsen af liveopdateringen.`;
+    } else if (selectedType.value === 'carrier') {
+    successMessage.value = `Der opstod en fejl ved oprettelsen af transportør.`;
+    }
+    showSuccessMessage.value = true;
+    setTimeout(() => {
+        showSuccessMessage.value = false;
+    }, 10000);
 };
 
 const resetIncidentForm = () => {
@@ -376,16 +356,11 @@ const handleCancelSubmission = () => {
 };
 
 onMounted(async () => {
-    try {
-        const { data } = await axios.get(`${config.public.apiBase}/carriers`);
-        carriers.value = data;
-        const { data: serviceData } = await axios.get(`${config.public.apiBase}/services`);
-        services.value = serviceData;
-    } catch (error) {
-        console.error('Fejl ved hentning af transportører:', error);
-    }
+    await fetchServices();
+    await fetchCarriers();
 });
 </script>
+
 
 <style scoped>
 .accordion-content {

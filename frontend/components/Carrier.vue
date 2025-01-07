@@ -16,8 +16,7 @@
                     <div class="flex justify-end items-center gap-4">
                         <div v-if="carrier && carrier.incidents.length > 0" v-for="incident in carrier.incidents.slice(0, 2)"
                             :key="incident.incident_id" class="text-xs">
-                            <p class="truncate max-w-12 sm:max-w-24 md:max-w-40">{{ incident.title }} LABEL COMPONENT
-                            </p>
+                            <Label :type="'link'" :incident="incident" class="w-full hidden md:block sm:max-w-24 md:max-w-48"/>
                         </div>
                         <Icon v-if="carrier && carrier.services && carrier.services.length > 0" :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
                             class="transition-all duration-300 transform" :class="showDetails ? 'rotate-180' : ''" />
@@ -32,7 +31,9 @@
                                 <div class="flex py-3 border-t border-homeblue-12">
                                     <div class="flex w-full md:w-1/2 justify-between lg:justify-normal">
                                         <div class="flex md:w-2/3 items-center gap-4">
-                                            <Tooltip text="Oversigt over servicepoints" placement="top" size="md" />
+                                            <Tooltip text="Oversigt over servicepoints">
+                                                <Icon src="info" size="lg" />
+                                            </Tooltip>
                                             <p>{{ service.title }}</p>
                                         </div>
                                         <Status :status="service.status" class="md:w-1/3"/>

@@ -3,15 +3,14 @@
         <div class="flex flex-col gap-6">
             <div class="bg-white rounded-lg">
                 <div class="flex items-center justify-between gap-4 px-6 py-7" @click="toggleAccordion">
-                    <div class="w-1/2 flex items-center">
-                        <p class="w-1/2 font-semibold hidden md:block">{{ service.description }}</p>
-                        <Status :status="service.status" class="w-1/2" />
+                    <div class="w-full md:w-1/2 flex md:items-center">
+                        <p class="w-1/2 font-semibold">{{ service.description }}</p>
+                        <Status :status="service.status" class="w-1/2 justify-end md:justify-normal" />
                     </div>
                     <div class="flex justify-end items-center gap-4">
                         <div v-if="service.incidents.length > 0" v-for="incident in service.incidents.slice(0, 2)"
-                            :key="incident.incident_id" class="text-xs">
-                            <p class="truncate max-w-12 sm:max-w-24 md:max-w-40">{{ incident.title }} LABEL COMPONENT
-                            </p>
+                            :key="incident.incident_id" class="text-xs hidden md:block">
+                            <Label :type="'link'" :incident="incident" class="w-full md:max-w-48"/>
                         </div>
                         <Icon v-if="service.services && service.services.length > 0" :src="showDetails ? 'MinusCircle' : 'PlusCircle'" size="2xl"
                             class="transition-all duration-300 transform" :class="showDetails ? 'rotate-180' : ''" />
@@ -26,7 +25,9 @@
                                 <div class="flex py-3 border-t border-homeblue-12">
                                     <div class="flex w-full md:w-1/2 justify-between lg:justify-normal">
                                         <div class="flex md:w-2/3 items-center gap-4">
-                                            <Tooltip text="Oversigt over servicepoints" placement="top" size="md" />
+                                            <Tooltip text="Oversigt over servicepoints">
+                                                <Icon src="info" size="lg" />
+                                            </Tooltip>
                                             <p>{{ service.title }}</p>
                                         </div>
                                         <Status :status="service.status" class="md:w-1/3"/>

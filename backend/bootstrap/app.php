@@ -21,7 +21,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             '/api/incidents',
-            '/api/carriers' 
+            '/api/carriers',
+            '/api/incidents/*',
         ]);
         //
     })

@@ -35,12 +35,12 @@
                 </nuxt-link>
             </nav>
             <div class="hidden md:flex items-center gap-6">
-                <a href="https://homerunner.com">
+                <nuxt-link to="/admin">
                     <p
                         class="bg-homeblue-100 text-center text-white rounded-full border border-homeblue-120 px-4 py-[10px] -tracking-[.16px] leading-[110%] hover:bg-white hover:text-homeblue-120 transition duration-300 cursor-pointer">
-                        Gå til homerunner.com
+                        Gå til adminpanel
                     </p>
-                </a>
+                </nuxt-link>
             </div>
             <div class="ml-auto block md:hidden cursor-pointer relative" @click="showMobileNav()">
                 <svg class="ham hamRotate ham8" viewBox="0 0 100 100" width="50"

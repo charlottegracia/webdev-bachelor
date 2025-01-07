@@ -60,6 +60,10 @@ class IncidentController extends Controller
 
         $incident = Incident::findOrFail($id);
 
+        if (isset($validated['resolved_at']) && $validated['resolved_at'] <= now()) {
+            $validated['status'] = 'expired'; 
+        }
+
         $incident->update($validated); 
 
         return response()->json($incident->load('carriers', 'services'));
@@ -79,11 +83,14 @@ class IncidentController extends Controller
             return response()->json(['message' => 'Incident not found.'], 404);
         }
 
+        $incident->status = 'expired';
+        $incident->save();
+
         $incident->carriers()->detach();
         $incident->services()->detach();
-
-        $incident->delete();
-
+        
+        $incident->delete(); 
+        
         return response()->json(['message' => 'Incident deleted.'], 200);
     }
 }

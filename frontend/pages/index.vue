@@ -2,7 +2,7 @@
     <div>
         <h1 class="fields text-[64px] pb-12">Driftstatus</h1>
         <section class="grid grid-cols-2 md:grid-cols-3 gap-7 w-full">
-            <div
+            <nuxt-link to="/updates" 
                 class="bg-homeblue-08 text-homeblue-300 col-span-2 h-[400px] rounded-2xl p-8 flex flex-col justify-between">
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-5">
@@ -18,12 +18,12 @@
                         </div>
                     </div>
                 </div>
-                <nuxt-link to="/updates" class="w-fit self-end text-lg flex items-center gap-3">
+                <div class="w-fit self-end text-lg flex items-center gap-3">
                     <p>Se flere</p>
                     <Icon src="ArrowRight" size="xl" color="text-homeblue-300" />
-                </nuxt-link>
-            </div>
-            <div
+                </div>
+            </nuxt-link>
+            <nuxt-link to="/services"
                 class="bg-home-grape text-home-grape-300 col-span-1 h-[400px] rounded-2xl p-8 flex flex-col justify-between">
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-5">
@@ -34,12 +34,12 @@
                     </div>
                     <p class="text-xl">Status for Homerunners services og API'er</p>
                 </div>
-                <nuxt-link to="/services" class="w-fit self-end text-lg flex items-center gap-3">
+                <div class="w-fit self-end text-lg flex items-center gap-3">
                     <p>Se status</p>
                     <Icon src="ArrowRight" size="xl" color="text-home-grape-300" />
-                </nuxt-link>
-            </div>
-            <div
+                </div>
+            </nuxt-link>
+            <nuxt-link to="/countries"
                 class="bg-home-kiwi text-home-kiwi-300 col-span-1 h-[400px] rounded-2xl p-8 flex flex-col justify-between">
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-5">
@@ -52,12 +52,12 @@
                         detaljer på kortet
                     </p>
                 </div>
-                <nuxt-link to="/countries" class="w-fit self-end text-lg flex items-center gap-3">
+                <div class="w-fit self-end text-lg flex items-center gap-3">
                     <p>Åben kort</p>
                     <Icon src="ArrowRight" size="xl" color="text-home-kiwi-300" />
-                </nuxt-link>
-            </div>
-            <div
+                </div>
+            </nuxt-link>
+            <nuxt-link to="/carriers"
                 class="bg-home-tangerine text-home-tangerine-300 col-span-1 h-[400px] rounded-2xl p-8 flex flex-col justify-between">
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-5">
@@ -69,12 +69,12 @@
                     <p class="text-xl">Status på de forskellige transportører
                     </p>
                 </div>
-                <nuxt-link to="/carriers" class="w-fit self-end text-lg flex items-center gap-3">
+                <div class="w-fit self-end text-lg flex items-center gap-3">
                     <p>Se status</p>
                     <Icon src="ArrowRight" size="xl" color="text-home-tangerine-300" />
-                </nuxt-link>
-            </div>
-            <div
+                </div>
+            </nuxt-link>
+            <nuxt-link to="/deadlines-and-peak"
                 class="bg-home-raspberry text-home-raspberry-300 col-span-1 h-[400px] rounded-2xl p-8 flex flex-col justify-between">
                 <div class="flex flex-col gap-5">
                     <div class="flex items-center gap-5">
@@ -86,11 +86,11 @@
                     <p class="text-xl">Vigtige deadlines og peaktillæg
                     </p>
                 </div>
-                <nuxt-link to="/deadlines-and-peak" class="w-fit self-end text-lg flex items-center gap-3">
+                <div class="w-fit self-end text-lg flex items-center gap-3">
                     <p>Se oversigt</p>
                     <Icon src="ArrowRight" size="xl" color="text-home-raspberry-300" />
-                </nuxt-link>
-            </div>
+                </div>
+            </nuxt-link>
             <div class="col-span-2 md:col-span-3">
                 <Banner class="flex flex-col gap-6">
                     <div class="fields text-[64px] text-homeblue-100">Hold dig opdateret</div>

@@ -49,7 +49,7 @@ class IncidentObserver
     public function deleted(Incident $incident)
     {
         foreach ($incident->carriers as $carrier) {
-             $carrier->updateStatus();
+            $carrier->updateStatus();
         }
 
         foreach ($incident->services as $service) {

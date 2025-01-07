@@ -20,7 +20,7 @@ Route::get('/incidents', [IncidentController::class, 'index'])->name('api.incide
 Route::post('/incidents', [IncidentController::class, 'store']);
 Route::get('/incidents/{id}', [IncidentController::class, 'show']);
 Route::put('/incidents/{id}', [IncidentController::class, 'update']);
-Route::delete('/incidents/{id}', [IncidentController::class, 'delete']);
+Route::delete('/incidents/{id}', [IncidentController::class, 'delete'])->name('api.incidents.delete');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('api.services.index');
 Route::post('/services', [ServiceController::class, 'store']);

@@ -83,11 +83,14 @@ class IncidentController extends Controller
             return response()->json(['message' => 'Incident not found.'], 404);
         }
 
+        $incident->status = 'expired';
+        $incident->save();
+
         $incident->carriers()->detach();
         $incident->services()->detach();
-
-        $incident->delete();
-
+        
+        $incident->delete(); 
+        
         return response()->json(['message' => 'Incident deleted.'], 200);
     }
 }

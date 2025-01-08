@@ -13,7 +13,7 @@
                     </div>
                     <p class="text-xl">Se en samlet oversigt over alle hændelser</p>
                     <div class="flex flex-col gap-2">
-                        <div v-for="incident in recentIncidents" :key="incident.incident_id">
+                        <div v-for="incident in incidents.slice(0, 3)" :key="incident.incident_id">
                             <Label :size="'lg'" :type="'link'" :incident="incident" class="w-[632px]" />
                         </div>
                     </div>
@@ -110,10 +110,4 @@ onMounted(() => {
     fetchIncidents();
 });
 
-// Compute the 3 most recently updated incidents
-const recentIncidents = computed(() => {
-    return incidents.value
-        .sort((a, b) => (new Date(b.updated_at || 0).getTime()) - (new Date(a.updated_at || 0).getTime()))
-        .slice(0, 3);
-});
 </script>

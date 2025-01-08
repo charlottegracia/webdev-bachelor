@@ -168,9 +168,6 @@
 </template>
 
 <script setup lang="ts">
-import { useServices } from '~/composables/useServices';
-import countriesData from '~/public/countries.js';
-
 import type { Carrier, Country, Service, Incident } from '~/types.ts';
 
 const incidentTitle = ref('');
@@ -179,7 +176,6 @@ const carrierSlug = ref('');
 const carrierTitle = ref('');
 const carrierDescription = ref('');
 const expectedResolution = ref('');
-const countries = countriesData.COUNTRIES as Country[];
 const selectedCountries = ref<Country[]>([]);
 const selectedCarriers = ref<Carrier[]>([]);
 const selectedServices = ref<Service[]>([]);
@@ -196,8 +192,9 @@ const successMessage = ref('');
 const { postIncident } = useIncidents();
 const { carriers, fetchCarriers, postCarrier } = useCarriers();
 const { services, fetchServices } = useServices();
+const { countries } = useCountries();
 
-const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.length);
+const isAllCountriesSelected = computed(() => selectedCountries.value.length === countries.value.length);
 const isAllCarriersSelected = computed(() => selectedCarriers.value.length === carriers.value.length);
 const isAllServicesSelected = computed(() => selectedServices.value.length === services.value.length);
 
@@ -222,7 +219,7 @@ const previewIncident = computed(() => ({
 }));
 
 const toggleSelectAllCountries = () => {
-    selectedCountries.value = isAllCountriesSelected.value ? [] : [...countries];
+    selectedCountries.value = isAllCountriesSelected.value ? [] : [...countries.value];
 };
 
 const toggleSelectAllCarriers = () => {

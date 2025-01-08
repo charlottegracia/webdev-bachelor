@@ -38,8 +38,7 @@ export function useIncidents() {
     try {
       const response = await axios.put(
         `${config.public.apiBase}/incidents/${incidentId}`,
-        { resolved_at: resolvedAt },
-        { headers: { 'Content-Type': 'application/json' } }
+        { resolved_at: resolvedAt }
       );
 
       if (response.status !== 200) {
@@ -53,9 +52,7 @@ export function useIncidents() {
 
   const deleteIncident = async (incidentId: number) => {
     try {
-      const response = await axios.delete(`${config.public.apiBase}/incidents/${incidentId}`, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await axios.delete(`${config.public.apiBase}/incidents/${incidentId}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to delete incident');

@@ -4,10 +4,10 @@ import type { Incident } from '~/types.ts';
 
 export function useIncidents() {
   const incidents = ref<Incident[]>([]);
+  const config = useRuntimeConfig();
 
   const fetchIncidents = async () => {
     try {
-      const config = useRuntimeConfig();
       const { data } = await axios.get(`${config.public.apiBase}/incidents`);
 
       // sort incidents by `created_at` to show newest incidents first
@@ -21,7 +21,6 @@ export function useIncidents() {
 
   const postIncident = async (data: Incident) => {
     try {
-      const config = useRuntimeConfig();
       const response = await axios.post(`${config.public.apiBase}/incidents`, data)
 
       if (response.status >= 200 && response.status <= 299) {
@@ -37,7 +36,6 @@ export function useIncidents() {
 
   const resolveIncident = async (incidentId: number, resolvedAt: string) => {
     try {
-      const config = useRuntimeConfig();
       const response = await axios.put(
         `${config.public.apiBase}/incidents/${incidentId}`,
         { resolved_at: resolvedAt },
@@ -55,7 +53,6 @@ export function useIncidents() {
 
   const deleteIncident = async (incidentId: number) => {
     try {
-      const config = useRuntimeConfig();
       const response = await axios.delete(`${config.public.apiBase}/incidents/${incidentId}`, {
         headers: { 'Content-Type': 'application/json' },
       });

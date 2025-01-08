@@ -19,6 +19,22 @@ export function useIncidents() {
     }
   };
 
+  const postIncident = async (data: Incident) => {
+    try {
+      const config = useRuntimeConfig();
+      const response = await axios.post(`${config.public.apiBase}/incidents`, data)
+
+      if (response.status >= 200 && response.status <= 299) {
+        return response.data;
+      } else {
+        throw new Error('Failed to post incident');
+      }
+    } catch (error) {
+      console.error('Error posting incident:', error);
+      throw new Error('Failed to post incident');
+    }
+  };
+
   const resolveIncident = async (incidentId: number, resolvedAt: string) => {
     try {
       const config = useRuntimeConfig();
@@ -34,22 +50,6 @@ export function useIncidents() {
     } catch (error) {
       console.error('Error resolving incident:', error);
       throw error;
-    }
-  };
-
-  const postIncident = async (data: Incident) => {
-    try {
-      const config = useRuntimeConfig();
-      const response = await axios.post(`${config.public.apiBase}/incidents`, data)
-
-      if (response.status >= 200 && response.status <= 299) {
-        return response.data;
-      } else {
-        throw new Error('Failed to post incident');
-      }
-    } catch (error) {
-      console.error('Error posting incident:', error);
-      throw new Error('Failed to post incident');
     }
   };
 

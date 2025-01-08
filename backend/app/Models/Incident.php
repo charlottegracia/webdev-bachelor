@@ -49,7 +49,6 @@ class Incident extends Model
         });
     }
 
-    // Update the status to expired if the date has been exceeded
     public function checkAndExpire()
     {
         $currentTime = Carbon::now('Europe/Copenhagen');

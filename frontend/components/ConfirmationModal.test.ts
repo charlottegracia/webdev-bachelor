@@ -78,31 +78,14 @@ describe('ConfirmationModal', () => {
     expect(onCancelMock).toHaveBeenCalledTimes(1);
   });
 
- 
-  it('computes the lowercased title correctly', () => {
-    const wrapper = mount(ConfirmationModal, {
-      props: {
-        isVisible: true,
-        title: 'Test Title',
-        onConfirm: vi.fn(),
-        onCancel: vi.fn(),
-      },
-      global: {
-        components: { Button }
-      }
-    });
-
-    const paragraphText = wrapper.find('p').text();
-    expect(paragraphText).toContain('test title');
-  });
-
-  it('sets the confirm button text dynamically based on the title', () => {
+  it('sets the confirm button text dynamically based on the button prop', () => {
     const wrapper = mount(ConfirmationModal, {
       props: {
         isVisible: true,
         title: 'delete',
         onConfirm: vi.fn(),
         onCancel: vi.fn(),
+        button: 'Delete'
       },
       global: {
         components: { Button }
@@ -110,7 +93,7 @@ describe('ConfirmationModal', () => {
     });
 
     const confirmButton = wrapper.findComponent(Button);
-    expect(confirmButton.text()).toBe('Opret delete');
+    expect(confirmButton.text()).toBe('Delete');
   });
 
   it('sets the cancel button text to "Annuller"', () => {
@@ -129,8 +112,6 @@ describe('ConfirmationModal', () => {
     const cancelButton = wrapper.findAllComponents(Button).at(1);
     expect(cancelButton?.text()).toBe('Annuller');
   });
-
-
 
   it('throws a warning if required props are not provided', () => {
     const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});

@@ -1,9 +1,22 @@
 import { mount } from '@vue/test-utils';
+import { describe, it, expect, vi } from 'vitest';
 import Incident from './Incident.vue';
 import Tag from './Tag.vue';
+import type { Incident as IncidentType } from '~/types';
+
+// Mock the useIncidents composable
+vi.mock('@/composables/useIncidents', () => ({
+  useIncidents: vi.fn().mockReturnValue({
+    incidents: [],
+    fetchIncidents: vi.fn(),
+    resolveIncident: vi.fn(),
+    deleteIncident: vi.fn(),
+    postIncident: vi.fn(),
+  }),
+}));
 
 describe('Incident.vue', () => {
-  const incident = {
+  const incident: IncidentType = {
     incident_id: 1,
     title: 'Test Incident',
     message: 'This is a test incident message.',
@@ -14,18 +27,18 @@ describe('Incident.vue', () => {
     critical: 1,
     type: 'service',
     services: [
-      { id: 1, title: 'Service 1', description: 'Service 1 Description' },
-      { id: 2, title: 'Service 2', description: 'Service 2 Description' },
+      { service_id: 1, title: 'Service 1', description: 'Service 1 Description', status: 'active', created_at: '2023-10-01T12:00:00Z', updated_at: '2023-10-01T12:00:00Z' },
+      { service_id: 2, title: 'Service 2', description: 'Service 2 Description', status: 'active', created_at: '2023-10-01T12:00:00Z', updated_at: '2023-10-01T12:00:00Z' },
     ],
     carriers: [
-      { carrier_id: 1, title: 'Carrier 1' },
-      { carrier_id: 2, title: 'Carrier 2' },
+      { carrier_id: 1, title: 'Carrier 1', slug: 'carrier-1', type: 'type1', description: 'Description 1', status: 'active', created_at: '2023-10-01T12:00:00Z', updated_at: '2023-10-01T12:00:00Z', peak_up_charge: '10' },
+      { carrier_id: 2, title: 'Carrier 2', slug: 'carrier-2', type: 'type2', description: 'Description 2', status: 'active', created_at: '2023-10-01T12:00:00Z', updated_at: '2023-10-01T12:00:00Z', peak_up_charge: '20' },
     ],
   };
 
   it('renders the incident title', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
@@ -35,17 +48,18 @@ describe('Incident.vue', () => {
 
   it('renders the incident message', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
     });
-    expect(wrapper.find('p.mt-2').text()).toBe('This is a test incident message.');
+    const incidentMessage = wrapper.find('p.incident-message');
+    expect(incidentMessage.text()).toBe('This is a test incident message.');
   });
 
   it('renders the formatted creation date', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
@@ -56,7 +70,7 @@ describe('Incident.vue', () => {
 
   it('renders the correct number of country tags', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
@@ -67,7 +81,7 @@ describe('Incident.vue', () => {
 
   it('renders the correct number of carrier tags', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
@@ -78,7 +92,7 @@ describe('Incident.vue', () => {
 
   it('renders the correct number of service tags', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }
@@ -89,7 +103,7 @@ describe('Incident.vue', () => {
 
   it('renders the correct country names', () => {
     const wrapper = mount(Incident, {
-      props: { incident },
+      props: { incident, editAllowed: true },
       global: {
         components: { Tag }
       }

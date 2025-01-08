@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
 import Carrier from './Carrier.vue';
+import Label from './Label.vue';
 
 describe('Carrier.vue', () => {
   it('renders the correct carrier title', () => {
@@ -75,9 +76,12 @@ describe('Carrier.vue', () => {
 
     const wrapper = mount(Carrier, {
       props: { carrier },
+      global: {
+        components: { Label }
+      }
     });
 
-    const incidents = wrapper.findAll('.text-xs');
+    const incidents = wrapper.findAllComponents(Label);
     // Check if the correct number of incidents are rendered
     expect(incidents.length).toBe(2);
     expect(incidents[0].text()).toContain('Incident 1');
@@ -123,24 +127,24 @@ describe('Carrier.vue', () => {
     // Check if the props are correctly passed to the component
     expect(wrapper.props().carrier).toEqual(carrier);
   });
-  
+
   it('throws a warning if the `carrier` prop is not provided', () => {
     const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-  
+
     // Mount the component without the `carrier` prop
     mount(Carrier as any, {
       props: {},
     });
-  
+
     // Ensure a warning was called
     expect(consoleWarnSpy).toHaveBeenCalled();
-  
+
     // Check that at least one warning contains the required prop message
     const warningMessages = consoleWarnSpy.mock.calls.map(call => call[0]);
     expect(warningMessages).toEqual(
       expect.arrayContaining([expect.stringContaining('[Vue warn]: Missing required prop: "carrier"')])
     );
-  
+
     consoleWarnSpy.mockRestore();
   });
 

@@ -42,7 +42,7 @@ import countriesData from '../public/countries.js';
 import type { Incident } from '../types.ts';
 import { useIncidents } from '../composables/useIncidents';
 const { resolveIncident, deleteIncident } = useIncidents();
- 
+const { countries } = useCountries();
 
 const props = defineProps<{
     incident: Incident;
@@ -78,7 +78,7 @@ const formatDate = (dateString?: string) => {
 
 // Get the country name based on the code
 const getCountryName = (countryCode: string) => {
-    const country = countriesData.COUNTRIES.find((country) => country.code === countryCode);
+    const country = countries.value.find((country) => country.code === countryCode);
     return country ? country.name : countryCode; // Return country name if found, otherwise return the code
 };
 

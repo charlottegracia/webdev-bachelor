@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import axios from 'axios';
 import { useRuntimeConfig } from '#app';
 import type { Incident } from '.././types.ts';

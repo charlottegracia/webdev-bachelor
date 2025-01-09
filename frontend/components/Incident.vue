@@ -38,9 +38,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import countriesData from '../public/countries.js';
 import type { Incident } from '../types.ts';
 import { useIncidents } from '../composables/useIncidents';
+import { useCountries } from '../composables/useCountries'; // Add this line
 const { resolveIncident, deleteIncident } = useIncidents();
 const { countries } = useCountries();
 

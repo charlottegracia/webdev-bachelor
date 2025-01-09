@@ -3,15 +3,26 @@ import { describe, it, expect, vi } from 'vitest';
 import Incident from './Incident.vue';
 import Tag from './Tag.vue';
 import type { Incident as IncidentType } from '~/types';
+import { ref } from 'vue';
 
 // Mock the useIncidents composable
 vi.mock('@/composables/useIncidents', () => ({
-  useIncidents: vi.fn().mockReturnValue({
+  useIncidents: () => ({
     incidents: [],
     fetchIncidents: vi.fn(),
     resolveIncident: vi.fn(),
     deleteIncident: vi.fn(),
     postIncident: vi.fn(),
+  }),
+}));
+
+// Mock the useCountries composable with reactive countries
+vi.mock('@/composables/useCountries', () => ({
+  useCountries: () => ({
+    countries: ref([
+      { code: 'DK', name: 'Danmark' },
+      { code: 'SE', name: 'Sverige' },
+    ]),
   }),
 }));
 

@@ -19,7 +19,8 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    'floating-vue/nuxt'
+    'floating-vue/nuxt',
+    '@nuxt/test-utils/module'
   ],
   runtimeConfig: {
     public: {

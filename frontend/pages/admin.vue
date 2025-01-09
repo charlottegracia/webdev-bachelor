@@ -169,6 +169,11 @@
 
 <script setup lang="ts">
 import type { Carrier, Country, Service, Incident } from '~/types.ts';
+import { ref, computed, onMounted} from 'vue';
+import { useIncidents } from '~/composables/useIncidents';
+import { useCarriers } from '~/composables/useCarriers';
+import { useCountries } from '~/composables/useCountries';
+import { useServices } from '~/composables/useServices';
 
 const incidentTitle = ref('');
 const incidentDescription = ref('');

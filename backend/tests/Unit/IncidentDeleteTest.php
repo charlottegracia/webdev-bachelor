@@ -30,19 +30,21 @@ class IncidentDeleteTest extends TestCase
             'description' => 'Test Service',
         ]);
 
-        $incident = Incident::create([
+        $response = $this->postJson('/api/incidents', [
             'title' => 'Test Incident',
             'message' => 'This is a test incident.',
             'critical' => true, 
             'status' => 'active',
+            'carrier_ids' => [$carrier->carrier_id],
+            'service_ids' => [$service->service_id]
         ]);
 
-        $incident->carriers()->attach($carrier);
-        $incident->services()->attach($service);
+        $response->assertStatus(201);
 
-        $carrier->updateStatus();
-        $service->updateStatus();
+        $incident = Incident::first();
 
+        $carrier->refresh();
+        $service->refresh();
         $this->assertEquals('red', $carrier->status);
         $this->assertEquals('red', $service->status);
 
@@ -51,7 +53,6 @@ class IncidentDeleteTest extends TestCase
 
         $carrier->refresh();
         $service->refresh();
-
         $this->assertEquals('green', $carrier->status);
         $this->assertEquals('green', $service->status);
     }

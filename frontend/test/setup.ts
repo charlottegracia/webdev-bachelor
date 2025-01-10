@@ -7,7 +7,4 @@ vi.mock('#app', () => ({
   }));
 
 
-// Mock the Date object to a fixed date and time
-const fixedDate = new Date('2023-10-01T14:00:00Z');
-vi.useFakeTimers();
-vi.setSystemTime(fixedDate);
+process.env.TZ = 'UTC';

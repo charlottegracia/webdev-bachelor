@@ -61,7 +61,7 @@ const mockIncident: Incident = {
 describe("Label.vue", () => {
   beforeAll(() => {
     // Mock the Date object to a fixed UTC date and time
-    const fixedDate = new Date(Date.UTC(2023, 9, 1, 14, 0, 0)); // 1st Oct 2023, 14:00 UTC
+    const fixedDate = new Date(Date.UTC(2023, 9, 1, 12, 0, 0)); // 1st Oct 2023, 12:00 UTC
     vi.useFakeTimers();
     vi.setSystemTime(fixedDate);
   });
@@ -90,7 +90,7 @@ describe("Label.vue", () => {
     });
     console.log("Formatted date in test:", wrapper.text());
     expect(wrapper.text()).toContain(
-      "Problemet er løst 01. oktober 2023 14.00"
+      "Problemet er løst 01. oktober 2023 12.00"
     );
   });
 
@@ -134,6 +134,6 @@ describe("Label.vue", () => {
       },
     });
     console.log("Formatted date in test:", wrapper.text());
-    expect(wrapper.text()).toContain("01. oktober 2023 14.00");
+    expect(wrapper.text()).toContain("01. oktober 2023 12.00");
   });
 });

@@ -76,7 +76,7 @@ describe('Incident.vue', () => {
       }
     });
     const formattedDate = wrapper.find('.text-homeblue-300').text();
-    expect(formattedDate).toMatch(/01\. oktober 2023 14[:.]00/);
+    expect(formattedDate).toMatch(/01\. oktober 2023 12[:.]00/);
   });
 
   it('renders the correct number of country tags', () => {

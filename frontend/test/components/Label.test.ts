@@ -11,7 +11,7 @@ const mockIncident: Incident = {
   created_at: "2023-09-30T12:00:00Z",
   updated_at: "2023-10-01T12:00:00Z",
   resolved_at: "2023-10-01T12:00:00Z",
-  expected_resolved_at: "2023-10-01T14:00:00Z", // Updated to match the expected date
+  expected_resolved_at: "2023-10-01T14:00:00Z",
   critical: 1,
   type: "network",
   services: [
@@ -60,8 +60,8 @@ const mockIncident: Incident = {
 
 describe("Label.vue", () => {
   beforeAll(() => {
-    // Mock the Date object to a fixed date and time
-    const fixedDate = new Date('2023-10-01T14:00:00Z');
+    // Mock the Date object to a fixed UTC date and time
+    const fixedDate = new Date(Date.UTC(2023, 9, 1, 14, 0, 0)); // 1st Oct 2023, 14:00 UTC
     vi.useFakeTimers();
     vi.setSystemTime(fixedDate);
   });
@@ -88,6 +88,7 @@ describe("Label.vue", () => {
         incident: mockIncident,
       },
     });
+    console.log("Formatted date in test:", wrapper.text());
     expect(wrapper.text()).toContain(
       "Problemet er løst 01. oktober 2023 14.00"
     );
@@ -132,6 +133,7 @@ describe("Label.vue", () => {
         incident: mockIncident,
       },
     });
+    console.log("Formatted date in test:", wrapper.text());
     expect(wrapper.text()).toContain("01. oktober 2023 14.00");
   });
 });

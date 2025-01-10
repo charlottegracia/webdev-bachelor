@@ -59,6 +59,18 @@ const mockIncident: Incident = {
 };
 
 describe("Label.vue", () => {
+  beforeAll(() => {
+    // Mock the Date object to a fixed date and time
+    const fixedDate = new Date('2023-10-01T14:00:00Z');
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+  });
+
+  afterAll(() => {
+    // Restore the original timers
+    vi.useRealTimers();
+  });
+
   it("renders correctly", () => {
     const wrapper = mount(Label, {
       props: {

@@ -11,7 +11,7 @@ const mockIncident: Incident = {
   created_at: "2023-09-30T12:00:00Z",
   updated_at: "2023-10-01T12:00:00Z",
   resolved_at: "2023-10-01T12:00:00Z",
-  expected_resolved_at: "2023-10-01T12:00:00Z",
+  expected_resolved_at: "2023-10-01T14:00:00Z", // Updated to match the expected date
   critical: 1,
   type: "network",
   services: [
@@ -59,6 +59,18 @@ const mockIncident: Incident = {
 };
 
 describe("Label.vue", () => {
+  beforeAll(() => {
+    // Mock the Date object to a fixed date and time
+    const fixedDate = new Date('2023-10-01T14:00:00Z');
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+  });
+
+  afterAll(() => {
+    // Restore the original timers
+    vi.useRealTimers();
+  });
+
   it("renders correctly", () => {
     const wrapper = mount(Label, {
       props: {
@@ -77,7 +89,7 @@ describe("Label.vue", () => {
       },
     });
     expect(wrapper.text()).toContain(
-      "Problemet er løst 01. oktober 2023 12.00"
+      "Problemet er løst 01. oktober 2023 14.00"
     );
   });
 
@@ -120,6 +132,6 @@ describe("Label.vue", () => {
         incident: mockIncident,
       },
     });
-    expect(wrapper.text()).toContain("01. oktober 2023 12.00");
+    expect(wrapper.text()).toContain("01. oktober 2023 14.00");
   });
 });

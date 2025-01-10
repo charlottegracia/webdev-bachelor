@@ -20,7 +20,7 @@
             <Label v-if="incident.expected_resolved_at || incident.resolved_at" :type="'date'" :incident="incident"
                 class="w-fit" />
             <h2 class="fields text-[24px] md:text-[32px] text-homeblue-300">{{ incident.title }}</h2>
-            <p class="text-[20px] text-homeblue-300">{{ incident.message }}</p>
+            <p class="incident-message text-[20px] text-homeblue-300">{{ incident.message }}</p>
         </div>
 
         <div class="flex gap-3 mt-4 flex-wrap">
@@ -38,10 +38,11 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { Incident } from '~/types.ts';
+import type { Incident } from '../types.ts';
+import { useIncidents } from '../composables/useIncidents';
+import { useCountries } from '../composables/useCountries'; // Add this line
+const { resolveIncident, deleteIncident } = useIncidents();
 const { countries } = useCountries();
-import { useIncidents } from '@/composables/useIncidents';
-const { resolveIncident, deleteIncident, } = useIncidents();
 
 const props = defineProps<{
     incident: Incident;

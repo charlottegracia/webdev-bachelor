@@ -57,7 +57,7 @@ jobs:
       # Setup and run Nuxt 3 (Frontend) tests only if test files exist
       - name: Run Nuxt 3 Tests if Present
         run: |
-          if [ "$(find frontend/tests -name '*.test.ts' -o -name '*.spec.ts')" ]; then
+          if [ "$(find frontend/test -name '*.test.ts' -o -name '*.spec.ts')" ]; then
             cd frontend
             npm install
             npm run test

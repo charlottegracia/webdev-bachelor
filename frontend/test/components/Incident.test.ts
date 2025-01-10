@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import Incident from './Incident.vue';
-import Tag from './Tag.vue';
+import Incident from '../../components/Incident.vue';
+import Tag from '../../components/Tag.vue';
 import type { Incident as IncidentType } from '~/types';
 import { ref } from 'vue';
 

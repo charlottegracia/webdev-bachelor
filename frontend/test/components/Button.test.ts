@@ -1,6 +1,6 @@
 
 import { mount } from "@vue/test-utils";
-import Button from "./Button.vue"; 
+import Button from "../../components/Button.vue"; 
 
 describe("Button.vue", () => {
   it("renders the correct text when passed as a prop", () => {

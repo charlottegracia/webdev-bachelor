@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Icon from './Icon.vue';
+import Icon from '../../components/Icon.vue';
 import { PhTruck, PhGlobeHemisphereWest, PhArrowRight } from '@phosphor-icons/vue/compact';
 
 describe('Icon.vue', () => {

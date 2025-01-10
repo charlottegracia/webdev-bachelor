@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { vi } from 'vitest';
-import ConfirmationModal from './ConfirmationModal.vue';
-import Button from './Button.vue';
+import ConfirmationModal from '../../components/ConfirmationModal.vue';
+import Button from '../../components/Button.vue';
 
 describe('ConfirmationModal', () => {
   it('renders correctly when isVisible is true', () => {

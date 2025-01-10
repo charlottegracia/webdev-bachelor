@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Service from './Service.vue';
-import Label from './Label.vue';
-import Status from './Status.vue';
-import Icon from './Icon.vue';
-import Tooltip from './Tooltip.vue';
+import Service from '../../components/Service.vue';
+import Label from '../../components/Label.vue';
+import Status from '../../components/Status.vue';
+import Icon from '../../components/Icon.vue';
+import Tooltip from '../../components/Tooltip.vue';
 
 const mockService = {
     description: 'Test Service',

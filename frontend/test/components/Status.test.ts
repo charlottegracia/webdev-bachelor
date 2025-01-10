@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Status from './Status.vue';
+import Status from '../../components/Status.vue';
 
 describe('Status.vue', () => {
     it('renders correctly', () => {

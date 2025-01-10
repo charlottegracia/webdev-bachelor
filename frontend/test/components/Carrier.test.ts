@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import Carrier from './Carrier.vue';
-import Label from './Label.vue';
+import Carrier from '../../components/Carrier.vue';
+import Label from '../../components/Label.vue';
 
 describe('Carrier.vue', () => {
   it('renders the correct carrier title', () => {

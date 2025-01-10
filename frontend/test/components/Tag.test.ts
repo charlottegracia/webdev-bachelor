@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Tag from './Tag.vue';
+import Tag from '../../components/Tag.vue';
 
 describe('Tag.vue', () => {
     it('renders correctly', () => {

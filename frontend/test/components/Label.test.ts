@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import Label from "./Label.vue";
+import Label from "../../components/Label.vue";
 import type { Incident } from "~/types.ts";
 
 const mockIncident: Incident = {

@@ -1,7 +1,7 @@
 # Use an official PHP image as a parent image
 FROM php:8.2-fpm
 
-# Install system dependencies (e.g., for running Laravel, MySQL client, etc.)
+# Install system dependencies (for running Laravel, MySQL client)
 RUN apt-get update && apt-get install -y \
     git \
     default-mysql-client # MySQL klient

@@ -3,16 +3,11 @@ FROM php:8.2-fpm
 
 # Install system dependencies (e.g., for running Laravel, MySQL client, etc.)
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    zip \
     git \
-    default-mysql-client # Install default MySQL client
+    default-mysql-client # MySQL klient
 
 # Install PHP extensions for Laravel
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql
 
 # Set the working directory in the container
 WORKDIR /var/www

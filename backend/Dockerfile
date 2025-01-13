@@ -4,7 +4,7 @@ FROM php:8.2-fpm
 # Install system dependencies (for running Laravel, MySQL client)
 RUN apt-get update && apt-get install -y \
     git \
-    default-mysql-client # MySQL klient
+    default-mysql-client # MySQL client
 
 # Install PHP extensions for Laravel
 RUN docker-php-ext-install pdo pdo_mysql

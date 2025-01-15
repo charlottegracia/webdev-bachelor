@@ -17,7 +17,6 @@ describe('Carrier.vue', () => {
       props: { carrier },
     });
 
-    // Check if the carrier title is rendered
     expect(wrapper.text()).toContain('Carrier Title');
   });
 
@@ -35,7 +34,6 @@ describe('Carrier.vue', () => {
     });
 
     const img = wrapper.find('img');
-    // Check if the image is rendered and has the correct src
     expect(img.exists()).toBe(true);
     expect(img.attributes('src')).toBe('/carriers/carrier-slug.png');
   });
@@ -59,6 +57,7 @@ describe('Carrier.vue', () => {
 
     // Simulate a click to toggle the accordion
     await wrapper.find('.flex.items-center.justify-between').trigger('click');
+
     expect(accordionContent.classes()).toContain('expanded');
   });
 
@@ -82,7 +81,7 @@ describe('Carrier.vue', () => {
     });
 
     const incidents = wrapper.findAllComponents(Label);
-    // Check if the correct number of incidents are rendered
+
     expect(incidents.length).toBe(2);
     expect(incidents[0].text()).toContain('Incident 1');
     expect(incidents[1].text()).toContain('Incident 2');
@@ -105,7 +104,7 @@ describe('Carrier.vue', () => {
     });
 
     const services = wrapper.findAll('.flex.py-3.border-t');
-    // Check if the correct number of services are rendered
+    
     expect(services.length).toBe(2);
     expect(services[0].text()).toContain('Service 1');
     expect(services[1].text()).toContain('Service 2');
@@ -124,7 +123,6 @@ describe('Carrier.vue', () => {
       props: { carrier },
     });
 
-    // Check if the props are correctly passed to the component
     expect(wrapper.props().carrier).toEqual(carrier);
   });
 
@@ -161,7 +159,6 @@ describe('Carrier.vue', () => {
       props: { carrier },
     });
 
-    // Check if the props are correctly passed to the component
     expect(wrapper.props().carrier).toEqual(carrier);
   });
 });

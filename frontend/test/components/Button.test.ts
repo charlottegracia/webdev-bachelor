@@ -9,7 +9,6 @@ describe("Button.vue", () => {
       props: { text },
     });
 
-    // Check if the button contains the correct text
     expect(wrapper.text()).toBe(text);
   });
 });
@@ -25,7 +24,6 @@ describe('Button.vue', () => {
     // Ensure a warning was called
     expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
 
-    // Check that the warning contains the required prop message
     expect(consoleWarnSpy.mock.calls[0][0]).toEqual(
       expect.stringContaining('[Vue warn]: Missing required prop: "text"')
     );
@@ -40,7 +38,6 @@ describe("Button.vue", () => {
       props: { text: "Click Me" },
     });
 
-    // Check if the button has the expected classes
     expect(wrapper.classes()).toContain("bg-homeblue-100");
     expect(wrapper.classes()).toContain("text-white");
     expect(wrapper.classes()).toContain("hover:bg-white");
@@ -55,7 +52,6 @@ describe("Button.vue", () => {
 
     await wrapper.trigger("click");
 
-    // Check if the click event has been emitted by testing for a click handler
     expect(wrapper.emitted()).toHaveProperty('click');
   });
 });

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Carrier;
 
@@ -38,7 +37,10 @@ class CarrierSeeder extends Seeder
         ];
 
         foreach ($carriers as $carrier) {
-            Carrier::create($carrier);
+            // Check if the carrier already exists by its unique slug
+            if (!Carrier::where('slug', $carrier['slug'])->exists()) {
+                Carrier::create($carrier);
+            }
         }
     }
 }

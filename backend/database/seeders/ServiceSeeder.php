@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Service;
-use Carbon\Carbon;
 
 class ServiceSeeder extends Seeder
 {
@@ -33,7 +31,10 @@ class ServiceSeeder extends Seeder
         ];
 
         foreach ($services as $service) {
-            Service::create($service);
+            // Check if the service already exists by its unique title
+            if (!Service::where('title', $service['title'])->exists()) {
+                Service::create($service);
+            }
         }
     }
 }

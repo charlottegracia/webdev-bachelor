@@ -52,6 +52,8 @@
 
 <script setup lang="ts">
 import { useIncidents } from '@/composables/useIncidents';
+import { useI18n } from 'vue-i18n';
+import { watch } from 'vue';
 
 interface Filters {
   resolved: boolean;
@@ -61,6 +63,7 @@ interface Filters {
 }
 
 const { incidents, fetchIncidents } = useIncidents();
+const { locale } = useI18n();
 
 const filters = ref<Filters>({
   resolved: false,  // If checked, show only unresolved incidents
@@ -70,6 +73,10 @@ const filters = ref<Filters>({
 });
 
 onMounted(() => {
+  fetchIncidents();
+});
+
+watch(locale, () => {
   fetchIncidents();
 });
 

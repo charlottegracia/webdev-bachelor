@@ -2,46 +2,46 @@
   <div class="flex flex-col gap-8 items-center max-w-screen-md mx-auto">
     <div class="flex items-center gap-8">
       <Icon src="Broadcast" size="6xl" color="text-homeblue-300" />
-      <h1 class="fields text-[32px] md:text-[64px] text-text-default">Liveopdateringer</h1>
+      <h1 class="fields text-[32px] md:text-[64px] text-text-default">{{ $t('incidents') }}</h1>
     </div>
     <p class="md:max-w-[75%] font-semibold text-center">
-      På denne side findes en liste med Homerunners liveopdateringer. De opdateres løbende, når de bliver løst.
+      {{ $t('incidents_text') }}
     </p>
 
     <div class="self-start">
-      <p class="text-lg mb-2">Filtrer efter kategori:</p>
+      <p class="text-lg mb-2">{{ $t('incidents_filter') }}:</p>
       <div class="text-lg flex gap-4">
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.countries ? 'bg-home-kiwi-200 border border-home-kiwi-300' : 'bg-home-kiwi border border-home-kiwi']"
           @click="toggleFilter('countries')">
-          Lande
+          {{ $t('countries') }}
           <Icon v-if="filters.countries" src="Check" size="lg" color="text-home-kiwi-300" />
         </button>
 
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.carriers ? 'bg-home-tangerine-200 border border-home-tangerine-300' : 'bg-home-tangerine border border-home-tangerine']"
           @click="toggleFilter('carriers')">
-          Transportører
+          {{ $t('carriers') }}
           <Icon v-if="filters.carriers" src="Check" size="lg" color="text-home-tangerine-300" />
         </button>
 
         <button
           :class="['py-2 px-4 transition duration-500 rounded shadow-lg flex items-center font-medium gap-2', filters.services ? 'bg-home-grape-200 border border-home-grape-300' : 'bg-home-grape border border-home-grape']"
           @click="toggleFilter('services')">
-          IT-services
+          {{ $t('services') }}
           <Icon v-if="filters.services" src="Check" size="lg" color="text-home-grape-300" />
         </button>
       </div>
       <div class="flex gap-2 items-center mt-4 text-lg">
         <input type="checkbox" v-model="filters.resolved" class="h-4 w-4" />
         <label @click="toggleFilter('resolved')">
-          Filtrer løste hændelser fra
+          {{ $t('incidents_filter_resolved') }}
         </label>
       </div>
     </div>
 
     <div v-if="filteredIncidents.length === 0" class="text-center text-2xl fields text-homeblue-300 mt-20 mb-40">
-      Der er ingen liveopdateringer med de valgte filtre.
+      {{ $t('no_incidents') }}
     </div>
 
     <div v-else v-for="incident in filteredIncidents" :key="incident.incident_id" class="w-full">

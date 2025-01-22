@@ -25,7 +25,8 @@
     PhMinusCircle,
     PhCheck,
     PhCheckCircle,
-    PhTrash
+    PhTrash,
+    PhGlobe
     // Add more icons here as needed
   } from '@phosphor-icons/vue/compact';
   
@@ -42,7 +43,8 @@
     PhPlusCircle,
     PhCheck,
     PhCheckCircle,
-    PhTrash
+    PhTrash,
+    PhGlobe
     // Add more icons here as needed
 };
 

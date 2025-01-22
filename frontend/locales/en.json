@@ -1,0 +1,95 @@
+{
+  "frontpage": {
+    "title": "Operating status",
+    "updates": {
+      "text": "See a comprehensive overview of all events",
+      "more": "See more"
+    },
+    "services": {
+      "text": "Status of Homerunner's services and APIs",
+      "more": "See status"
+    },
+    "countries": {
+      "text": "Geographical events that may cause problems for shipping in the given country. \nSee details on the map",
+      "more": "Open map"
+    },
+    "carriers": {
+      "text": "Status of the various carriers",
+      "more": "See status"
+    },
+    "deadlines_and_peak": {
+      "more": "See overview",
+      "text": "Important deadlines and peak allowances"
+    }
+  },
+  "incidents": "Live updates",
+  "services": "IT-services",
+  "countries": "Countries",
+  "carriers": "Carriers",
+  "deadlines_and_peak": "Dates and peak",
+  "banner_text": "Stay updated",
+  "go_to_admin": "Go to admin panel",
+  "solution": "Solution",
+  "product": "Product",
+  "features": "Features",
+  "integrations": "Integrations",
+  "contact": "Contact",
+  "blog": "Blog",
+  "cases": "Cases",
+  "resources": "Resources",
+  "about_us": "About us",
+  "incidents_text": "This page contains a list of Homerunner's live updates. \nThey are continuously updated when they are solved.",
+  "incidents_filter": "Filter by category",
+  "incidents_filter_resolved": "Filter out resolved events",
+  "no_incidents": "There are no live updates with the selected filters.",
+  "services_text": "Here you can see the status of Homerunner's various services",
+  "carriers_text": "Here you can see the status of Homerunner's various carriers",
+  "admin": {
+    "title": "What would you like to create?",
+    "type": "Type",
+    "add_countries": "Add countries",
+    "add_carriers": "Add carriers",
+    "add_services": "Add services",
+    "reset": "Reset",
+    "choose_all": "Select all",
+    "resolved_title": "When is the problem expected to be resolved?",
+    "critical": "Is the problem critical?",
+    "critical_tooltip": "When 'Critical' is selected, the status of the selected carrier/service/country changes to red",
+    "critical_option": "Critical",
+    "preview_text": "Preview on live update",
+    "not_critical_option": "Non-critical",
+    "create_incident": "Create live update",
+    "create_carrier": "Create carrier",
+    "modal": {
+      "confirmation": "Are you sure you want to create this live update?",
+      "confirmation_button": "Create live update",
+      "confirmation_carrier": "Are you sure you want to create this carrier?",
+      "confirmation_button_carrier": "Create carrier"
+    },
+    "incident": {
+      "missing_fields": "The live update title and description must be completed.",
+      "created": "The live update was created.",
+      "error": "An error occurred while creating the live update."
+    },
+    "carrier": {
+      "missing_fields": "The carrier's slug and title must be filled in.",
+      "created": "The carrier {carrier} was created.",
+      "error": "An error occurred while creating carrier."
+    }
+  },
+  "carrier": "Carrier",
+  "incident": "Live update",
+  "title": "Title",
+  "description": "Description",
+  "enter_title": "Enter title",
+  "enter_description": "Enter description",
+  "slug": "Slug",
+  "enter_slug": "Enter slug",
+  "are_you_sure": "Are you sure?",
+  "cancel": "Cancel",
+  "label": {
+    "solved": "The problem is solved",
+    "expected_solved": "Expected to be resolved",
+    "view_updates": "Show updates"
+  }
+}

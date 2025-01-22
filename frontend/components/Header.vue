@@ -10,35 +10,45 @@
             <nav class="hidden md:flex py-2 items-start gap-6">
                 <nuxt-link to="/updates">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
-                        Liveopdateringer
+                        {{ $t('incidents') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/services">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
-                        IT-services
+                        {{ $t('services') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/countries">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
-                        Lande
+                        {{ $t('countries') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/carriers">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
-                        Transportører
+                        {{ $t('carriers') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/deadlines-and-peak">
                     <p class="-tracking-[.16px] leading-[110%] font-medium">
-                        Datoer og tillæg
+                        {{ $t('deadlines_and_peak') }}
                     </p>
                 </nuxt-link>
             </nav>
+            <form class="flex items-center gap-1">
+                <label for="locale-select">
+                    <Icon src="Globe" size="2xl" color="text-text-primary" />
+                </label>
+                <select id="locale-select" v-model="$i18n.locale" @change="saveLanguage($i18n.locale)">
+                    <option value="da">DA</option>
+                    <option value="en">EN</option>
+                </select>
+            </form>
+
             <div class="hidden md:flex items-center gap-6">
                 <nuxt-link to="/admin">
                     <p
                         class="bg-homeblue-100 text-center text-white rounded-full border border-homeblue-120 px-4 py-[10px] -tracking-[.16px] leading-[110%] hover:bg-white hover:text-homeblue-120 transition duration-300 cursor-pointer">
-                        Gå til adminpanel
+                        {{ $t('go_to_admin') }}
                     </p>
                 </nuxt-link>
             </div>
@@ -56,37 +66,37 @@
                 :class="mobiledNavShown ? 'max-h-[550px] py-10' : 'max-h-0'">
                 <nuxt-link to="/updates">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
-                        Liveopdateringer
+                        {{ $t('incidents') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/services">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
-                        IT-services
+                        {{ $t('services') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/countries">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
-                        Lande
+                        {{ $t('countries') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/carriers">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
-                        Transportører
+                        {{ $t('carriers') }}
                     </p>
                 </nuxt-link>
                 <nuxt-link to="/deadlines-and-peak">
                     <p class="text-2xl cursor-pointer mb-6 -tracking-[.16px] leading-[110%] font-medium text-center">
-                        Datoer og tillæg
+                        {{ $t('deadlines_and_peak') }}
                     </p>
                 </nuxt-link>
                 <div>
-                    <a href="https://homerunner.com">
+                    <nuxt-link to="/admin">
 
                         <p
                             class="bg-homeblue-100 text-white rounded-full border border-homeblue-500 px-4 py-[10px] -tracking-[.16px] leading-[110%] font-medium hover:bg-white hover:text-homeblue-500 transition duration-300 cursor-pointer max-w-max mx-auto">
-                            Gå til homerunner.com
+                            {{ $t('go_to_admin') }}
                         </p>
-                    </a>
+                    </nuxt-link>
                 </div>
             </nav>
             <div class="w-5 bg-white absolute top-11 left-0" :class="mobiledNavShown ? 'h-5' : 'h-0'"></div>
@@ -101,6 +111,15 @@ const router = useRouter();
 const showNavbar = ref(true);
 const lastScrollPosition = ref(0);
 const mobiledNavShown = ref(false);
+
+import { useI18n } from 'vue-i18n';
+
+const { locale } = useI18n();
+
+const saveLanguage = (lang) => {
+  localStorage.setItem('user-lang', lang);
+  locale.value = lang;
+};
 
 const showMobileNav = () => {
     mobiledNavShown.value = !mobiledNavShown.value;
@@ -126,7 +145,7 @@ const onScroll = () => {
 };
 
 onMounted(() => {
-    window.addEventListener("scroll", onScroll);   
+    window.addEventListener("scroll", onScroll);
 });
 
 onBeforeUnmount(() => {

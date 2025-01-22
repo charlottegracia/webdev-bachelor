@@ -1,0 +1,95 @@
+{
+  "frontpage": {
+    "title": "Driftstatus",
+    "updates": {
+      "text": "Se en samlet oversigt over alle hændelser",
+      "more": "Se flere"
+    },
+    "services": {
+      "text": "Status for Homerunners services og API'er",
+      "more": "Se status"
+    },
+    "countries": {
+      "text": "Geografiske hændelser, som kan skabe problemer for fragten i det givne land. Se detaljer på kortet",
+      "more": "Åben kort"
+    },
+    "carriers": {
+      "text": "Status på de forskellige transportører",
+      "more": "Se status"
+    },
+    "deadlines_and_peak": {
+      "more": "Se oversigt",
+      "text": "Vigtige deadlines og peaktillæg"
+    }
+  },
+  "incidents": "Liveopdateringer",
+  "services": "IT-services",
+  "countries": "Lande",
+  "carriers": "Transportører",
+  "deadlines_and_peak": "Datoer og tillæg",
+  "banner_text": "Hold dig opdateret",
+  "go_to_admin": "Gå til adminpanel",
+  "solution": "Løsning",
+  "product": "Produkt",
+  "features": "Features",
+  "integrations": "Integrationer",
+  "cases": "Cases",
+  "blog": "Blog",
+  "contact": "Kontakt",
+  "resources": "Ressourcer",
+  "about_us": "Om os",
+  "incidents_text": "På denne side findes en liste med Homerunners liveopdateringer. De opdateres løbende, når de bliver løst.",
+  "incidents_filter": "Filtrer efter kategori",
+  "incidents_filter_resolved": "Filtrer løste hændelser fra",
+  "no_incidents": "Der er ingen liveopdateringer med de valgte filtre.",
+  "services_text": "Her kan du se status for Homerunners forskellige services",
+  "carriers_text": "Her kan du se status for Homerunners forskellige transportører",
+  "admin": {
+    "title": "Hvad vil du gerne oprette?",
+    "type": "Type",
+    "add_countries": "Tilføj lande",
+    "add_carriers": "Tilføj transportører",
+    "add_services": "Tilføj services",
+    "reset": "Nulstil",
+    "choose_all": "Vælg alle",
+    "resolved_title": "Hvornår forventes problemet at være løst?",
+    "critical": "Er problemet kritisk?",
+    "critical_tooltip": "Ved valg af 'Kritisk' ændres status på valgt transportør/service/land til rød",
+    "not_critical_option": "Ikke-kritisk",
+    "critical_option": "Kritisk",
+    "preview_text": "Preview på liveopdatering",
+    "create_incident": "Opret liveopdatering",
+    "create_carrier": "Opret transportør",
+    "modal": {
+      "confirmation": "Er du sikker på, at du vil oprette denne liveopdatering?",
+      "confirmation_button": "Opret liveopdatering",
+      "confirmation_carrier": "Er du sikker på, at du vil oprette denne transportør?",
+      "confirmation_button_carrier": "Opret transportør"
+    },
+    "incident": {
+      "missing_fields": "Liveopdateringens titel og beskrivelse skal udfyldes.",
+      "created": "Liveopdateringen blev oprettet.",
+      "error": "Der opstod en fejl ved oprettelsen af liveopdateringen."
+    },
+    "carrier": {
+      "missing_fields": "Transportørens slug og titel skal udfyldes.",
+      "created": "Transportøren {carrier} blev oprettet.",
+      "error": "Der opstod en fejl ved oprettelsen af transportør."
+    }
+  },
+  "incident": "Liveopdatering",
+  "carrier": "Transportør",
+  "title": "Titel",
+  "description": "Beskrivelse",
+  "enter_title": "Indtast titel",
+  "enter_description": "Indtast beskrivelse",
+  "slug": "Slug",
+  "enter_slug": "Indtast slug",
+  "are_you_sure": "Er du sikker?",
+  "cancel": "Annuller",
+  "label": {
+    "solved": "Problemet er løst",
+    "expected_solved": "Forventes løst",
+    "view_updates": "Vis opdateringer"
+  }
+}

@@ -2,10 +2,10 @@
     <div class="inline-block text-md">
         <div v-if="props.type === 'date'" :class="['rounded', sizeClass, colorClass]" v-show="hasDate">
             <span v-if="props.incident?.resolved_at">
-                Problemet er løst {{ formatDate(props.incident.resolved_at, true) }}
+                {{ $t('label.solved') }} {{ formatDate(props.incident.resolved_at, true) }}
             </span>
             <span v-else-if="props.incident?.expected_resolved_at">
-                Forventes løst {{ formatDate(props.incident.expected_resolved_at) }}
+                {{ $t('label.expected_solved') }} {{ formatDate(props.incident.expected_resolved_at) }}
             </span>
         </div>
 
@@ -16,7 +16,7 @@
             <div v-if="props.size === 'sm'" class="flex items-center w-full">
                 <Icon :src="'info'" :size="'lg'" :color="'text-homeblue-300'" class="mr-2" />
                 <p class="truncate flex-1">
-                    {{ props.incident?.title || 'Vis opdateringer' }}
+                    {{ props.incident?.title || $t('label.view_updates') }}
                 </p>
                 <Icon :src="'arrowRight'" :size="'lg'" :color="'text-homeblue-300'" class="ml-3" />
             </div>
@@ -27,7 +27,7 @@
                 </p>
                 <span>-</span>
                 <p class="truncate flex-1">
-                    {{ props.incident?.title || 'Vis opdateringer' }}
+                    {{ props.incident?.title || $t('label.view_updates') }}
                 </p>
             </div>
         </a>

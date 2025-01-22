@@ -27,30 +27,33 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n(); 
 
 const logoPath = ref('/images/homerunner-logo.png');
 const currentYear = ref(new Date().getFullYear());
-const footerLinks = ref([
+const footerLinks = computed(() => [
     {
-        title: "Produkt",
+        title: t('product'),
         links: [
-            { text: "Løsning", url: "https://www.homerunner.com/solution" },
-            { text: "Features", url: "https://homerunner.com/features" },
-            { text: "Integrationer", url: "https://www.homerunner.com/integrations/" },
+            { text: t('solution'), url: "https://www.homerunner.com/solution" },
+            { text: t('features'), url: "https://homerunner.com/features" },
+            { text: t('integrations'), url: "https://www.homerunner.com/integrations/" },
         ],
     },
     {
-        title: "Ressourcer",
+        title: t('resources'),
         links: [
-            { text: "Cases", url: "https://www.homerunner.com/cases" },
-            { text: "Blog", url: "https://www.homerunner.com/blog" },
-            { text: "Kontakt", url: "https://www.homerunner.com/contact" },
+            { text: t('cases'), url: "https://www.homerunner.com/cases" },
+            { text: t('blog'), url: "https://www.homerunner.com/blog" },
+            { text: t('contact'), url: "https://www.homerunner.com/contact" },
         ],
     },
     {
         title: "Homerunner",
         links: [
-            { text: "Om os", url: "https://www.homerunner.com/about" },
+            { text: t('about_us'), url: "https://www.homerunner.com/about" },
             { text: "Østerågade 27, 9000 Aalborg" },
             { text: "CVR: 36721146" },
         ],

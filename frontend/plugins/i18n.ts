@@ -8,7 +8,6 @@ export default defineNuxtPlugin(({ vueApp }) => {
 
   if (import.meta.client) {
     const savedLang = localStorage.getItem('user-lang'); // check if user has chosen a language
-
     if (savedLang) {
       userLang = savedLang; // use chosen language if available
     } else {
@@ -27,6 +26,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     },
     warnHtmlInMessage: 'off'
   });
-
   vueApp.use(i18n);
 });
+
+

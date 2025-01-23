@@ -6,13 +6,12 @@ import type { Incident } from '.././types.ts';
 export function useIncidents() {
   const incidents = ref<Incident[]>([]);
   const config = useRuntimeConfig();
-  const { locale } = useI18n(); // Access the current locale
+  const { locale } = useI18n();
 
   const fetchIncidents = async () => {
     try {
       const { data } = await axios.get(`${config.public.apiBase}/incidents`);
 
-      // If the locale is 'en', translate incidents
       if (locale.value === 'en') {
         const translatedIncidents = await Promise.all(
           data.map(async (incident: Incident) => {
@@ -26,12 +25,10 @@ export function useIncidents() {
           })
         );
 
-        // Sort and store translated incidents
         incidents.value = translatedIncidents.sort((a: Incident, b: Incident) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
       } else {
-        // Store untranslated incidents
         incidents.value = data.sort((a: Incident, b: Incident) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );

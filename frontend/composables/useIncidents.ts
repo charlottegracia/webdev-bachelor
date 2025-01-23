@@ -13,17 +13,18 @@ export function useIncidents() {
       const { data } = await axios.get(`${config.public.apiBase}/incidents`);
 
       if (locale.value === 'en') {
-        const translatedIncidents = await Promise.all(
-          data.map(async (incident: Incident) => {
-            const translatedTitle = await translateText(incident.title, 'en');
-            const translatedDescription = await translateText(incident.message, 'en');
-            return {
-              ...incident,
-              title: translatedTitle,
-              message: translatedDescription,
-            };
-          })
-        );
+        const translatedIncidents = [];
+
+        for (const incident of data) {
+          const translatedTitle = await translateText(incident.title, 'en');
+          const translatedDescription = await translateText(incident.message, 'en');
+          
+          translatedIncidents.push({
+            ...incident,
+            title: translatedTitle,
+            message: translatedDescription,
+          });
+        }
 
         incidents.value = translatedIncidents.sort((a: Incident, b: Incident) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()

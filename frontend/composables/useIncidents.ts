@@ -44,18 +44,17 @@ export function useIncidents() {
       const response = await axios.get(`https://translate.googleapis.com/translate_a/single`, {
         params: {
           client: 'gtx',
-          sl: 'da', // Source language (auto-detect)
-          tl: targetLang, // Target language
-          dt: 't', // Translation text
-          q: text, // Text to translate
+          sl: 'da', // source language
+          tl: targetLang, // target language
+          dt: 't',
+          q: text, 
         },
       });
 
-      // Extract the translated text from the response
       return response.data[0][0][0];
     } catch (error) {
       console.error('Error translating text:', error);
-      return text; // Fallback to original text if translation fails
+      return text; // fallback to original text if translation fails
     }
   };
 

@@ -112,10 +112,6 @@ const showNavbar = ref(true);
 const lastScrollPosition = ref(0);
 const mobiledNavShown = ref(false);
 
-import { useI18n } from 'vue-i18n';
-
-const { locale } = useI18n();
-
 const saveLanguage = (lang) => {
   localStorage.setItem('user-lang', lang);
 };

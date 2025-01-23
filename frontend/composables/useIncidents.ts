@@ -43,7 +43,7 @@ export function useIncidents() {
       const response = await axios.get(`https://translate.googleapis.com/translate_a/single`, {
         params: {
           client: 'gtx',
-          sl: 'auto', // Source language (auto-detect)
+          sl: 'da', // Source language (auto-detect)
           tl: targetLang, // Target language
           dt: 't', // Translation text
           q: text, // Text to translate

@@ -208,8 +208,8 @@ const isAllServicesSelected = computed(() => selectedServices.value.length === s
 
 // preview data of incident
 const previewIncident = computed(() => ({
-    title: incidentTitle.value || 'Ingen titel angivet',
-    message: incidentDescription.value || 'Ingen beskrivelse angivet',
+    title: incidentTitle.value || t('admin.no_title'),
+    message: incidentDescription.value || t('admin.no_description'),
     country: selectedCountries.value.map(c => c.code).join(','),
     expected_resolved_at: expectedResolution.value || null,
     created_at: new Date().toISOString(),

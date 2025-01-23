@@ -75,7 +75,9 @@
       "missing_fields": "Transportørens slug og titel skal udfyldes.",
       "created": "Transportøren {carrier} blev oprettet.",
       "error": "Der opstod en fejl ved oprettelsen af transportør."
-    }
+    },
+    "no_title": "Ingen titel angivet",
+    "no_description": "Ingen beskrivelse angivet"
   },
   "incident": "Liveopdatering",
   "carrier": "Transportør",

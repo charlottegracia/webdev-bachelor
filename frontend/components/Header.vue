@@ -118,7 +118,6 @@ const { locale } = useI18n();
 
 const saveLanguage = (lang) => {
   localStorage.setItem('user-lang', lang);
-  locale.value = lang;
 };
 
 const showMobileNav = () => {

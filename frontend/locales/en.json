@@ -75,7 +75,9 @@
       "missing_fields": "The carrier's slug and title must be filled in.",
       "created": "The carrier {carrier} was created.",
       "error": "An error occurred while creating carrier."
-    }
+    },
+    "no_title": "No title provided",
+    "no_description": "No description provided"
   },
   "carrier": "Carrier",
   "incident": "Live update",

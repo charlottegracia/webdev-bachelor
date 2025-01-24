@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Incident;
 use Carbon\Carbon;
@@ -45,7 +44,11 @@ class IncidentSeeder extends Seeder
         ];
 
         foreach ($incidents as $incident) {
-            Incident::create($incident);
+            // Check if the incident already exists by its unique title
+            if (!Incident::where('title', $incident['title'])->exists()) {
+                Incident::create($incident);
+            }
+            
         }
     }
 }

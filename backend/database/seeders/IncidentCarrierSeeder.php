@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Carrier;
 use App\Models\Incident;
@@ -15,6 +14,14 @@ class IncidentCarrierSeeder extends Seeder
      */
     public function run(): void
     {
+        $flagFile = storage_path('app/incident_carrier_seeded.flag');
+
+         // Check if the seeder has already been run
+         if (file_exists($flagFile)) {
+            echo "IncidentCarrierSeeder has already been run. Skipping...\n";
+            return;
+        }
+
         // Retrieve all incidents, carriers and services
         $incidents = Incident::all();
         $carriers = Carrier::all();
@@ -43,5 +50,10 @@ class IncidentCarrierSeeder extends Seeder
                 $service->updateStatus(); 
             }
         }
+
+         // Create the flag file to indicate this seeder has been run
+         file_put_contents($flagFile, 'Seeded on: ' . now());
+
+         echo "IncidentCarrierSeeder completed successfully.\n";
     }
 }

@@ -127,5 +127,17 @@
   "go_back": "Go back",
   "back_to_home": "Go to the front page",
   "mark_as_solved": "Mark as solved",
-  "delete_incident": "Delete live update"
+  "delete_incident": "Delete live update",
+  "delete": {
+    "incident": {
+      "confirmation": "Are you sure you want to delete this live update?",
+      "button": "Delete live update"
+    }
+  },
+  "resolve": {
+    "incident": {
+      "button": "Mark as solved",
+      "confirmation": "Are you sure you will mark this live update as resolved?"
+    }
+  }
 }

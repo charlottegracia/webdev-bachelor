@@ -34,6 +34,13 @@ class CarrierSeeder extends Seeder
                 'status' => 'green',
                 'peak_up_charge' => 15.00,
             ],
+            [
+                'slug' => 'gls',
+                'title' => 'GLS',
+                'description' => 'local carrier.',
+                'status' => 'green',
+                'peak_up_charge' => 15.00,
+            ],
         ];
 
         foreach ($carriers as $carrier) {

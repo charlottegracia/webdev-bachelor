@@ -127,5 +127,17 @@
   "go_back": "Gå tilbage",
   "back_to_home": "Gå til forsiden",
   "mark_as_solved": "Marker som løst",
-  "delete_incident": "Slet liveopdatering"
+  "delete_incident": "Slet liveopdatering",
+  "delete": {
+    "incident": {
+      "confirmation": "Er du sikker på, at du vil slette denne liveopdatering?",
+      "button": "Slet liveopdatering"
+    }
+  },
+  "resolve": {
+    "incident": {
+      "confirmation": "Er du sikker på, at du vil markere denne liveopdatering som løst?",
+      "button": "Marker som løst"
+    }
+  }
 }

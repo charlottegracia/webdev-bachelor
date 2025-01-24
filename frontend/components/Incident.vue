@@ -40,7 +40,10 @@
 import { ref } from 'vue';
 import type { Incident } from '../types.ts';
 import { useIncidents } from '../composables/useIncidents';
-import { useCountries } from '../composables/useCountries'; // Add this line
+import { useCountries } from '../composables/useCountries';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const { resolveIncident, deleteIncident } = useIncidents();
 const { countries } = useCountries();
 
@@ -50,8 +53,8 @@ const props = defineProps<{
 }>();
 
 const showModal = ref(false);
-const modalTitle = ref('Er du sikker på, at du vil oprette denne liveopdatering?');
-const modalButton = ref('Opret liveopdatering');
+const modalTitle = ref();
+const modalButton = ref();
 const actionType = ref<string>(''); // Store type of action ('resolve' or 'delete')
 
 // Format date for display
@@ -86,11 +89,11 @@ const getCountryName = (countryCode: string) => {
 const openModal = (action: string) => {
     actionType.value = action; // Set action type ('resolve' or 'delete')
     if (action === 'delete') {
-        modalTitle.value = 'Er du sikker på, at du vil slette denne liveopdatering?';
-        modalButton.value = 'Slet liveopdatering';
+        modalTitle.value = t('delete.incident.confirmation');
+        modalButton.value = t('delete.incident.button');
     } else if (action === 'resolve') {
-        modalTitle.value = 'Er du sikker på, at du vil markere denne liveopdatering som løst?';
-        modalButton.value = 'Marker som løst';
+        modalTitle.value = t('resolve.incident.confirmation');
+        modalButton.value = t('resolve.incident.button');
     }
     showModal.value = true; // Show the modal
 };

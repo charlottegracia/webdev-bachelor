@@ -106,6 +106,7 @@ const { incidents, fetchIncidents } = useIncidents();
 
 onMounted(() => {
     fetchIncidents();
+    //throw createError({ statusCode: 405, message: 'Method Not Allowed' });
 });
 
 watch(locale, () => {

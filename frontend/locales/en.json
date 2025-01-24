@@ -93,5 +93,39 @@
     "solved": "The problem is solved",
     "expected_solved": "Expected to be resolved",
     "view_updates": "Show updates"
-  }
+  },
+  "errors": {
+    "400": {
+      "title": "Invalid request",
+      "description": "There was a problem with the request. \nPlease check the information and try again."
+    },
+    "401": {
+      "title": "Unauthorized",
+      "description": "You do not have the necessary rights to access this page."
+    },
+    "403": {
+      "title": "Forbidden",
+      "description": "You do not have permission to access this resource."
+    },
+    "404": {
+      "title": "The page could not be found",
+      "description": "The requested page does not exist. \nPlease check the URL or try to go back to the front page."
+    },
+    "405": {
+      "description": "The HTTP method used is not supported for this resource.",
+      "title": "The method is not allowed"
+    },
+    "500": {
+      "title": "Internal server error",
+      "description": "An error occurred on the server. \nTry again later."
+    },
+    "502": {
+      "title": "Bad gateway",
+      "description": "The server could not communicate with the required service. \nTry again later."
+    }
+  },
+  "go_back": "Go back",
+  "back_to_home": "Go to the front page",
+  "mark_as_solved": "Mark as solved",
+  "delete_incident": "Delete live update"
 }

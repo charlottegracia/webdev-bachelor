@@ -5,13 +5,13 @@
                 <p class="text-homeblue-300">{{ formatDate(incident.created_at) }}</p>
                 <div v-if="editAllowed" class="flex gap-3">
                     <div @click="openModal('resolve')" class="cursor-pointer">
-                        <Tooltip :text="'Marker som løst'" placement="top">
+                        <Tooltip :text="$t('mark_as_solved')" placement="top">
                             <Icon src="CheckCircle" size="3xl" color="text-homeblue-300"
                                 v-if="incident.resolved_at === null" />
                         </Tooltip>
                     </div>
                     <div @click="openModal('delete')" class="cursor-pointer">
-                        <Tooltip :text="'Slet liveopdatering'" placement="top">
+                        <Tooltip :text="$t('delete_incident')" placement="top">
                             <Icon src="Trash" size="3xl" color="text-homeblue-300" />
                         </Tooltip>
                     </div>

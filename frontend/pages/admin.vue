@@ -157,7 +157,7 @@
             <div v-if="selectedType === 'carrier'" class="flex flex-col gap-4">
                 <InputField v-model="carrierSlug" :label="$t('slug') + ' *'" :placeholder="$t('enter_slug')" type="text" />
                 <InputField v-model="carrierTitle" :label="$t('title') + ' *'" :placeholder="$t('enter_title')" type="text" />
-                <InputField v-model="carrierDescription" :label="$t('description') + ' *'" :placeholder="$t('enter_description')"
+                <InputField v-model="carrierDescription" :label="$t('description')" :placeholder="$t('enter_description')"
                     type="textarea" />
                 <Button :text="$t('admin.create_carrier')" @click="checkRequired" />
             </div>
